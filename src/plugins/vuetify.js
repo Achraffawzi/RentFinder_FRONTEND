@@ -9,7 +9,7 @@ export default new Vuetify({
         light: {
           primary: "#008DE9",
           secondary: "#333333",
-          third: "#C4C4C4",
+          third: "#949393",
           navigattionDrawer: "#122658",
           error: "#b71c1c",
         },

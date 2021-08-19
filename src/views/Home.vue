@@ -26,6 +26,9 @@
         </carousel>
       </v-container>
     </section>
+    
+    <!-- Footer -->
+    <Footer />
   </div>
 </template>
 
@@ -35,6 +38,7 @@ import GlobalStatistics from "@/components/GlobalStatistics.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
 import carousel from "vue-owl-carousel";
 import Testimonial from "@/components/home/Testimonial.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   name: "Home",
   components: {
@@ -43,6 +47,7 @@ export default {
     CardAnnouncement,
     carousel,
     Testimonial,
+    Footer
   },
 };
 </script>
