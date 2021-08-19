@@ -3,4 +3,16 @@ import Vuetify from "vuetify/lib/framework";
 
 Vue.use(Vuetify);
 
-export default new Vuetify({});
+export default new Vuetify({
+    theme: {
+      themes: {
+        light: {
+          primary: "#008DE9",
+          secondary: "#333333",
+          third: "#C4C4C4",
+          navigattionDrawer: "#122658",
+          error: "#b71c1c",
+        },
+      },
+    },
+  });
