@@ -12,7 +12,7 @@
           <v-card-text>
             <!-- content -->
             <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-            <v-rating length="5" value="4" color="yellow"></v-rating>
+            <v-rating background-color="yellow lighten-3" length="5" value="4" color="yellow"></v-rating>
           </v-card-text>
           <v-card-actions>
             <span class="font-weight-medium mr-4">Agadir</span>
