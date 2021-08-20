@@ -3,6 +3,7 @@
     <Navbar />
 
     <!-- Signup form -->
+    <v-container>
     <v-form
       @submit.prevent="onSignup"
       method="POST"
@@ -45,6 +46,7 @@
           >
         </p>
     </v-form>
+    </v-container>
   </div>
 </template>
 
