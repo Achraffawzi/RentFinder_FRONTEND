@@ -1,7 +1,28 @@
 <template>
-  <v-row>
+  <div class="announcement-cards">
+    <!-- Snackbar for added to favorite -->
+    <v-snackbar
+      v-model="snackbarFavorite"
+      top
+      color="primary"
+    >
+      Announcement added to favorite!
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="white"
+          text
+          v-bind="attrs"
+          @click="snackbarFavorite = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <!-- The cards -->
+    <v-row>
     <v-col cols="12" sm="6" md="4">
-    <v-card  class="mx-auto" outlined>
+      <v-card class="mx-auto" outlined>
         <v-img
           src="https://source.unsplash.com/random"
           height="200"
@@ -9,7 +30,9 @@
         >
           <v-card-title class="justify-space-between">
             <h5 class="text-h5 font-weight-bold">$55/night</h5>
-            <v-icon class="white--text">favorite_border</v-icon>
+            <v-icon class="white--text" style="cursor: pointer" @click="onAddToFavorite"
+              >{{ favoriteIcon }}</v-icon
+            >
           </v-card-title>
         </v-img>
         <v-card-text>
@@ -29,10 +52,10 @@
           <span class="font-weight-medium">23/05/2000</span>
         </v-card-actions>
       </v-card>
-      </v-col>
+    </v-col>
 
-      <v-col cols="12" sm="6" md="4">
-    <v-card  class="mx-auto" outlined>
+    <v-col cols="12" sm="6" md="4">
+      <v-card class="mx-auto" outlined>
         <v-img
           src="https://source.unsplash.com/random"
           height="200"
@@ -40,7 +63,9 @@
         >
           <v-card-title class="justify-space-between">
             <h5 class="text-h5 font-weight-bold">$55/night</h5>
-            <v-icon class="white--text">favorite_border</v-icon>
+            <v-icon class="white--text" style="cursor: pointer" @click="onAddToFavorite"
+              >{{ favoriteIcon }}</v-icon
+            >
           </v-card-title>
         </v-img>
         <v-card-text>
@@ -60,10 +85,10 @@
           <span class="font-weight-medium">23/05/2000</span>
         </v-card-actions>
       </v-card>
-      </v-col>
+    </v-col>
 
-      <v-col cols="12" sm="6" md="4">
-    <v-card  class="mx-auto" outlined>
+    <v-col cols="12" sm="6" md="4">
+      <v-card class="mx-auto" outlined>
         <v-img
           src="https://source.unsplash.com/random"
           height="200"
@@ -71,7 +96,9 @@
         >
           <v-card-title class="justify-space-between">
             <h5 class="text-h5 font-weight-bold">$55/night</h5>
-            <v-icon class="white--text">favorite_border</v-icon>
+            <v-icon class="white--text" style="cursor: pointer" @click="onAddToFavorite"
+              >{{ favoriteIcon }}</v-icon
+            >
           </v-card-title>
         </v-img>
         <v-card-text>
@@ -91,15 +118,32 @@
           <span class="font-weight-medium">23/05/2000</span>
         </v-card-actions>
       </v-card>
-      </v-col>
-      
+    </v-col>
   </v-row>
+  </div>
 </template>
 
 <script>
 export default {
   name: "CardAnnouncement",
   props: ["housesResult"],
+  data() {
+    return {
+      snackbarFavorite: false,
+      isFaved: false,
+    }
+  },
+  computed: {
+    // Change the heart icon depending on the isFaved value
+    favoriteIcon() {
+      return this.isFaved ? 'favorite' : 'favorite_border';
+    }
+  },
+  methods: {
+    onAddToFavorite() {
+      this.snackbarFavorite = true;
+    }
+  }
 };
 </script>
 
