@@ -4,7 +4,7 @@
     <GlobalStatistics />
 
     <!-- Featured Houses -->
-    <section class="featured-houses py-16">
+    <section class="featured-houses py-10">
       <v-container>
         <h4 class="text-h4 font-weight-bold mb-4">Featured Houses</h4>
       </v-container>

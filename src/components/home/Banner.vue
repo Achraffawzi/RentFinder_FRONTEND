@@ -4,9 +4,9 @@
 
     <!-- Intro text -->
     <v-container>
-      <h1 class="text-h1 font-weight-medium white--text mb-3">
+      <p class="text-h1 font-weight-medium white--text mb-3 banner__title">
         Find Your Best And Most Suitable House
-      </h1>
+      </p>
       <p class="white--text">
         Here you can find thousands of beautiful and modern houses waiting for
         you
@@ -20,7 +20,7 @@
         class="banner__image"
         alt="Beautiful home"
       />
-      <v-form class="white pa-4">
+      <!-- <v-form class="white pa-4 d-xs-none d-lg-block">
           <span class="subtitle-t d-block mb-5">Quick Search</span>
           <v-select
             :items="cities"
@@ -28,7 +28,7 @@
             outlined
         ></v-select>
         <v-btn class="primary white--text" text depressed>Search</v-btn>
-      </v-form>
+      </v-form> -->
     </div>
   </div>
 </template>
@@ -42,17 +42,17 @@ export default {
   },
   data() {
     return {
-      cities: [
-        "Tangier",
-        "Fez",
-        "Meknes",
-        "Agadir",
-        "Marrakech",
-        "Oujda",
-        "Asfi",
-        "Rabat",
-        "Casablanca",
-      ]
+      // cities: [
+      //   "Tangier",
+      //   "Fez",
+      //   "Meknes",
+      //   "Agadir",
+      //   "Marrakech",
+      //   "Oujda",
+      //   "Asfi",
+      //   "Rabat",
+      //   "Casablanca",
+      // ]
     }
   }
 };
@@ -67,11 +67,18 @@ export default {
     width: 400px;
   }
 
-  .v-form {
-      margin-left: 400px;
-      HEIGHT: AUTO;
-      width: 400px;
-      background: rgba(255, 255, 255, 0.5) !important;
+  // .v-form {
+  //     margin-left: 400px;
+  //     HEIGHT: AUTO;
+  //     width: 400px;
+  //     background: rgba(255, 255, 255, 0.5) !important;
+  // }
+}
+
+@media screen and (max-width: 600px) {
+  .banner__title {
+    font-size: 50px !important;
+    line-height: 1.3;
   }
 }
 </style>

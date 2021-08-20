@@ -2,8 +2,8 @@
     <div class="global-stats py-10 text-center">
         <v-container>
             <v-row>
-                <v-col cols="12" sm="4" v-for="stat in statistics" :key="stat.title">
-                    <h4 class="text-h4 font-weight-bold">{{ formatStats(stat.value) }}</h4>
+                <v-col cols="12" sm="4" v-for="stat in statistics" :key="stat.title" class="stat-col">
+                    <h4 class="text-h4 font-weight-black">{{ formatStats(stat.value) }}</h4>
                     <p class="third--text">{{ stat.title }}</p>
                 </v-col>
             </v-row>
@@ -31,3 +31,9 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+  @media screen and (max-width: 600px) {
+      .stat-col {margin-bottom: 30px;}
+  }
+</style>
