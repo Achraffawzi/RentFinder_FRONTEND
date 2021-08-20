@@ -6,9 +6,9 @@
     <!-- Featured Houses -->
     <section class="featured-houses py-10">
       <v-container>
-        <h4 class="text-h4 font-weight-bold mb-4">Featured Houses</h4>
+        <h4 class="text-h4 font-weight-bold mb-10">Featured Houses</h4>
+        <CardAnnouncement />
       </v-container>
-      <CardAnnouncement />
     </section>
 
     <!-- Testimonial -->
@@ -26,7 +26,7 @@
         </carousel>
       </v-container>
     </section>
-    
+
     <!-- Footer -->
     <Footer />
   </div>
@@ -47,7 +47,7 @@ export default {
     CardAnnouncement,
     carousel,
     Testimonial,
-    Footer
+    Footer,
   },
 };
 </script>
