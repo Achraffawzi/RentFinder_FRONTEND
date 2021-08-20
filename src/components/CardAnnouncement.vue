@@ -148,15 +148,3 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .grid-container {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-//   row-gap: 20px;
-// }
-
-// @media screen and (max-width: 600px) {
-//   .grid-container {
-//     grid-template-columns: 1fr;
-//   }
-// }
-</style>

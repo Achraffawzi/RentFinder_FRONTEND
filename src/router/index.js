@@ -14,6 +14,14 @@ const routes = [
       requiresAuth: false,
     },
   },
+  {
+    path: "/search",
+    name: "search",
+    component: () => import(/* webpackChunkName: "search" */ '@/views/Search.vue'),
+    meta: {
+      requiresAuth: false,
+    },
+  }
 ];
 
 const router = new VueRouter({
