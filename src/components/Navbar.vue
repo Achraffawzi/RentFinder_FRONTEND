@@ -39,7 +39,7 @@
               background:
                 link.title === 'Sign up' ? 'rgba(255, 255, 255, 0.3)' : '',
             }"
-            :to="{ name: '+link.routeName+' }"
+            :to="{ name: link.routeName }"
             >{{ link.title }}</router-link
           >
         </div>
@@ -66,7 +66,7 @@
             v-for="link in links"
             :key="link.title"
             link
-            :to="link.route"
+            :to="{ name: link.routeName }"
           >
             <v-list-item-content>
               <v-list-item-title>{{ link.title }}</v-list-item-title>
