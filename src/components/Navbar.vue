@@ -39,7 +39,7 @@
               background:
                 link.title === 'Sign up' ? 'rgba(255, 255, 255, 0.3)' : '',
             }"
-            :to="{ name: 'search' }"
+            :to="{ name: '+link.routeName+' }"
             >{{ link.title }}</router-link
           >
         </div>
@@ -86,10 +86,10 @@ export default {
       drawer: false,
       links: [
         { title: "Search for a house", routeName: "search" },
-        { title: "Log in", routeName: "" },
-        { title: "Sign up", routeName: "" },
-        { title: "Favorite", routeName: "" },
-        { title: "Log out", routeName: "" },
+        { title: "Log in", routeName: "login" },
+        { title: "Sign up", routeName: "signup" },
+        { title: "Favorite", routeName: "favorite" },
+        { title: "Log out", routeName: "logout" },
       ],
     };
   },
