@@ -4,7 +4,7 @@
     <v-container>
       <v-row>
         <!-- The column for the left showcase => announcement info -->
-        <v-col cols="12" md="7">
+        <v-col cols="12" md="8" order-md="first">
           <carousel
             :nav="false"
             :responsive="{
@@ -59,7 +59,60 @@
         </v-col>
 
         <!-- The column for the house owner info -->
-        <v-col cols="12" md="4">test</v-col>
+        <v-col cols="12" md="4" order-sm="first" order-md="last">
+          <v-card>
+            <v-card-title>
+              <v-row>
+                <v-col cols="12" sm="4">
+                  <v-img src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2FBeautiful-luxury-home-exterior-at-twilight%2F960x0.jpg%3Ffit%3Dscale"
+                  max-width="100"></v-img>
+                </v-col>
+                <v-col cols="12" sm="8">
+                  <h5 class="text-h5 font-weight-medium">House Owner Name</h5>
+                  <span class="font-weight-regular" style="font-size: 15px;">House Owner city</span>
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-card-actions>
+              <v-dialog
+      v-model="dialogPhoneNumber"
+      width="500"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn text depressed class="primary" v-bind="attrs" v-on="on">View Phone Number</v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title class="text-h5 error--text">
+          Be Careful
+        </v-card-title>
+
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+          <!-- Phone Number -->
+          <div class="text-center primary--text font-weight-bold mt-5" style="font-size: 20px;">
+            01111111111111
+          </div>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            text
+            @click="dialogPhoneNumber = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+            </v-card-actions>
+          </v-card>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -78,6 +131,7 @@ export default {
   data() {
     return {
       totalRooms: null,
+      dialogPhoneNumber: false,
     };
   },
   computed: {
