@@ -33,6 +33,7 @@
         <p class="third--text font-weight-medium mb-4">Number of result found : {{ result.length }}</p>
       <CardAnnouncement :result="result" />
       </div>
+      
     </v-container>
   </div>
 </template>

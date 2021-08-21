@@ -22,7 +22,7 @@
     <!-- The cards -->
     <v-row>
     <v-col cols="12" sm="6" md="4" v-for="item in result" :key="item.id">
-      <v-card class="mx-auto" outlined>
+      <v-card class="mx-auto" outlined :to="{ name: 'announcementdetails', params: { id: item.id }}">
         <v-img
           :src="item.photos"
           height="200"

@@ -5,14 +5,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    searchedAnnouncements: [
+    announcements: [
       {
         id: "1",
         city: "Agadir",
-        photos: "https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2FBeautiful-luxury-home-exterior-at-twilight%2F960x0.jpg%3Ffit%3Dscale",
+        photos: [
+          "https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2FBeautiful-luxury-home-exterior-at-twilight%2F960x0.jpg%3Ffit%3Dscale",
+        ],
         title: "title 1",
         price: 1,
-        description: "Desc 1",
+        description: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         totalfloors: 1,
         totalbathrooms:1 ,
         totallivingrooms: 1,
@@ -25,10 +27,12 @@ export default new Vuex.Store({
       {
         id: "2",
         city: "Tangier",
-        photos: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROk71ayhtqVt33k6lkag6slMUCM81bYEbkCfSZ5o9pOj68OydKtWc8q5CKjAuFCkZGrq4&usqp=CAU",
+        photos: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROk71ayhtqVt33k6lkag6slMUCM81bYEbkCfSZ5o9pOj68OydKtWc8q5CKjAuFCkZGrq4&usqp=CAU",
+        ],
         title: "title 2",
         price: 2,
-        description: "Desc 2",
+        description: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         totalfloors: 2,
         totalbathrooms:2 ,
         totallivingrooms: 2,
@@ -41,10 +45,12 @@ export default new Vuex.Store({
       {
         id: "3",
         city: "Tangier",
-        photos: "https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2FBeautiful-luxury-home-exterior-at-twilight%2F960x0.jpg%3Ffit%3Dscale",
-        title: "title 3",
+        photos: [
+          "https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2FBeautiful-luxury-home-exterior-at-twilight%2F960x0.jpg%3Ffit%3Dscale",
+        ],
+        title: "In publishing and graphic design, Lorem ipsum",
         price: 3,
-        description: "Desc 3",
+        description: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         totalfloors: 3,
         totalbathrooms:3 ,
         totallivingrooms: 3,
@@ -62,11 +68,17 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   getters: {
+    getAnnouncements: (state) => {
+      return state.announcements;
+    },
     searchedAnnouncements: (state) => (payload) => {
       console.log("payload: " + payload.city);
-      return state.searchedAnnouncements.filter(announcement => announcement.city.includes(payload.city)).sort((announcementA, announcementB) => {
+      return state.announcements.filter(announcement => announcement.city.includes(payload.city)).sort((announcementA, announcementB) => {
         return announcementA.publicationdate > announcementB.publicationdate;
       })
     },
+    getAnnouncement: (state) => (announcementID) => {
+      return state.announcements.find(ann => ann.id.toString() === announcementID.toString())
+    }
   },
 });
