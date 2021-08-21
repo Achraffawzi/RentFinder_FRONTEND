@@ -21,15 +21,15 @@
     </v-snackbar>
     <!-- The cards -->
     <v-row>
-    <v-col cols="12" sm="6" md="4">
+    <v-col cols="12" sm="6" md="4" v-for="item in result" :key="item.id">
       <v-card class="mx-auto" outlined>
         <v-img
-          src="https://source.unsplash.com/random"
+          :src="item.photos"
           height="200"
           class="align-end white--text"
         >
           <v-card-title class="justify-space-between">
-            <h5 class="text-h5 font-weight-bold">$55/night</h5>
+            <h5 class="text-h5 font-weight-bold">${{ item.price }}/night</h5>
             <v-icon class="white--text" style="cursor: pointer" @click="onAddToFavorite"
               >{{ favoriteIcon }}</v-icon
             >
@@ -37,85 +37,19 @@
         </v-img>
         <v-card-text>
           <!-- content -->
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+          <p>{{ item.title }}</p>
           <v-rating
             background-color="yellow lighten-3"
             length="5"
-            value="4"
+            :value="item.rating"
             size="20"
             readonly
             color="yellow"
           ></v-rating>
         </v-card-text>
         <v-card-actions>
-          <span class="font-weight-medium mr-4">Agadir</span>
-          <span class="font-weight-medium">23/05/2000</span>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-
-    <v-col cols="12" sm="6" md="4">
-      <v-card class="mx-auto" outlined>
-        <v-img
-          src="https://source.unsplash.com/random"
-          height="200"
-          class="align-end white--text"
-        >
-          <v-card-title class="justify-space-between">
-            <h5 class="text-h5 font-weight-bold">$55/night</h5>
-            <v-icon class="white--text" style="cursor: pointer" @click="onAddToFavorite"
-              >{{ favoriteIcon }}</v-icon
-            >
-          </v-card-title>
-        </v-img>
-        <v-card-text>
-          <!-- content -->
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-          <v-rating
-            background-color="yellow lighten-3"
-            length="5"
-            value="4"
-            size="20"
-            readonly
-            color="yellow"
-          ></v-rating>
-        </v-card-text>
-        <v-card-actions>
-          <span class="font-weight-medium mr-4">Agadir</span>
-          <span class="font-weight-medium">23/05/2000</span>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-
-    <v-col cols="12" sm="6" md="4">
-      <v-card class="mx-auto" outlined>
-        <v-img
-          src="https://source.unsplash.com/random"
-          height="200"
-          class="align-end white--text"
-        >
-          <v-card-title class="justify-space-between">
-            <h5 class="text-h5 font-weight-bold">$55/night</h5>
-            <v-icon class="white--text" style="cursor: pointer" @click="onAddToFavorite"
-              >{{ favoriteIcon }}</v-icon
-            >
-          </v-card-title>
-        </v-img>
-        <v-card-text>
-          <!-- content -->
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-          <v-rating
-            background-color="yellow lighten-3"
-            length="5"
-            value="4"
-            size="20"
-            readonly
-            color="yellow"
-          ></v-rating>
-        </v-card-text>
-        <v-card-actions>
-          <span class="font-weight-medium mr-4">Agadir</span>
-          <span class="font-weight-medium">23/05/2000</span>
+          <span class="font-weight-medium mr-4">{{ item.city }}</span>
+          <span class="font-weight-medium">{{ item.publicationDate }}</span>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -126,7 +60,7 @@
 <script>
 export default {
   name: "CardAnnouncement",
-  props: ["housesResult"],
+  props: ["result"],
   data() {
     return {
       snackbarFavorite: false,
