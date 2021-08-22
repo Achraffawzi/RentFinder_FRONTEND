@@ -34,6 +34,8 @@
       <CardAnnouncement :result="result" />
       </div>
       
+      <!-- Footer -->
+      <Footer />
     </v-container>
   </div>
 </template>
@@ -41,11 +43,13 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   name: "Search",
   components: {
     Navbar,
     CardAnnouncement,
+    Footer,
   },
   data() {
     return {

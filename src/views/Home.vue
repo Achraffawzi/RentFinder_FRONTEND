@@ -22,7 +22,8 @@
           }"
           :center="true"
         >
-          <Testimonial />
+         
+          <Testimonial v-for="item in getFeaturedReviews" :key="item.photo" :review="item"/>
         </carousel>
       </v-container>
     </section>
@@ -49,5 +50,10 @@ export default {
     Testimonial,
     Footer,
   },
+  computed: {
+    getFeaturedReviews () {
+      return this.$store.getters.getFeaturedReviews;
+    }
+  }
 };
 </script>

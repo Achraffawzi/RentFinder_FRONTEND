@@ -63,10 +63,19 @@ export default new Vuex.Store({
     ],
     user: {
 
+    },
+    featuredReviews: null,
+  },
+  mutations: {
+    setFeaturedReviews (state, payload) {
+      state.featuredReviews = [...payload];
+    },
+  },
+  actions: {
+    setFeaturedReviews (context, payload) {
+      context.commit('setFeaturedReviews', payload);
     }
   },
-  mutations: {},
-  actions: {},
   getters: {
     getAnnouncements: (state) => {
       return state.announcements;
@@ -79,6 +88,9 @@ export default new Vuex.Store({
     },
     getAnnouncement: (state) => (announcementID) => {
       return state.announcements.find(ann => ann.id.toString() === announcementID.toString())
+    },
+    getFeaturedReviews: (state) => {
+      return state.featuredReviews;
     }
   },
 });

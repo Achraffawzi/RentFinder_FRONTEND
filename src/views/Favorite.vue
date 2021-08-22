@@ -6,6 +6,8 @@
       <!-- favorite houses section  -->
       <h4 class="text-h4 font-weight-bold mb-10">Favorite Houses</h4>
       <CardAnnouncement :result="result" />
+
+      <Footer />
     </v-container>
   </div>
 </template>
@@ -13,11 +15,13 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   name: "Favorite",
   components: {
     CardAnnouncement,
     Navbar,
+    Footer,
   },
   data() {
     return {
