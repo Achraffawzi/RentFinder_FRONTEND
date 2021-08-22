@@ -47,10 +47,21 @@ const routes = [
       requiresAuth: false,
     },
   },
+  // House Owner routes
   {
-    path: "/houseownerdashboard/:id",
+    path: "/houseownerdashboard/",
     name: "houseownerdashboard",
     component: () => import(/* webpackChunkName: "houseownerdashboard" */ '@/views/houseOwner/HouseOwnerDashboard.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  // User routes
+  {
+    path: "/favorite",
+    name: "favorite",
+    component: () => import(/* webpackChunkName: "favorite" */ '@/views/Favorite.vue'),
     props: true,
     meta: {
       requiresAuth: true,
