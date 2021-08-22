@@ -46,6 +46,15 @@ const routes = [
     meta: {
       requiresAuth: false,
     },
+  },
+  {
+    path: "/houseownerdashboard/:id",
+    name: "houseownerdashboard",
+    component: () => import(/* webpackChunkName: "houseownerdashboard" */ '@/views/houseOwner/HouseOwnerDashboard.vue'),
+    props: true,
+    meta: {
+      requiresAuth: true,
+    },
   }
 ];
 
