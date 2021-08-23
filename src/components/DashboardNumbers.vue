@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-numbers">
-        <v-card class="elevation-7">
+        <v-card class="elevation-5">
             <v-card-title class="d-flex align-center justify-space-between">
                 <h4 class="text-h4 primary--text font-weight-black">{{ data.value }}</h4>
                 <v-icon class="primary--text" x-large>{{ data.icon }}</v-icon>

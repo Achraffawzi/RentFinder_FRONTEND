@@ -4,7 +4,7 @@
 
     <!-- Signup form -->
     <v-container>
-      <v-form class="d-block mx-auto" style="max-width: 400px" ref="formSignup">
+      <v-form @submit.prevent="onSignup" class="d-block mx-auto" style="max-width: 400px" ref="formSignup">
         <h2 class="primary--text text-center mb-4">Sign Up</h2>
 
         <v-row>
@@ -13,6 +13,7 @@
               label="Firstname"
               prepend-icon="badge"
               :rules="nameRule"
+              v-model="newUser.firstName"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -20,6 +21,7 @@
               label="Lastname"
               prepend-icon="badge"
               :rules="nameRule"
+              v-model="newUser.lastName"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -30,6 +32,7 @@
               label="Phone number"
               prepend-icon="phone"
               :rules="phoneNumberRule"
+              v-model="newUser.phoneNumber"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -37,20 +40,27 @@
               label="City"
               prepend-icon="location_on"
               :rules="nameRule"
+              v-model="newUser.city"
             ></v-text-field>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col cols="12" md="6">
-            <v-text-field label="Email" prepend-icon="email" :rules="emailRule"></v-text-field>
+            <v-text-field
+              label="Email"
+              prepend-icon="email"
+              :rules="emailRule"
+              v-model="newUser.email"
+            ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
             <v-select
               prepend-icon="work"
               label="Role"
-              :items="['User', 'House owner']"
+              :items="['User', 'HouseOwner']"
               :rules="roleRule"
+              v-model="newUser.role"
             ></v-select>
           </v-col>
         </v-row>
@@ -67,6 +77,7 @@
               counter
               @click:append="showPasswordModel = !showPasswordModel"
               :rules="passwordRule"
+              v-model="newUser.password"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -112,15 +123,17 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Footer from "@/components/Footer.vue";
+import { createApiEndPoints, END_POINTS } from "../../api.js";
 export default {
   name: "Signup",
+
   components: {
     Navbar,
     Footer,
   },
+
   data() {
     return {
-
       //#region Component Models
       showPasswordModel: false,
       showConfirmPasswordModel: false,
@@ -137,7 +150,10 @@ export default {
           /^[0-9]{8,}$/.test(value) || "Phone number must be numeric and valid",
       ],
       emailRule: [
-        (email) => /^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@(gmail|yahoo|hotmail).(com|fr|uk|net)$/.test(email) ||"please enter a valid email adresse"
+        (email) =>
+          /^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@(gmail|yahoo|hotmail).(com|fr|uk|net)$/.test(
+            email
+          ) || "please enter a valid email adresse",
       ],
       roleRule: [(value) => !!value || "Please select a role"],
       passwordRule: [
@@ -145,16 +161,49 @@ export default {
           password.length >= 8 || "Password must have at least 8 characters",
       ],
       confirmPasswordRule: [
-        (password) => password === this.newUser.Password || "Password not match",
+        (password) =>
+          password === this.newUser.Password || "Password not match",
       ],
       //#endregion
 
       //#region User Signup Data
-      newUser: null,
+      newUser: {
+        firstName: "",
+        lastName: "",
+        city: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
+        role: "",
+      },
       //#endregion
-    
-      
     };
   },
+
+  methods: {
+    onSignup () {
+      // Adding the userName
+      const user = {
+        firstName: this.newUser.firstName,
+        lastName: this.newUser.lastName,
+        city: this.newUser.city,
+        phoneNumber: this.newUser.phoneNumber,
+        email: this.newUser.email,
+        password: this.newUser.password,
+        role: this.newUser.role,
+        userName: this.newUser.firstName + " " + this.newUser.lastName
+      }
+      // const { firstName, lastName, phoneNumber, city, userName = `${firstName} ${lastName}`, email, password } = this.newUser;
+      // let user = {...this.newUser, userName = `${this.newUser.firstName} ${this.newUser.lastName}`}
+      createApiEndPoints(END_POINTS.AUTH_REGISTER)
+        .create(user)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+  }
 };
 </script>
