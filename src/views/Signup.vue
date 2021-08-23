@@ -120,10 +120,13 @@ export default {
   },
   data() {
     return {
+
+      //#region Component Models
       showPasswordModel: false,
       showConfirmPasswordModel: false,
+      //#endregion
 
-      // Input rules
+      //#region Input rules
       nameRule: [
         (value) =>
           /^[a-zA-Z]{2,}$/.test(value) ||
@@ -144,6 +147,13 @@ export default {
       confirmPasswordRule: [
         (password) => password === this.newUser.Password || "Password not match",
       ],
+      //#endregion
+
+      //#region User Signup Data
+      newUser: null,
+      //#endregion
+    
+      
     };
   },
 };

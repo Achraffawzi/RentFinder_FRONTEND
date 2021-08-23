@@ -83,7 +83,10 @@ export default {
   name: "Navbar",
   data() {
     return {
+      //#region Component Models
       drawer: false,
+      //#endregion
+      
       links: [
         { title: "Search for a house", routeName: "search" },
         { title: "Log in", routeName: "login" },

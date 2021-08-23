@@ -53,20 +53,25 @@ export default {
   },
   data() {
     return {
-      // Rules
+      //#region Input Rules
       cityRule: [
         (value) =>
           (/^[a-zA-Z]{2,}$/.test(value) && value.length > 0) ||
           "City must be an alphabetic value",
       ],
       priceRangeRule: [(value) => !!value || "Please select a range"],
-      // Inputs Data Binding
+      //#endregion
+
+      //#region Inputs Data Binding
       city: "",
       price: 1,
       searchedAnnouncementsObj: {
         city: this.city,
         price: this.price,
       },
+      //#endregion
+      
+      //#region Other Data
       result: [],
       pricesRange: [
         "$0 - $10/night",
@@ -75,6 +80,7 @@ export default {
         "$30 - $40/night",
         "$40+/night",
       ],
+      //#endregion
     };
   },
 
@@ -89,10 +95,6 @@ export default {
   methods: {
     onSearch() {
       if (this.$refs.formSearch.validate()) {
-        // let searchedAnnouncementsObj = {
-        //   city: this.city,
-        //   price: this.price,
-        // };
         this.result = this.searchedAnnouncements;
       }
     },

@@ -66,8 +66,13 @@ export default {
   props: ["result"],
   data() {
     return {
+      //#region Component Models
       snackbarFavorite: false,
+      //#endregion
+      
+      //#region General Data
       isFaved: false,
+      //#endregion
     }
   },
   computed: {

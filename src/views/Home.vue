@@ -35,7 +35,7 @@
 
 <script>
 import Banner from "@/components/home/Banner.vue";
-import GlobalStatistics from "@/components/GlobalStatistics.vue";
+import GlobalStatistics from "@/components/home/GlobalStatistics.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
 import carousel from "vue-owl-carousel";
 import Testimonial from "@/components/home/Testimonial.vue";

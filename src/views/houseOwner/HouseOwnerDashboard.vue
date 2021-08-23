@@ -140,7 +140,7 @@ export default {
   },
   data() {
     return {
-      // Statistics Numbers
+      //#region Statistics Numbers
       houseNumbers: [
         {
           title: "Available Houses",
@@ -158,10 +158,14 @@ export default {
           value: 16,
         },
       ],
+      //#endregion
+
+      //#region Component Dialogs
       dialog: false,
       dialogDelete: false,
+      //#endregion
 
-      // Data table properties
+      //#region Data table properties
       headers: [
         {
           text: "Title",
@@ -182,6 +186,9 @@ export default {
         { text: "Photos", value: "photos" },
         { text: "Actions", value: "actions", sortable: false },
       ],
+      //#endregion
+
+      //#region Main Data
       announcements: [],
       editedIndex: -1,
       editedItem: {
@@ -214,6 +221,7 @@ export default {
         surface: 0,
         isAvailable: true,
       },
+      //#endregion
     };
   },
 

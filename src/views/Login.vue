@@ -56,7 +56,9 @@ export default {
   },
   data() {
       return {
+        //#region Component Models
           showPasswordModel: false,
+        //#endregion
       }
   }
 };

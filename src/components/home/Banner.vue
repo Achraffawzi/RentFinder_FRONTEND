@@ -20,15 +20,6 @@
         class="banner__image"
         alt="Beautiful home"
       />
-      <!-- <v-form class="white pa-4 d-xs-none d-lg-block">
-          <span class="subtitle-t d-block mb-5">Quick Search</span>
-          <v-select
-            :items="cities"
-            label="City"
-            outlined
-        ></v-select>
-        <v-btn class="primary white--text" text depressed>Search</v-btn>
-      </v-form> -->
     </div>
   </div>
 </template>
@@ -40,21 +31,6 @@ export default {
   components: {
     Navbar,
   },
-  data() {
-    return {
-      // cities: [
-      //   "Tangier",
-      //   "Fez",
-      //   "Meknes",
-      //   "Agadir",
-      //   "Marrakech",
-      //   "Oujda",
-      //   "Asfi",
-      //   "Rabat",
-      //   "Casablanca",
-      // ]
-    }
-  }
 };
 </script>
 
@@ -66,13 +42,6 @@ export default {
   .banner__image {
     width: 400px;
   }
-
-  // .v-form {
-  //     margin-left: 400px;
-  //     HEIGHT: AUTO;
-  //     width: 400px;
-  //     background: rgba(255, 255, 255, 0.5) !important;
-  // }
 }
 
 @media screen and (max-width: 600px) {
