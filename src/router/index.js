@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "@/views/Home.vue"
+import Home from "@/views/Home.vue";
+import UserRoutes from "./userRoutes.js";
+import houseOwnerRoutes from "./houseOwnerRoutes.js";
 
 Vue.use(VueRouter);
 
 const routes = [
-  // Outter routes
   {
     path: "/",
     name: "home",
@@ -47,27 +48,14 @@ const routes = [
       requiresAuth: false,
     },
   },
-  // House Owner routes
-  {
-    path: "/houseownerdashboard/",
-    name: "houseownerdashboard",
-    component: () => import(/* webpackChunkName: "houseownerdashboard" */ '@/views/houseOwner/HouseOwnerDashboard.vue'),
-    props: true,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  // User routes
-  {
-    path: "/favorite",
-    name: "favorite",
-    component: () => import(/* webpackChunkName: "favorite" */ '@/views/Favorite.vue'),
-    props: true,
-    meta: {
-      requiresAuth: true,
-    },
-  }
+  ...houseOwnerRoutes,
+  ...UserRoutes,
 ];
+
+// If logged in and wants to go to signup or login (or favorite if he's house owner or admin)
+// if from.meta.requiresAuth == true (other thing is handled by the other func)
+// else next()
+// routes.push(UserRoutes);
 
 const router = new VueRouter({
   mode: "history",

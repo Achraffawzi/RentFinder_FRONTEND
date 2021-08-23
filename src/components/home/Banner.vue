@@ -16,7 +16,7 @@
     <!-- Bottom showcase -->
     <div class="d-flex">
       <img
-        :src="require('@/assets/banner-image.png')"
+        :src="require('@/assets/images/banner-image.png')"
         class="banner__image"
         alt="Beautiful home"
       />
