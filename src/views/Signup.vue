@@ -4,7 +4,15 @@
 
     <!-- Signup form -->
     <v-container>
-      <v-form @submit.prevent="onSignup" class="d-block mx-auto" style="max-width: 400px" ref="formSignup">
+      <v-form
+        @submit.prevent="onSignup"
+        class="d-block mx-auto"
+        style="max-width: 600px"
+        ref="formSignup"
+      >
+        <div v-if="alertData != null">
+          <BaseAlert :alertData="alertData" />
+        </div>
         <h2 class="primary--text text-center mb-4">Sign Up</h2>
 
         <v-row>
@@ -94,6 +102,7 @@
               @click:append="
                 showConfirmPasswordModel = !showConfirmPasswordModel
               "
+              :rules="confirmPasswordRule"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -103,6 +112,7 @@
           class="primary my-4 text-capitalize"
           block
           type="submit"
+          :loading="loadingSignup"
           >Sign up</v-btn
         >
         <p class="text-center">
@@ -122,6 +132,7 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import BaseAlert from "@/components/BaseAlert.vue";
 import Footer from "@/components/Footer.vue";
 import { createApiEndPoints, END_POINTS } from "../../api.js";
 export default {
@@ -130,6 +141,7 @@ export default {
   components: {
     Navbar,
     Footer,
+    BaseAlert,
   },
 
   data() {
@@ -137,6 +149,12 @@ export default {
       //#region Component Models
       showPasswordModel: false,
       showConfirmPasswordModel: false,
+      alertData: null,
+      //#endregion
+
+      //#region Component Bindings
+      loadingSignup: false,
+      loader: null,
       //#endregion
 
       //#region Input rules
@@ -162,7 +180,7 @@ export default {
       ],
       confirmPasswordRule: [
         (password) =>
-          password === this.newUser.Password || "Password not match",
+          password === this.newUser.password || "Password not match",
       ],
       //#endregion
 
@@ -180,30 +198,59 @@ export default {
     };
   },
 
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    },
+  },
+
   methods: {
-    onSignup () {
-      // Adding the userName
-      const user = {
-        firstName: this.newUser.firstName,
-        lastName: this.newUser.lastName,
-        city: this.newUser.city,
-        phoneNumber: this.newUser.phoneNumber,
-        email: this.newUser.email,
-        password: this.newUser.password,
-        role: this.newUser.role,
-        userName: this.newUser.firstName + " " + this.newUser.lastName
+    onSignup() {
+      this.loadingSignup = true;
+      setTimeout(() => {console.log(32);}, 3000);
+      if (this.$refs.formSignup.validate()) {
+        // Adding the userName
+        const user = {
+          firstName: this.newUser.firstName,
+          lastName: this.newUser.lastName,
+          city: this.newUser.city,
+          phoneNumber: this.newUser.phoneNumber,
+          email: this.newUser.email,
+          password: this.newUser.password,
+          role: this.newUser.role,
+          userName: this.newUser.firstName + " " + this.newUser.lastName,
+        };
+        createApiEndPoints(END_POINTS.AUTH_REGISTER)
+          .create(user)
+          .then((response) => {
+            this.alertData = {
+              alertMessage: response.data.message,
+              alertColor: "success",
+              alertIcon: "check",
+            };
+          })
+          .catch(() => {
+            this.alertData = {
+              alertMessage:
+                "Something went wrong, please verify our information",
+              alertColor: "error",
+              alertIcon: "error",
+            };
+          });
+      } else {
+        this.alertData = {
+          alertMessage: "Something went wrong, please verify our information",
+          alertColor: "error",
+          alertIcon: "error",
+        };
       }
-      // const { firstName, lastName, phoneNumber, city, userName = `${firstName} ${lastName}`, email, password } = this.newUser;
-      // let user = {...this.newUser, userName = `${this.newUser.firstName} ${this.newUser.lastName}`}
-      createApiEndPoints(END_POINTS.AUTH_REGISTER)
-        .create(user)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        })
-    }
-  }
+      this.loadingSignup = false;
+    },
+  },
 };
 </script>
