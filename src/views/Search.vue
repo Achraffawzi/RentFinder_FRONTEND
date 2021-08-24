@@ -30,12 +30,11 @@
 
       <!-- Result section -->
       <div v-if="result.length > 0">
-        <p class="third--text font-weight-medium mb-4">Number of result found : {{ result.length }}</p>
-      <CardAnnouncement :result="result" />
+        <p class="third--text font-weight-medium mb-4">
+          Number of result found : {{ result.length }}
+        </p>
+        <CardAnnouncement :result="result" />
       </div>
-      
-      <!-- Footer -->
-      <Footer />
     </v-container>
   </div>
 </template>
@@ -43,13 +42,11 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
-import Footer from "@/components/Footer.vue";
 export default {
   name: "Search",
   components: {
     Navbar,
     CardAnnouncement,
-    Footer,
   },
   data() {
     return {
@@ -70,7 +67,7 @@ export default {
         price: this.price,
       },
       //#endregion
-      
+
       //#region Other Data
       result: [],
       pricesRange: [

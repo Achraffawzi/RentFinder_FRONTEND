@@ -22,14 +22,14 @@
           }"
           :center="true"
         >
-         
-          <Testimonial v-for="item in getFeaturedReviews" :key="item.photo" :review="item"/>
+          <Testimonial
+            v-for="item in getFeaturedReviews"
+            :key="item.photo"
+            :review="item"
+          />
         </carousel>
       </v-container>
     </section>
-
-    <!-- Footer -->
-    <Footer />
   </div>
 </template>
 
@@ -39,7 +39,6 @@ import GlobalStatistics from "@/components/home/GlobalStatistics.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
 import carousel from "vue-owl-carousel";
 import Testimonial from "@/components/home/Testimonial.vue";
-import Footer from "@/components/Footer.vue";
 export default {
   name: "Home",
   components: {
@@ -48,12 +47,11 @@ export default {
     CardAnnouncement,
     carousel,
     Testimonial,
-    Footer,
   },
   computed: {
-    getFeaturedReviews () {
+    getFeaturedReviews() {
       return this.$store.getters.getFeaturedReviews;
-    }
-  }
+    },
+  },
 };
 </script>

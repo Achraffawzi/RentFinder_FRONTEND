@@ -124,8 +124,6 @@
           >
         </p>
       </v-form>
-
-      <Footer />
     </v-container>
   </div>
 </template>
@@ -133,14 +131,12 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import BaseAlert from "@/components/BaseAlert.vue";
-import Footer from "@/components/Footer.vue";
 import { createApiEndPoints, END_POINTS } from "../../api.js";
 export default {
   name: "Signup",
 
   components: {
     Navbar,
-    Footer,
     BaseAlert,
   },
 
@@ -212,7 +208,9 @@ export default {
   methods: {
     onSignup() {
       this.loadingSignup = true;
-      setTimeout(() => {console.log(32);}, 3000);
+      setTimeout(() => {
+        console.log(32);
+      }, 3000);
       if (this.$refs.formSignup.validate()) {
         // Adding the userName
         const user = {

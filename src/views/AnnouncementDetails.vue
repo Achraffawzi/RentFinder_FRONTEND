@@ -126,7 +126,6 @@
           </v-card>
         </v-col>
       </v-row>
-      <Footer />
     </v-container>
   </div>
 </template>
@@ -134,13 +133,11 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import carousel from "vue-owl-carousel";
-import Footer from "@/components/Footer.vue";
 export default {
   name: "AnnouncementDetails",
   components: {
     Navbar,
     carousel,
-    Footer,
   },
   props: ["id"],
   data() {

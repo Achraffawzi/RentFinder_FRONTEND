@@ -18,7 +18,8 @@ const routes = [
   {
     path: "/search",
     name: "search",
-    component: () => import(/* webpackChunkName: "search" */ '@/views/Search.vue'),
+    component: () =>
+      import(/* webpackChunkName: "search" */ "@/views/Search.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -26,7 +27,8 @@ const routes = [
   {
     path: "/signup",
     name: "signup",
-    component: () => import(/* webpackChunkName: "signup" */ '@/views/Signup.vue'),
+    component: () =>
+      import(/* webpackChunkName: "signup" */ "@/views/Signup.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -34,7 +36,8 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+    component: () =>
+      import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
     meta: {
       requiresAuth: false,
     },
@@ -42,7 +45,10 @@ const routes = [
   {
     path: "/announcementdetails/:id",
     name: "announcementdetails",
-    component: () => import(/* webpackChunkName: "announcementdetails" */ '@/views/AnnouncementDetails.vue'),
+    component: () =>
+      import(
+        /* webpackChunkName: "announcementdetails" */ "@/views/AnnouncementDetails.vue"
+      ),
     props: true,
     meta: {
       requiresAuth: false,
@@ -66,6 +72,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   document.title = `${process.env.VUE_APP_TITLE} - ${to.name}`;
   next();
-}); 
+});
 
 export default router;

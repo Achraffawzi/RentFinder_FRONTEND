@@ -1,7 +1,6 @@
 <template>
   <div class="alert">
     <v-alert
-      
       v-model="alert"
       dismissible
       :color="alertData.alertColor"

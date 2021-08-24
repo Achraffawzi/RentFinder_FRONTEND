@@ -2,8 +2,6 @@
   <nav class="mb-5 navbar">
     <v-app-bar style="background-color: transparent" elevate-on-scroll>
       <v-container class="d-flex align-center justify-space-between">
-        
-
         <!-- Logo link -->
         <router-link :to="{ name: 'home' }" class="navbar__logo mr-3">
           <span
@@ -86,7 +84,7 @@ export default {
       //#region Component Models
       drawer: false,
       //#endregion
-      
+
       links: [
         { title: "Search for a house", routeName: "search" },
         { title: "Log in", routeName: "login" },

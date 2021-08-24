@@ -124,19 +124,16 @@
           <v-btn color="primary" @click="initialize"> Reset </v-btn>
         </template>
       </v-data-table>
-      <Footer />
     </v-container>
   </div>
 </template>
 
 <script>
 import DashboardNumbers from "@/components/DashboardNumbers.vue";
-import Footer from "@/components/Footer.vue";
 export default {
   name: "HouseOwnerDashboard",
   components: {
     DashboardNumbers,
-    Footer,
   },
   data() {
     return {

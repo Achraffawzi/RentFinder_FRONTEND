@@ -4,7 +4,9 @@
       <v-avatar size="100">
         <img :src="review.photo" alt="" />
       </v-avatar>
-      <h4 class="text-h4 font-weight-medium my-3">{{ review.firstname }} {{ review.lastname }}</h4>
+      <h4 class="text-h4 font-weight-medium my-3">
+        {{ review.firstname }} {{ review.lastname }}
+      </h4>
       <v-rating
         size="20"
         background-color="yellow lighten-3"
@@ -15,7 +17,7 @@
       ></v-rating>
       <v-card-text>
         <p>
-          {{review.text}}
+          {{ review.text }}
         </p>
       </v-card-text>
     </v-card>

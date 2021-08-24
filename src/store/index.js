@@ -14,9 +14,10 @@ export default new Vuex.Store({
         ],
         title: "title 1",
         price: 1,
-        description: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+        description:
+          "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         totalfloors: 1,
-        totalbathrooms:1 ,
+        totalbathrooms: 1,
         totallivingrooms: 1,
         totalkitchens: 1,
         totalbedrooms: 1,
@@ -32,9 +33,10 @@ export default new Vuex.Store({
         ],
         title: "title 2",
         price: 2,
-        description: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+        description:
+          "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         totalfloors: 2,
-        totalbathrooms:2 ,
+        totalbathrooms: 2,
         totallivingrooms: 2,
         totalkitchens: 2,
         totalbedrooms: 2,
@@ -50,9 +52,10 @@ export default new Vuex.Store({
         ],
         title: "In publishing and graphic design, Lorem ipsum",
         price: 3,
-        description: "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+        description:
+          "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available. In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
         totalfloors: 3,
-        totalbathrooms:3 ,
+        totalbathrooms: 3,
         totallivingrooms: 3,
         totalkitchens: 3,
         totalbedrooms: 3,
@@ -61,20 +64,18 @@ export default new Vuex.Store({
         rating: 3,
       },
     ],
-    user: {
-
-    },
+    user: {},
     featuredReviews: null,
   },
   mutations: {
-    setFeaturedReviews (state, payload) {
+    setFeaturedReviews(state, payload) {
       state.featuredReviews = [...payload];
     },
   },
   actions: {
-    setFeaturedReviews (context, payload) {
-      context.commit('setFeaturedReviews', payload);
-    }
+    setFeaturedReviews(context, payload) {
+      context.commit("setFeaturedReviews", payload);
+    },
   },
   getters: {
     getAnnouncements: (state) => {
@@ -82,15 +83,19 @@ export default new Vuex.Store({
     },
     searchedAnnouncements: (state) => (payload) => {
       console.log("payload: " + payload.city);
-      return state.announcements.filter(announcement => announcement.city.includes(payload.city)).sort((announcementA, announcementB) => {
-        return announcementA.publicationdate > announcementB.publicationdate;
-      })
+      return state.announcements
+        .filter((announcement) => announcement.city.includes(payload.city))
+        .sort((announcementA, announcementB) => {
+          return announcementA.publicationdate > announcementB.publicationdate;
+        });
     },
     getAnnouncement: (state) => (announcementID) => {
-      return state.announcements.find(ann => ann.id.toString() === announcementID.toString())
+      return state.announcements.find(
+        (ann) => ann.id.toString() === announcementID.toString()
+      );
     },
     getFeaturedReviews: (state) => {
       return state.featuredReviews;
-    }
+    },
   },
 });
