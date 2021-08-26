@@ -9,6 +9,8 @@ export const END_POINTS = {
   AUTH_CONFIRM_EMAIL: "auth/confirm",
   AUTH_FORGET_PASSWORD: "auth/forgetpassword",
   AUTH_RESET_PASSWORD: "auth/resetpassword",
+
+  GET_ANNOUNCEMENTS: "announcements/",
 };
 
 export const authAxois = axios.create({

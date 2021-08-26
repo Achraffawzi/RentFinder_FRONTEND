@@ -123,7 +123,6 @@ export default {
           let pathName = getUserPathName(response.data.token);
           this.$router.push({ name: pathName });
         } catch (e) {
-          console.log("catch block");
           this.alertData = {
             alertMessage: "Please confirm your email to login",
             alertColor: "error",
