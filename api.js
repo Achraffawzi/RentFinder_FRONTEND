@@ -11,6 +11,8 @@ export const END_POINTS = {
   AUTH_RESET_PASSWORD: "auth/resetpassword",
 
   GET_ANNOUNCEMENTS: "announcements/",
+
+  GET_FEEDBACKS: "feedback/"
 };
 
 export const authAxois = axios.create({

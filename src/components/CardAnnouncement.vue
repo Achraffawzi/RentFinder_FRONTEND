@@ -21,15 +21,15 @@
     </v-snackbar>
     <!-- The cards -->
     <v-row>
-    <v-col cols="12" sm="6" md="4" v-for="item in result" :key="item.id">
-      <v-card class="mx-auto" outlined :to="{ name: 'announcementdetails', params: { id: item.id }}">
+    <v-col cols="12" sm="6" md="4" v-for="item in result" :key="item.Id">
+      <v-card class="mx-auto" outlined :to="{ name: 'announcementdetails', params: { id: item.Id }}">
         <v-img
-          :src="item.photos[0]"
+          :src="item.Photos.split(' ')[0]"
           height="200"
           class="align-end white--text"
         >
           <v-card-title class="justify-space-between">
-            <h5 class="text-h5 font-weight-bold">${{ item.price }}/night</h5>
+            <h5 class="text-h5 font-weight-bold">${{ item.Price }}/night</h5>
             <v-icon v-if="$route.name !== 'favorite'" class="white--text" style="cursor: pointer" @click="onAddToFavorite"
               >{{ favoriteIcon }}</v-icon
             >
@@ -37,11 +37,11 @@
         </v-img>
         <v-card-text>
           <!-- content -->
-          <p>{{ item.title }}</p>
+          <p>{{ item.Title }}</p>
           <v-rating
             background-color="yellow lighten-3"
             length="5"
-            :value="item.rating"
+            :value="4"
             size="20"
             readonly
             color="yellow"
@@ -49,8 +49,8 @@
         </v-card-text>
         <v-card-actions class="align-center justify-space-between">
           <div>
-            <span class="font-weight-medium mr-4">{{ item.city }}</span>
-            <span class="font-weight-medium">{{ item.publicationDate }}</span>
+            <span class="font-weight-medium mr-4">{{ item.Location }}</span>
+            <!-- <span class="font-weight-medium">{{ item.publicationDate }}</span> -->
           </div>
           <v-btn v-if="$route.name === 'favorite'" class="error dark">Delete</v-btn>
         </v-card-actions>
