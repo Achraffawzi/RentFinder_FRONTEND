@@ -59,8 +59,8 @@
             <v-btn v-if="$route.name === 'favorite'" class="error dark"
               >Delete</v-btn
             >
-            <v-btn v-if="$route.name !== 'favorite'" class="primary dark"
-              >View Details</v-btn
+            <router-link :to="{ path: 'announcementdetails/' + item.Id }" v-if="$route.name !== 'favorite'" class="primary dark"
+              >View Details</router-link
             >
           </v-card-actions>
         </v-card>
