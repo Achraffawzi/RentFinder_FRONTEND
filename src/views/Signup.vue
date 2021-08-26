@@ -208,9 +208,6 @@ export default {
   methods: {
     onSignup() {
       this.loadingSignup = true;
-      setTimeout(() => {
-        console.log(32);
-      }, 3000);
       if (this.$refs.formSignup.validate()) {
         // Adding the userName
         const user = {
@@ -225,10 +222,10 @@ export default {
         };
         createApiEndPoints(END_POINTS.AUTH_REGISTER)
           .create(user)
-          .then((response) => {
+          .then( () => {
             this.alertData = {
-              alertMessage: response.data.message,
-              alertColor: "success",
+              alertMessage: "Please check out your email to verify your account",
+              alertColor: "cyan",
               alertIcon: "check",
             };
           })

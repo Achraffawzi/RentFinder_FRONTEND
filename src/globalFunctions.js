@@ -1,4 +1,4 @@
-export function getUserPath(token) {
+export function getUserPathName(token) {
   // Convert the JWT To Object
   var base64Url = token.split(".")[1];
   var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -11,19 +11,20 @@ export function getUserPath(token) {
       .join("")
   );
   let tokenObj = JSON.parse(jsonPayload);
-  // Get the role
-  switch (tokenObj.role) {
-    case "User":
-      return "/UserDashboard/Meals";
 
-    case "Manager":
-      return "/managerDashboard";
+  // Get the role
+  switch (tokenObj.user.role) {
+    case "User":
+      return "home";
+
+    case "HouseOwner":
+      return  "houseownerdashboard";
 
     case "Admin":
-      return "/AdminDashboard/Users";
+      return  "/";
 
     default:
-      return "/";
+      return  "/";
   }
 }
 

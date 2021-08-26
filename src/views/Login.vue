@@ -59,7 +59,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import BaseAlert from "@/components/BaseAlert.vue";
-import { getRoleFromToken } from "@/globalFunctions.js";
+import { getUserPathName } from "@/globalFunctions.js";
 import { createApiEndPoints, END_POINTS } from "../../api.js";
 export default {
   name: "Login",
@@ -112,39 +112,24 @@ export default {
   },
 
   methods: {
-    onLogin() {
+    async onLogin() {
       this.loadingLoginButton = true;
       if (this.$refs.formLogin.validate()) {
-        createApiEndPoints(END_POINTS.AUTH_LOGIN)
-          .create(this.user)
-          .then((response) => {
-            console.log(" response.token : " + response.token);
-            // Redirect the user to the correspendant view
-            let role = getRoleFromToken(response.token);
-            console.log("role : " + role);
-            switch (role) {
-              case "User":
-                this.$router.push({ name: "home" });
-                break;
-              case "HouseOwner":
-                this.$router.push({ name: "houseownerdashboard" });
-                break;
-              case "Admin":
-                this.$router.push({ name: "admindashboard" });
-                break;
-              default:
-                this.$router.push({ name: "home" });
-                break;
-            }
-          })
-          .catch(() => {
-            console.log("catch block");
-            this.alertData = {
-              alertMessage: "Please confirm your email to login",
-              alertColor: "error",
-              alertIcon: "error",
-            };
-          });
+        try {
+          const response = await createApiEndPoints(
+            END_POINTS.AUTH_LOGIN
+          ).create(this.user);
+          localStorage.setItem("L_T", response.data.token);
+          let pathName = getUserPathName(response.data.token);
+          this.$router.push({ name: pathName });
+        } catch (e) {
+          console.log("catch block");
+          this.alertData = {
+            alertMessage: "Please confirm your email to login",
+            alertColor: "error",
+            alertIcon: "error",
+          };
+        }
       } else {
         this.alertData = {
           alertMessage: "Please verify your information",
