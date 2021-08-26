@@ -43,3 +43,20 @@ export function getRoleFromToken(token) {
   let tokenObj = JSON.parse(jsonPayload);
   return tokenObj.role;
 }
+
+export function getUserObjFromToken(token) {
+  // Convert the JWT To Object
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  let tokenObj = JSON.parse(jsonPayload);
+
+  return tokenObj.user;
+}

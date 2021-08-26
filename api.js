@@ -11,8 +11,12 @@ export const END_POINTS = {
   AUTH_RESET_PASSWORD: "auth/resetpassword",
 
   GET_ANNOUNCEMENTS: "announcements/",
+  GET_ANNOUNCEMENTS_OF_USER: "announcements/mine",
 
-  GET_FEEDBACKS: "feedback/"
+  GET_FEEDBACKS: "feedback/",
+
+  CREATE_FAVORITE: "favorite/add",
+  DELETE_FAVORITE: "favorite/delete",
 };
 
 export const authAxois = axios.create({
@@ -30,7 +34,7 @@ export const createApiEndPoints = (endPoint) => {
   return {
     fetch: () => authAxois.get(url),
     create: (newRecord) => authAxois.post(url, newRecord),
-    delete: () => authAxois.delete(url),
+    delete: (deletedRecord) => authAxois.delete(url, deletedRecord),
     update: (editedRecord) => authAxois.put(url, editedRecord),
   };
 };

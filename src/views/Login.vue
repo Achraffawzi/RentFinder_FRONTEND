@@ -59,7 +59,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import BaseAlert from "@/components/BaseAlert.vue";
-import { getUserPathName } from "@/globalFunctions.js";
+import { getUserPathName, getUserObjFromToken } from "@/globalFunctions.js";
 import { createApiEndPoints, END_POINTS } from "../../api.js";
 export default {
   name: "Login",
@@ -76,7 +76,7 @@ export default {
       //#region Input Rules
       emailRule: [
         (email) =>
-          /^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@(gmail|yahoo|hotmail).(com|fr|uk|net)$/.test(
+          /^[a-zA-Z0-9]+(((.|_|-)[a-zA-Z0-9]+)?)+@(gmail|yahoo|hotmail).(com|fr|uk|net)$/.test(
             email
           ) || "please enter a valid email adresse",
       ],
@@ -120,6 +120,7 @@ export default {
             END_POINTS.AUTH_LOGIN
           ).create(this.user);
           localStorage.setItem("L_T", response.data.token);
+          this.$store.dispatch('setUser', getUserObjFromToken(response.data.token));
           let pathName = getUserPathName(response.data.token);
           this.$router.push({ name: pathName });
         } catch (e) {

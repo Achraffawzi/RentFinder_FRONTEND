@@ -165,7 +165,7 @@ export default {
       ],
       emailRule: [
         (email) =>
-          /^[a-zA-Z0-9]+((.|_|-)[a-zA-Z0-9]+)?@(gmail|yahoo|hotmail).(com|fr|uk|net)$/.test(
+          /^[a-zA-Z0-9]+(((.|_|-)[a-zA-Z0-9]+)?)+@(gmail|yahoo|hotmail).(com|fr|uk|net)$/.test(
             email
           ) || "please enter a valid email adresse",
       ],
