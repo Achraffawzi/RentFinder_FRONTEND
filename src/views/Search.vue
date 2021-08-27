@@ -1,5 +1,7 @@
 <template>
   <div class="search">
+    <!-- Snackbar for fields error -->
+    <BaseSnackbar v-if="show" :show="show" :message="snackbarMsg" :color="snackbarColor" v-on:closeSnackbar="show = false" />
     <Navbar />
 
     <v-container>
@@ -20,7 +22,7 @@
               prepend-icon="attach_money"
               label="price range"
               :rules="priceRangeRule"
-              v-model="price"
+              v-model="priceRange"
             ></v-select>
           </v-col>
           <v-col cols="12" sm="2" lg="4">
@@ -30,7 +32,7 @@
       </v-form>
 
       <!-- Result section -->
-      <div v-if="result.length > 0">
+      <div v-if="result">
         <p class="third--text font-weight-medium mb-4">
           Number of result found : {{ result.length }}
         </p>
@@ -48,11 +50,13 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../api.js";
+import BaseSnackbar from "@/components/BaseSnackbar.vue";
 import Navbar from "@/components/Navbar.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
 export default {
   name: "Search",
   components: {
+    BaseSnackbar,
     Navbar,
     CardAnnouncement,
   },
@@ -69,16 +73,20 @@ export default {
 
       //#region Inputs Data Binding
       city: "",
-      price: 1,
+      priceRange: "",
       searchedAnnouncementsObj: {
         city: this.city,
         price: this.price,
       },
+      snackbarMsg: "",
+      snackbarColor: "",
+      show: false,
       //#endregion
 
       //#region Other Data
+      announcements: [],
       featuredAnnouncements: [],
-      result: [],
+      result: null,
       pricesRange: [
         "$0 - $10/night",
         "$10 - $20/night",
@@ -90,32 +98,51 @@ export default {
     };
   },
 
-  computed: {
-    searchedAnnouncements() {
-      return this.$store.getters.searchedAnnouncements({
-        ...this.searchedAnnouncementsObj,
-      });
-    },
-  },
-
   mounted() {
-    this.getFeaturedAnnouncements();
+    this.getAnnouncements();
   },
 
   methods: {
-    async getFeaturedAnnouncements() {
+    async getAnnouncements() {
       try {
         const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS);
         const response = await req.fetch();
+        this.announcements = response.data;
         this.featuredAnnouncements = response.data.slice(0, 4);
       } catch (e) {
-        console.log(e);
+        this.snackbarMsg = "Something went wrong!";
+        this.snackbarColor = "error";
+      }
+    },
+
+    getPriceFromRange(range) {
+      // check wheather the range had two values or just one ($40+/night)
+      if(range.includes('+')) {
+        let price = range.split('/')[0].split('$')[1].split('+')[0];
+
+        return price;
+      }
+      else {
+        let priceInf = range.split('/')[0].split(' - ')[0].split('$')[1];
+        let priceSup = range.split('/')[0].split(' - ')[1].split('$')[1];
+
+        return [priceInf, priceSup];
       }
     },
 
     onSearch() {
       if (this.$refs.formSearch.validate()) {
-        this.result = this.searchedAnnouncements;
+        // Get the price interval
+        let priceRange = this.getPriceFromRange(this.priceRange);
+        if(Array.isArray(priceRange)) {
+          this.result = this.announcements.filter(ann => ann.Location.toLowerCase().includes(this.city.toLowerCase()) && (ann.Price >= parseInt(priceRange[0]) && ann.Price <= parseInt(priceRange[1])))
+        } else {
+          this.result = this.announcements.filter(ann => ann.Location.toLowerCase().includes(this.city.toLowerCase()) && ann.Price >= parseInt(priceRange))
+        }
+      } else {
+        this.show = true;
+        this.snackbarMsg = "Double check your fields' values";
+        this.snackbarColor = "error";
       }
     },
   },

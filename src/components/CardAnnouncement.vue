@@ -1,20 +1,13 @@
 <template>
   <div class="announcement-cards">
     <!-- Snackbar for added to favorite -->
-    <v-snackbar v-model="snackbarFavorite" top color="primary">
-      {{ snackbarFavoriteMsg }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="white"
-          text
-          v-bind="attrs"
-          @click="snackbarFavorite = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <BaseSnackbar
+      v-if="show"
+      :show="show"
+      :message="snackbarMsg"
+      :color="snackbarColor"
+      v-on:closeSnackbar="show = false"
+    />
     <!-- The cards -->
     <v-row>
       <v-col cols="12" sm="6" md="4" v-for="item in result" :key="item.Id">
@@ -76,13 +69,21 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../api.js";
+import BaseSnackbar from "@/components/BaseSnackbar.vue";
 export default {
   name: "CardAnnouncement",
+  components: { BaseSnackbar },
   props: ["result"],
   data() {
     return {
       //#region Component Models
       snackbarFavorite: false,
+      //#endregion
+
+      //#region Component Bindings
+      show: false,
+      snackbarMsg: "",
+      snackbarColor: "",
       //#endregion
 
       //#region General Data
@@ -100,24 +101,38 @@ export default {
   methods: {
     async onAddToOrRemoveFromFavorite(announcementID) {
       this.isFaved = !this.isFaved;
-      // Impl add to fav and remove from fav api
+      // Impl add to fav api
       if (this.isFaved) {
         try {
           const req = createApiEndPoints(END_POINTS.CREATE_FAVORITE);
           const response = await req.create({ announcementId: announcementID });
 
           this.snackbarFavoriteMsg = response.data.message;
+          this.show = true;
+          this.snackbarMsg = response.data.message;
+          this.snackbarColor = "success";
         } catch (e) {
-          console.log(e);
+          this.isFaved = !this.isFaved;
+          this.show = true;
+          this.snackbarMsg = "something went wrong!";
+          this.snackbarColor = "error";
         }
-      } else {
+      }
+      // remove from fav api
+      else {
         try {
           const req = createApiEndPoints(END_POINTS.DELETE_FAVORITE);
           const response = await req.delete({ announcementId: announcementID });
 
           this.snackbarFavoriteMsg = response.data.message;
+          this.show = true;
+          this.snackbarMsg = response.data.message;
+          this.snackbarColor = "success";
         } catch (e) {
-          console.log(e);
+          this.isFaved = !this.isFaved;
+          this.show = true;
+          this.snackbarMsg = "something went wrong!";
+          this.snackbarColor = "error";
         }
       }
 
