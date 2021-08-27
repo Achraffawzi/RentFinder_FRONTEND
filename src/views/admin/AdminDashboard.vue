@@ -1,7 +1,7 @@
 <template>
   <div class="admin-dashboard">
     <!-- Navbar Header -->
-    <v-app-bar app>
+    <v-app-bar app flat>
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
         class="grey--text"
@@ -20,7 +20,12 @@
         RentFinder
       </div>
       <v-list-item class="custom-list-item">
-        <v-list-item-avatar max-width="100" height="100" width="100" class="mx-auto">
+        <v-list-item-avatar
+          max-width="100"
+          height="100"
+          width="100"
+          class="mx-auto"
+        >
           <v-img
             src="https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg"
           ></v-img>
@@ -42,7 +47,7 @@
             v-for="item in items"
             :key="item.title"
             link
-            :to="item.route"
+            :to="{ name: item.routeName }"
           >
             <v-list-item-icon>
               <v-icon small class="white--text">{{ item.icon }}</v-icon>
@@ -57,7 +62,9 @@
       </v-list>
     </v-navigation-drawer>
     <!-- Main Content ( dashoard, users, houseowners, settings ) -->
-    <p>main content</p>
+    <v-container>
+      <router-view></router-view>
+    </v-container>
   </div>
 </template>
 
@@ -69,12 +76,29 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Statistics", icon: "equalizer", route: "" },
-        { title: "House Owners", icon: "record_voice_over", route: "" },
-        { title: "Users", icon: "groups", route: "" },
-        { title: "Announcements", icon: "description", route: "" },
-        { title: "Settings", icon: "settings", route: "" },
-        { title: "Logout", icon: "logout", route: "" },
+        { title: "Statistics", icon: "equalizer", routeName: "statistics" },
+        { title: "House Owners", icon: "record_voice_over", routeName: "houseowners" },
+        { title: "Users", icon: "groups", routeName: "users" },
+        { title: "Announcements", icon: "description", routeName: "announcements" },
+        { title: "Settings", icon: "settings", routeName: "settings" },
+        { title: "Logout", icon: "logout", routeName: "" },
+      ],
+      houseNumbers: [
+        {
+          title: "Available Houses",
+          icon: "event_available",
+          value: 10,
+        },
+        {
+          title: "Rented Houses",
+          icon: "event_busy",
+          value: 3,
+        },
+        {
+          title: "Total Houses",
+          icon: "functions",
+          value: 13,
+        },
       ],
     };
   },
