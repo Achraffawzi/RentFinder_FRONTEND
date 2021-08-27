@@ -97,7 +97,7 @@ export default {
 
 .v-item--active,
 .v-list-item--active {
-  background-color: $primary-color;
+  background-color: #2b00ff2b;
   color: #fff;
 }
 
