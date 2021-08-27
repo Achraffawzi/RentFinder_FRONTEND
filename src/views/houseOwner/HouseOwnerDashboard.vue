@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard">
-    <v-container>
+    <v-container v-if="announcements.length > 0">
+
+      length: {{ announcements.length }}
       <!-- Logout btn -->
       <v-row>
         <v-col cols="12" sm="2" offset-sm="10">
@@ -120,15 +122,16 @@
           </v-icon>
           <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
         </template>
-        <template v-slot:no-data>
+        <!-- <template v-slot:no-data>
           <v-btn color="primary" @click="initialize"> Reset </v-btn>
-        </template>
+        </template> -->
       </v-data-table>
     </v-container>
   </div>
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api.js";
 import DashboardNumbers from "@/components/DashboardNumbers.vue";
 export default {
   name: "HouseOwnerDashboard",
@@ -142,17 +145,17 @@ export default {
         {
           title: "Available Houses",
           icon: "event_available",
-          value: 2,
+          value: this.getHouseAnalytic("Available Houses"),
         },
         {
           title: "Rented Houses",
           icon: "event_busy",
-          value: 14,
+          value: this.getHouseAnalytic("Rented Houses"),
         },
         {
           title: "Total Houses",
           icon: "functions",
-          value: 16,
+          value: this.announcements.length,
         },
       ],
       //#endregion
@@ -167,20 +170,20 @@ export default {
         {
           text: "Title",
           align: "start",
-          value: "title",
+          value: "Title",
         },
 
-        { text: "Description", value: "description" },
-        { text: "Price", value: "price" },
-        { text: "City", value: "city" },
-        { text: "Total Floors", value: "totalfloors" },
-        { text: "Total Bathrooms", value: "totalbathrooms" },
-        { text: "Total Livingrooms", value: "totallivingrooms" },
-        { text: "Total Kitchens", value: "totalkitchens" },
-        { text: "Total Bedrooms", value: "totalbedrooms" },
-        { text: "Surface", value: "surface" },
-        { text: "Available", value: "isAvailable" },
-        { text: "Photos", value: "photos" },
+        { text: "Description", value: "Description" },
+        { text: "Price", value: "Price" },
+        { text: "City", value: "Location" },
+        { text: "Total Floors", value: "TotalFloors" },
+        { text: "Total Bathrooms", value: "TotalBathrooms" },
+        { text: "Total Livingrooms", value: "TotalLivingrooms" },
+        { text: "Total Kitchens", value: "TotalKitchens" },
+        { text: "Total Bedrooms", value: "TotalBedrooms" },
+        { text: "Surface", value: "Surface" },
+        { text: "Available", value: "IsAvailable" },
+        { text: "Photos", value: "Photos" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       //#endregion
@@ -237,29 +240,28 @@ export default {
     },
   },
 
-  created() {
+  mounted() {
     this.initialize();
   },
 
   methods: {
-    initialize() {
-      this.announcements = [
-        {
-          id: 12,
-          title: "qsd",
-          photos: "qsd",
-          city: "qsd",
-          price: "qsd",
-          description: "qsd",
-          totalfloors: "qsd",
-          totalbathrooms: "qsd",
-          totallivingrooms: "qsd",
-          totalkitchens: "qsd",
-          totalbedrooms: "qsd",
-          surface: "qsd",
-          isAvailable: "qsd",
-        },
-      ];
+    async initialize() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS_OF_USER);
+        const response = await req.fetch();
+        this.announcements = response.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    getHouseAnalytic(availability) {
+      console.log("****************************inside anal****************************");
+      if (availability === "Available Houses") {
+        return this.announcements.filter((ann) => ann.isAvailable).length;
+      } else if (availability === "Rented Houses") {
+        return this.announcements.filter((ann) => !ann.isAvailable).length;
+      }
     },
 
     editItem(item) {

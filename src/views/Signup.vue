@@ -222,9 +222,10 @@ export default {
         };
         createApiEndPoints(END_POINTS.AUTH_REGISTER)
           .create(user)
-          .then( () => {
+          .then(() => {
             this.alertData = {
-              alertMessage: "Please check out your email to verify your account",
+              alertMessage:
+                "Please check out your email to verify your account",
               alertColor: "cyan",
               alertIcon: "check",
             };

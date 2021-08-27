@@ -13,10 +13,7 @@
             }"
             :center="true"
           >
-            <v-img
-              :src="announcement.Photos.split(' ')[0]"
-            >
-            </v-img>
+            <v-img :src="announcement.Photos.split(' ')[0]"> </v-img>
           </carousel>
           <div class="d-flex align-center justify-space-between mt-4">
             <div>
@@ -98,11 +95,13 @@ export default {
   methods: {
     async getAnnouncement(announcementId) {
       try {
-        const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENT_BY_ID + "" + announcementId);
+        const req = createApiEndPoints(
+          END_POINTS.GET_ANNOUNCEMENT_BY_ID + "" + announcementId
+        );
         const response = await req.fetch();
         this.announcement = response.data;
         await this.fillRoomsNumbers();
-      } catch(e) {
+      } catch (e) {
         console.log("catch block");
         console.log(e);
       }
@@ -110,38 +109,38 @@ export default {
 
     fillRoomsNumbers() {
       this.totalRooms = [
-      {
-        icon: "roofing",
-        title: "total floors",
-        value: this.announcement.TotalFloors,
-      },
-      {
-        icon: "bathtub",
-        title: "total bathrooms",
-        value: this.announcement.TotalBathrooms,
-      },
-      {
-        icon: "dinner_dining",
-        title: "total livingrooms",
-        value: this.announcement.TotalLivingrooms,
-      },
-      {
-        icon: "restaurant",
-        title: "total kitchens",
-        value: this.announcement.TotalKitchens,
-      },
-      {
-        icon: "king_bed",
-        title: "total bedrooms",
-        value: this.announcement.TotalBedrooms,
-      },
-      {
-        icon: "aspect_ratio",
-        title: "surface",
-        value: this.announcement.Surface,
-      },
-    ];
-    }
+        {
+          icon: "roofing",
+          title: "total floors",
+          value: this.announcement.TotalFloors,
+        },
+        {
+          icon: "bathtub",
+          title: "total bathrooms",
+          value: this.announcement.TotalBathrooms,
+        },
+        {
+          icon: "dinner_dining",
+          title: "total livingrooms",
+          value: this.announcement.TotalLivingrooms,
+        },
+        {
+          icon: "restaurant",
+          title: "total kitchens",
+          value: this.announcement.TotalKitchens,
+        },
+        {
+          icon: "king_bed",
+          title: "total bedrooms",
+          value: this.announcement.TotalBedrooms,
+        },
+        {
+          icon: "aspect_ratio",
+          title: "surface",
+          value: this.announcement.Surface,
+        },
+      ];
+    },
   },
 };
 </script>

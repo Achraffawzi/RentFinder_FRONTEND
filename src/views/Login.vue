@@ -120,7 +120,10 @@ export default {
             END_POINTS.AUTH_LOGIN
           ).create(this.user);
           localStorage.setItem("L_T", response.data.token);
-          this.$store.dispatch('setUser', getUserObjFromToken(response.data.token));
+          this.$store.dispatch(
+            "setUser",
+            getUserObjFromToken(response.data.token)
+          );
           let pathName = getUserPathName(response.data.token);
           this.$router.push({ name: pathName });
         } catch (e) {

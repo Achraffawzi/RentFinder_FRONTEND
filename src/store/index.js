@@ -72,9 +72,9 @@ export default new Vuex.Store({
       state.featuredReviews = [...payload];
     },
 
-    setUser (state, payload) {
+    setUser(state, payload) {
       state.user = Object.assign({}, payload);
-    }
+    },
   },
   actions: {
     setFeaturedReviews(context, payload) {

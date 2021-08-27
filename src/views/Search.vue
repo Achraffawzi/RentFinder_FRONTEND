@@ -6,23 +6,24 @@
       <v-form ref="formSearch">
         <!-- The search fields -->
         <v-row class="align-center">
-          <v-col cols="12" sm="5" lg="3">
+          <v-col cols="12" sm="5" lg="4">
             <v-text-field
               prepend-icon="location_on"
               label="city"
               :rules="cityRule"
-              v-model="searchedAnnouncementsObj.city"
+              v-model="city"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" lg="4">
+          <v-col cols="12" sm="5" lg="4">
             <v-select
               :items="pricesRange"
               prepend-icon="attach_money"
               label="price range"
               :rules="priceRangeRule"
+              v-model="price"
             ></v-select>
           </v-col>
-          <v-col cols="12" sm="1" lg="1">
+          <v-col cols="12" sm="2" lg="4">
             <v-btn class="primary" dark @click="onSearch">Search</v-btn>
           </v-col>
         </v-row>
@@ -35,11 +36,18 @@
         </p>
         <CardAnnouncement :result="result" />
       </div>
+      <div v-else>
+        <p class="third--text font-weight-medium mb-4 text-h5">
+          Featured Announcements
+        </p>
+        <CardAnnouncement :result="featuredAnnouncements" />
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../api.js";
 import Navbar from "@/components/Navbar.vue";
 import CardAnnouncement from "@/components/CardAnnouncement.vue";
 export default {
@@ -69,6 +77,7 @@ export default {
       //#endregion
 
       //#region Other Data
+      featuredAnnouncements: [],
       result: [],
       pricesRange: [
         "$0 - $10/night",
@@ -89,7 +98,21 @@ export default {
     },
   },
 
+  mounted() {
+    this.getFeaturedAnnouncements();
+  },
+
   methods: {
+    async getFeaturedAnnouncements() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS);
+        const response = await req.fetch();
+        this.featuredAnnouncements = response.data.slice(0, 4);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
     onSearch() {
       if (this.$refs.formSearch.validate()) {
         this.result = this.searchedAnnouncements;

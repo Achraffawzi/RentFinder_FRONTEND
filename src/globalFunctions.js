@@ -18,13 +18,13 @@ export function getUserPathName(token) {
       return "home";
 
     case "HouseOwner":
-      return  "houseownerdashboard";
+      return "houseownerdashboard";
 
     case "Admin":
-      return  "/";
+      return "/";
 
     default:
-      return  "/";
+      return "/";
   }
 }
 

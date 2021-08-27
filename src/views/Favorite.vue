@@ -6,7 +6,6 @@
       <!-- favorite houses section  -->
       <h4 class="text-h4 font-weight-bold mb-10">Favorite Houses</h4>
       <CardAnnouncement :result="result" />
-
     </v-container>
   </div>
 </template>
