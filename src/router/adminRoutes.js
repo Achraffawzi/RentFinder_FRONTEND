@@ -38,9 +38,7 @@ export default [
         path: "/users",
         name: "users",
         component: () =>
-          import(
-            /* webpackChunkName: "users" */ "@/views/admin/Users.vue"
-          ),
+          import(/* webpackChunkName: "users" */ "@/views/admin/Users.vue"),
         meta: {
           requiresAuth: true,
         },
@@ -68,6 +66,31 @@ export default [
         meta: {
           requiresAuth: true,
         },
+        children: [
+          {
+            path: "/settings/editprofile",
+            name: "admineditprofile",
+            component: () =>
+              import(
+                /* webpackChunkName: "admineditprofile" */ "@/views/admin/EditProfile.vue"
+              ),
+            meta: {
+              requiresAuth: true,
+            },
+          },
+
+          {
+            path: "/settings/changepassword",
+            name: "adminchangepassword",
+            component: () =>
+              import(
+                /* webpackChunkName: "adminchangepassword" */ "@/views/admin/ChangePassword.vue"
+              ),
+            meta: {
+              requiresAuth: true,
+            },
+          },
+        ],
       },
     ],
   },
