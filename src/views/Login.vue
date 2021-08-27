@@ -116,9 +116,8 @@ export default {
       this.loadingLoginButton = true;
       if (this.$refs.formLogin.validate()) {
         try {
-          const response = await createApiEndPoints(
-            END_POINTS.AUTH_LOGIN
-          ).create(this.user);
+          const req = createApiEndPoints(END_POINTS.AUTH_LOGIN);
+          const response = await req.create(this.user);
           localStorage.setItem("L_T", response.data.token);
           this.$store.dispatch(
             "setUser",

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import UserRoutes from "./userRoutes.js";
 import houseOwnerRoutes from "./houseOwnerRoutes.js";
+import adminRoutes from "./adminRoutes.js";
 
 Vue.use(VueRouter);
 
@@ -54,6 +55,7 @@ const routes = [
       requiresAuth: false,
     },
   },
+  ...adminRoutes,
   ...houseOwnerRoutes,
   ...UserRoutes,
 ];

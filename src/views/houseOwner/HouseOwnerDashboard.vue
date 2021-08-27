@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { createApiEndPoints, END_POINTS } from "../../../api.js";
+// import { createApiEndPoints, END_POINTS } from "../../../api.js";
 import DashboardNumbers from "@/components/DashboardNumbers.vue";
 export default {
   name: "HouseOwnerDashboard",
@@ -241,70 +241,71 @@ export default {
   },
 
   mounted() {
-    this.initialize();
+    // this.initialize();
+    console.log("this.announcements ===> " + this.announcements);
   },
 
   methods: {
-    async initialize() {
-      try {
-        const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS_OF_USER);
-        const response = await req.fetch();
-        this.announcements = response.data;
-      } catch (e) {
-        console.log(e);
-      }
-    },
+    // async initialize() {
+    //   try {
+    //     const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS_OF_USER);
+    //     const response = await req.fetch();
+    //     this.announcements = response.data;
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // },
 
-    getHouseAnalytic(availability) {
-      console.log("****************************inside anal****************************");
-      if (availability === "Available Houses") {
-        return this.announcements.filter((ann) => ann.isAvailable).length;
-      } else if (availability === "Rented Houses") {
-        return this.announcements.filter((ann) => !ann.isAvailable).length;
-      }
-    },
+    // getHouseAnalytic(availability) {
+    //   console.log("****************************inside anal****************************");
+    //   if (availability === "Available Houses") {
+    //     return this.announcements.filter((ann) => ann.isAvailable).length;
+    //   } else if (availability === "Rented Houses") {
+    //     return this.announcements.filter((ann) => !ann.isAvailable).length;
+    //   }
+    // },
 
-    editItem(item) {
-      this.editedIndex = this.announcements.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
+    // editItem(item) {
+    //   this.editedIndex = this.announcements.indexOf(item);
+    //   this.editedItem = Object.assign({}, item);
+    //   this.dialog = true;
+    // },
 
-    deleteItem(item) {
-      this.editedIndex = this.announcements.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
-    },
+    // deleteItem(item) {
+    //   this.editedIndex = this.announcements.indexOf(item);
+    //   this.editedItem = Object.assign({}, item);
+    //   this.dialogDelete = true;
+    // },
 
-    deleteItemConfirm() {
-      this.announcements.splice(this.editedIndex, 1);
-      this.closeDelete();
-    },
+    // deleteItemConfirm() {
+    //   this.announcements.splice(this.editedIndex, 1);
+    //   this.closeDelete();
+    // },
 
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
+    // close() {
+    //   this.dialog = false;
+    //   this.$nextTick(() => {
+    //     this.editedItem = Object.assign({}, this.defaultItem);
+    //     this.editedIndex = -1;
+    //   });
+    // },
 
-    closeDelete() {
-      this.dialogDelete = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
+    // closeDelete() {
+    //   this.dialogDelete = false;
+    //   this.$nextTick(() => {
+    //     this.editedItem = Object.assign({}, this.defaultItem);
+    //     this.editedIndex = -1;
+    //   });
+    // },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.announcements[this.editedIndex], this.editedItem);
-      } else {
-        this.announcements.push(this.editedItem);
-      }
-      this.close();
-    },
+    // save() {
+    //   if (this.editedIndex > -1) {
+    //     Object.assign(this.announcements[this.editedIndex], this.editedItem);
+    //   } else {
+    //     this.announcements.push(this.editedItem);
+    //   }
+    //   this.close();
+    // },
   },
 };
 </script>

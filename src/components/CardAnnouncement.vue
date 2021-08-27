@@ -21,17 +21,26 @@
             <v-card-title class="justify-space-between">
               <h5 class="text-h5 font-weight-bold">${{ item.Price }}/night</h5>
               <v-icon
-                v-if="$route.name !== 'favorite'"
+                v-if="$route.name !== 'favorite' && getUser"
                 class="white--text"
                 style="cursor: pointer"
                 @click="onAddToOrRemoveFromFavorite(item.Id)"
                 >{{ favoriteIcon }}</v-icon
               >
+              <v-icon
+                class="white--text"
+                style="cursor: pointer"
+                v-else-if="$route.name === 'favorite'"
+              >
+                favorite
+              </v-icon>
             </v-card-title>
           </v-img>
           <v-card-text>
             <!-- content -->
-            <p class="font-weight-bold black--text">{{ item.Title }}</p>
+            <p class="font-weight-bold black--text">
+              {{ item.Title }}
+            </p>
             <v-rating
               background-color="yellow lighten-3"
               length="5"
@@ -88,6 +97,7 @@ export default {
 
       //#region General Data
       isFaved: false,
+      user: null,
       snackbarFavoriteMsg: "",
       //#endregion
     };
@@ -97,7 +107,15 @@ export default {
     favoriteIcon() {
       return this.isFaved ? "favorite" : "favorite_border";
     },
+
+    // Get the user obj from store
+    getUser() {
+      return this.$store.getters.getUser;
+    },
   },
+
+  mounted() {},
+
   methods: {
     async onAddToOrRemoveFromFavorite(announcementID) {
       this.isFaved = !this.isFaved;
@@ -107,7 +125,6 @@ export default {
           const req = createApiEndPoints(END_POINTS.CREATE_FAVORITE);
           const response = await req.create({ announcementId: announcementID });
 
-          this.snackbarFavoriteMsg = response.data.message;
           this.show = true;
           this.snackbarMsg = response.data.message;
           this.snackbarColor = "success";
@@ -122,8 +139,7 @@ export default {
       else {
         try {
           const req = createApiEndPoints(END_POINTS.DELETE_FAVORITE);
-          const response = await req.delete({ announcementId: announcementID });
-
+          const response = await req.delete({ announcementId: parseInt(announcementID) });
           this.snackbarFavoriteMsg = response.data.message;
           this.show = true;
           this.snackbarMsg = response.data.message;
@@ -136,7 +152,7 @@ export default {
         }
       }
 
-      this.snackbarFavorite = true;
+      // this.snackbarFavorite = true;
     },
   },
 };

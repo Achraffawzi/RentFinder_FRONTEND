@@ -10,7 +10,7 @@ export default new Vuetify({
         primary: "#008DE9",
         secondary: "#333333",
         third: "#949393",
-        navigattionDrawer: "#122658",
+        navigationDrawer: "#122658",
         error: "#b71c1c",
       },
     },

@@ -38,7 +38,8 @@ export default {
 
   data() {
     return {
-      featuredAnnouncements: [],
+      // START HERE
+      featuredAnnouncements: null,
       feedbacks: [],
     };
   },
@@ -59,6 +60,7 @@ export default {
       try {
         const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS);
         const response = await req.fetch();
+        // this.featuredAnnouncements = [...response.data.slice(0, 4), isFaved = false];
         this.featuredAnnouncements = response.data.slice(0, 4);
       } catch (e) {
         console.log(e);
