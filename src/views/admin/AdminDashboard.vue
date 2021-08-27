@@ -83,23 +83,6 @@ export default {
         { title: "Settings", icon: "settings", routeName: "settings" },
         { title: "Logout", icon: "logout", routeName: "" },
       ],
-      houseNumbers: [
-        {
-          title: "Available Houses",
-          icon: "event_available",
-          value: 10,
-        },
-        {
-          title: "Rented Houses",
-          icon: "event_busy",
-          value: 3,
-        },
-        {
-          title: "Total Houses",
-          icon: "functions",
-          value: 13,
-        },
-      ],
     };
   },
 };
