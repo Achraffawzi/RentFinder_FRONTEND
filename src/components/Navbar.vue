@@ -25,12 +25,12 @@
         <!-- Links -->
         <div class="flex-grow-1 d-flex align-center">
           <router-link
-            v-for="link in links"
+            v-for="link in navbarItems"
             :key="link.title"
             class="ma-4 hidden-sm-and-down"
             :class="[
               $route.path === '/' ? 'white--text' : 'third--text',
-              link.title === 'Log in' ? 'ml-sm-0 ml-sm-auto ma-4' : '',
+              link.title === 'Log in' || link.title === 'Favorite' ? 'ml-sm-0 ml-sm-auto ma-4' : '',
               link.title === 'Sign up' ? 'py-1 px-5' : '',
             ]"
             :style="{
@@ -40,6 +40,7 @@
             :to="{ name: link.routeName }"
             >{{ link.title }}</router-link
           >
+          <span class="white--text hidden-sm-and-down ma-4" @click="onSignout" style="cursor: pointer;">Signout</span>
         </div>
 
         <!-- App Bars -->
@@ -59,9 +60,9 @@
       temporary
     >
       <v-list>
-        <v-list-item-group v-model="drawer">
+        <v-list-item-group>
           <v-list-item
-            v-for="link in links"
+            v-for="link in navbarItems"
             :key="link.title"
             link
             :to="{ name: link.routeName }"
@@ -69,6 +70,9 @@
             <v-list-item-content>
               <v-list-item-title>{{ link.title }}</v-list-item-title>
             </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <span @click="onSignout" style="cursor: pointer;">Signout</span>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -84,16 +88,38 @@ export default {
       //#region Component Models
       drawer: false,
       //#endregion
+    };
+  },
 
-      links: [
+  computed: {
+    getUser() {
+      return this.$store.getters.getUser;
+    },
+
+    navbarItems() {
+      let links = [
         { title: "Search for a house", routeName: "search" },
-        { title: "Log in", routeName: "login" },
-        { title: "Sign up", routeName: "signup" },
         { title: "Favorite", routeName: "favorite" },
         { title: "Profile", routeName: "usereditprofile" },
-        { title: "Log out", routeName: "logout" },
-      ],
-    };
+      ];
+
+      if(this.getUser === null || this.getUser === undefined) {
+        links = [
+          { title: "Log in", routeName: "login" },
+          { title: "Sign up", routeName: "signup" },
+        ]
+      }
+
+      return links;
+    },
+  },
+
+  methods: {
+    onSignout() {
+      this.$store.dispatch('setUser', null);
+      localStorage.removeItem('L_T');
+      this.$router.push({ name: 'home' });
+    },
   },
 };
 </script>
