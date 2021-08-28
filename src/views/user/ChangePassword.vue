@@ -6,7 +6,7 @@
     <h5 class="text-h5 font-weight-bold">Change password</h5>
     <v-form ref="changePasswordForm">
       <v-text-field
-        v-model="currentPassword"
+        v-model="passwords.currentPassword"
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
         :type="show1 ? 'text' : 'password'"
@@ -18,7 +18,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="newPassword"
+        v-model="passwords.newPassword"
         :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
         :type="show2 ? 'text' : 'password'"
@@ -30,7 +30,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="confirmNewPassword"
+        v-model="passwords.confirmNewPassword"
         :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="confirmPasswordRule"
         :type="show3 ? 'text' : 'password'"
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api";
 import BaseAlert from "@/components/BaseAlert.vue";
 export default {
   name: "ChangePassword",
@@ -75,9 +76,11 @@ export default {
       //#endregion
 
       //#region Input models
-      currentPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
+      passwords: {
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+      },
       //#endregion
 
       //#region Input rules
@@ -86,7 +89,8 @@ export default {
           password.length >= 8 || "Password must be at least 8 characters",
       ],
       confirmPasswordRule: [
-        (password) => password === this.newPassword || "Password not match",
+        (password) =>
+          password === this.passwords.newPassword || "Password not match",
       ],
       //#endregion
 
@@ -107,14 +111,20 @@ export default {
   },
 
   methods: {
-    onChangePassword() {
+    async onChangePassword() {
       if (this.$refs.changePasswordForm.validate()) {
-        console.log("ok");
-        this.alertData = {
-          alertMessage: "nice!",
-          alertColor: "success",
-          alertIcon: "check",
-        };
+        try {
+          const req = createApiEndPoints(END_POINTS.AUTH_FORGET_PASSWORD);
+          const response = await req.create({ ...this.passwords });
+          console.log(response);
+          this.alertData = {
+            alertMessage: "nice!",
+            alertColor: "success",
+            alertIcon: "check",
+          };
+        } catch (e) {
+          console.log("forget error");
+        }
       } else {
         this.alertData = {
           alertMessage: "Please verify pasword fields",

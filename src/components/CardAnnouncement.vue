@@ -16,7 +16,7 @@
           <v-img
             :src="item.Photos.split(' ')[0]"
             height="200"
-            class="align-end white--text"
+            class="align-end justify-space-between white--text"
           >
             <v-card-title class="justify-space-between">
               <h5 class="text-h5 font-weight-bold">${{ item.Price }}/night</h5>
@@ -38,9 +38,12 @@
           </v-img>
           <v-card-text>
             <!-- content -->
-            <p class="font-weight-bold black--text">
-              {{ item.Title }}
-            </p>
+            <div class="d-flex align-center justify-space-between flex-wrap">
+              <p class="font-weight-bold black--text">
+                {{ item.Title }}
+              </p>
+              <v-chip small :color="setAvailabilityColor(item.IsAvailable)" dark>{{ setAvailabilityText(item.IsAvailable) }}</v-chip>
+            </div>
             <v-rating
               background-color="yellow lighten-3"
               length="5"
@@ -155,6 +158,15 @@ export default {
       }
 
       // this.snackbarFavorite = true;
+    },
+
+    setAvailabilityColor(availability) {
+      return availability ? "success" : "orange"
+    },
+
+    // Set the text of availaility ( Busy | Available )
+    setAvailabilityText(availability) {
+      return availability ? "Available" : "Busy"
     },
   },
 };
