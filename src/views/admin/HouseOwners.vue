@@ -1,13 +1,21 @@
 <template>
   <div class="house-owners">
     <!-- Upper div for sorting and searching -->
-    <div class="sort-search d-flex align-center justify-space-between">
+    <div class="sort-search d-flex align-center justify-space-between flex-wrap  mb-16">
       <div class="sort">
-        <v-btn depressed class="subtitle-2 font-weight-regular text-lowercase">
+        <v-btn
+          depressed
+          class="subtitle-2 font-weight-regular text-lowercase"
+          @click="sortBy('LastName')"
+        >
           <v-icon small>person</v-icon>
           <span>sort by Lastname</span>
         </v-btn>
-        <v-btn depressed class="subtitle-2 font-weight-regular text-lowercase">
+        <v-btn
+          depressed
+          class="subtitle-2 font-weight-regular text-lowercase"
+          @click="sortBy('City')"
+        >
           <v-icon small>location_on</v-icon>
           <span>sort by City</span>
         </v-btn>
@@ -17,15 +25,14 @@
           v-model="search"
           append-icon="mdi-magnify"
           label="Search"
-          single-line
           hide-details
+          class="ma-0 pa-0"
         ></v-text-field>
       </div>
     </div>
     <v-data-table
       :headers="headers"
       :items="houseOwners"
-      sort-by="LastName"
       class="elevation-1"
       :search="search"
     >
@@ -37,11 +44,10 @@
       </template>
       <!-- Dialog template -->
       <template v-slot:top>
-        <v-toolbar flat>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
               <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
+                >Are you sure you want to delete this house owner?</v-card-title
               >
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -55,7 +61,6 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-        </v-toolbar>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
@@ -73,16 +78,26 @@ export default {
     dialogDelete: false,
     headers: [
       {
-        text: "Firstname",
+        text: "FirstName",
         align: "start",
         sortable: false,
         filterable: false,
         value: "FirstName",
       },
-      { text: "Lastname", value: "LastName", filterable: true, },
-      { text: "phone number", value: "PhoneNumber", filterable: false, },
-      { text: "City", value: "City", filterable: false, },
-      { text: "Avatar", value: "Avatar", filterable: false, },
+      {
+        text: "LastName",
+        value: "LastName",
+        filterable: true,
+        sortable: true,
+      },
+      {
+        text: "phone number",
+        value: "PhoneNumber",
+        filterable: false,
+        sortable: false,
+      },
+      { text: "City", value: "City", filterable: false, sortable: true },
+      { text: "Avatar", value: "Avatar", filterable: false, sortable: false },
       { text: "Actions", value: "actions", sortable: false },
     ],
     houseOwners: [],
@@ -117,6 +132,14 @@ export default {
     initialize() {
       this.houseOwners = [
         {
+          FirstName: "Sergio",
+          LastName: "Ramos",
+          PhoneNumber: "9910294855",
+          City: "Paris",
+          Avatar:
+            "https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg",
+        },
+        {
           FirstName: "Achraf",
           LastName: "FAWZI",
           PhoneNumber: "9910294855",
@@ -125,6 +148,10 @@ export default {
             "https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg",
         },
       ];
+    },
+
+    sortBy(prop) {
+      this.houseOwners.sort((a, b) => (a[prop] < b[prop] ? -1 : 1));
     },
 
     deleteItem(item) {
