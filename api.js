@@ -13,6 +13,7 @@ export const END_POINTS = {
   GET_ANNOUNCEMENTS: "announcements/",
   GET_ANNOUNCEMENTS_OF_USER: "announcements/mine",
   GET_ANNOUNCEMENT_BY_ID: "announcements/",
+  DELETE_ANNOUNCEMENT: "announcements/",
 
   GET_FEEDBACKS: "feedback/",
 
@@ -36,6 +37,7 @@ export const createApiEndPoints = (endPoint) => {
     fetch: () => authAxois.get(url),
     create: (newRecord) => authAxois.post(url, newRecord),
     delete: (deletedRecord) => authAxois.delete(url, deletedRecord),
+    deleteFromParams: () => authAxois.delete(url),
     update: (editedRecord) => authAxois.put(url, editedRecord),
   };
 };
