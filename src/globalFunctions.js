@@ -27,7 +27,7 @@ export function getUserPathName(token) {
       return "houseownerdashboard";
 
     case "Admin":
-      return "/";
+      return "statistics";
 
     default:
       return "/";

@@ -58,6 +58,15 @@ const routes = [
   ...adminRoutes,
   ...houseOwnerRoutes,
   ...UserRoutes,
+
+  {
+    path: "*",
+    name: "notfound",
+    component: () =>
+      import(
+        /* webpackChunkName: "notfound" */ "@/views/404.vue"
+      ),
+  }
 ];
 
 // If logged in and wants to go to signup or login (or favorite if he's house owner or admin)

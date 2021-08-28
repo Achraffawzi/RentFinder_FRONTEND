@@ -6,7 +6,7 @@
     <h5 class="text-h5 font-weight-bold">Change password</h5>
     <v-form ref="changePasswordForm">
       <v-text-field
-        v-model="passwords.currentPassword"
+      v-model="passwords.currentPassword"
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
         :type="show1 ? 'text' : 'password'"
@@ -112,26 +112,33 @@ export default {
 
   methods: {
     async onChangePassword() {
+      this.loading = true;
       if (this.$refs.changePasswordForm.validate()) {
         try {
           const req = createApiEndPoints(END_POINTS.AUTH_FORGET_PASSWORD);
           const response = await req.create({ ...this.passwords });
           console.log(response);
           this.alertData = {
-            alertMessage: "nice!",
+            alertMessage: "Password has been changed successfully",
             alertColor: "success",
             alertIcon: "check",
           };
         } catch (e) {
           console.log("forget error");
+          this.alertData = {
+            alertMessage: "Something went wrong! please try again",
+            alertColor: "error",
+            alertIcon: "error",
+          };
         }
       } else {
         this.alertData = {
-          alertMessage: "Please verify pasword fields",
+          alertMessage: "Please verify password fields",
           alertColor: "error",
           alertIcon: "error",
         };
       }
+      this.loading = false;
     },
   },
 };

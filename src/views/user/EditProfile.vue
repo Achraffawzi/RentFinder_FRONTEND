@@ -1,5 +1,7 @@
 <template>
   <div class="edit-profile">
+    <!-- Alert -->
+    <BaseAlert v-if="alertData" :alertData="alertData" />
     <v-row>
       <v-col cols="12" md="5">
         <v-avatar
@@ -21,97 +23,104 @@
       </v-col>
       <!-- Profile info col -->
       <v-col cols="12" md="7">
-
-        <!-- Firstname -->
-        <div>
-          <div class="d-flex justify-space-between align-center py-4">
-            <div class="d-flex flex-column align-start justify-center">
-              <span class="font-weight-bold">Firstname</span>
-              <v-text-field
-                v-model="profileInfo.FirstName"
-                :disabled="!isFirstnameChanging"
-                :rules="nameRule"
+        <v-form @submit.prevent="onUpdateProfile" method="POST" ref="formUpdate">
+          <!-- Firstname -->
+          <div>
+            <div class="d-flex justify-space-between align-center py-4">
+              <div class="d-flex flex-column align-start justify-center">
+                <span class="font-weight-bold">Firstname</span>
+                <v-text-field
+                  v-model="userInfo.FirstName"
+                  :disabled="!isFirstnameChanging"
+                  :rules="nameRule"
+                >
+                </v-text-field>
+              </div>
+              <v-btn
+                outlined
+                color="primary"
+                @click="isFirstnameChanging = !isFirstnameChanging"
+                >{{ changeButtonValue(isFirstnameChanging) }}</v-btn
               >
-              </v-text-field>
             </div>
-            <v-btn
-              outlined
-              color="primary"
-              @click="isFirstnameChanging = !isFirstnameChanging"
-              >{{ changeButtonValue(isFirstnameChanging) }}</v-btn
-            >
           </div>
-        </div>
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <!-- Lastname -->
-        <div>
-          <div class="d-flex justify-space-between align-center py-4">
-            <div class="d-flex flex-column align-start justify-center">
-              <span class="font-weight-bold">Lastname</span>
-              <v-text-field
-                v-model="profileInfo.LastName"
-                :disabled="!isLastnameChanging"
-                :rules="nameRule"
+          <!-- Lastname -->
+          <div>
+            <div class="d-flex justify-space-between align-center py-4">
+              <div class="d-flex flex-column align-start justify-center">
+                <span class="font-weight-bold">Lastname</span>
+                <v-text-field
+                  v-model="userInfo.LastName"
+                  :disabled="!isLastnameChanging"
+                  :rules="nameRule"
+                >
+                </v-text-field>
+              </div>
+              <v-btn
+                outlined
+                color="primary"
+                @click="isLastnameChanging = !isLastnameChanging"
+                >{{ changeButtonValue(isLastnameChanging) }}</v-btn
               >
-              </v-text-field>
             </div>
-            <v-btn
-              outlined
-              color="primary"
-              @click="isLastnameChanging = !isLastnameChanging"
-              >{{ changeButtonValue(isLastnameChanging) }}</v-btn
-            >
           </div>
-        </div>
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <!-- Phone number -->
-        <div>
-          <div class="d-flex justify-space-between align-center py-4">
-            <div class="d-flex flex-column align-start justify-center">
-              <span class="font-weight-bold">Phone number</span>
-              <v-text-field
-                v-model="profileInfo.PhoneNumber"
-                :disabled="!isPhoneNumberChanging"
-                :rules="phoneNumberRule"
+          <!-- Phone number -->
+          <div>
+            <div class="d-flex justify-space-between align-center py-4">
+              <div class="d-flex flex-column align-start justify-center">
+                <span class="font-weight-bold">Phone number</span>
+                <v-text-field
+                  v-model="userInfo.PhoneNumber"
+                  :disabled="!isPhoneNumberChanging"
+                  :rules="phoneNumberRule"
+                >
+                </v-text-field>
+              </div>
+              <v-btn
+                outlined
+                color="primary"
+                @click="isPhoneNumberChanging = !isPhoneNumberChanging"
+                >{{ changeButtonValue(isPhoneNumberChanging) }}</v-btn
               >
-              </v-text-field>
             </div>
-            <v-btn
-              outlined
-              color="primary"
-              @click="isPhoneNumberChanging = !isPhoneNumberChanging"
-              >{{ changeButtonValue(isPhoneNumberChanging) }}</v-btn
-            >
           </div>
-        </div>
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <!-- City -->
-        <div>
-          <div class="d-flex justify-space-between align-center py-4">
-            <div class="d-flex flex-column align-start justify-center">
-              <span class="font-weight-bold">City</span>
-              <v-text-field
-                v-model="profileInfo.City"
-                :disabled="!isCityChanging"
-                :rules="nameRule"
+          <!-- City -->
+          <div>
+            <div class="d-flex justify-space-between align-center py-4">
+              <div class="d-flex flex-column align-start justify-center">
+                <span class="font-weight-bold">City</span>
+                <v-text-field
+                  v-model="userInfo.City"
+                  :disabled="!isCityChanging"
+                  :rules="nameRule"
+                >
+                </v-text-field>
+              </div>
+              <v-btn
+                outlined
+                color="primary"
+                @click="isCityChanging = !isCityChanging"
+                >{{ changeButtonValue(isCityChanging) }}</v-btn
               >
-              </v-text-field>
             </div>
-            <v-btn
-              outlined
-              color="primary"
-              @click="isCityChanging = !isCityChanging"
-              >{{ changeButtonValue(isCityChanging) }}</v-btn
-            >
           </div>
-        </div>
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <!-- submit button -->
-        <v-btn :loading="loadingProfile" :disabled="loadingProfile" class="primary white--text text-lowercase">Save changes</v-btn>
+          <!-- submit button -->
+          <v-btn
+            :loading="loadingProfile"
+            :disabled="loadingProfile"
+            class="primary white--text text-lowercase"
+            type="submit"
+            >Save changes</v-btn
+          >
+        </v-form>
       </v-col>
     </v-row>
   </div>
@@ -119,14 +128,17 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
+import BaseAlert from "@/components/BaseAlert.vue";
 let filePicker = document.querySelector("#filePicker");
 export default {
   name: "EditProfile",
 
+  components: { BaseAlert, },
+
   data() {
     return {
       //#region Main Data
-      profileInfo: {
+      userInfo: {
         FirstName: "",
         LastName: "",
         PhoneNumber: "",
@@ -135,12 +147,17 @@ export default {
       //#endregion
 
       //#region Component Bindings
+      alertData: null,
+
       isFirstnameChanging: false,
       isLastnameChanging: false,
       isPhoneNumberChanging: false,
       isCityChanging: false,
+
+      loadingProfile: false,
+      loader: null,
       //#endregion
-      
+
       //#region Input Rules
       nameRule: [
         (name) =>
@@ -153,7 +170,18 @@ export default {
           /^[0-9]{8,}$/.test(value) || "Phone number must be numeric and valid",
       ],
       //#endregion
-    }
+    };
+  },
+
+  watch: {
+    loader() {
+      const l = this.loader;
+      this[l] = !this[l];
+
+      setTimeout(() => (this[l] = false), 3000);
+
+      this.loader = null;
+    },
   },
 
   mounted() {
@@ -162,12 +190,47 @@ export default {
 
   methods: {
     async getUserInfo() {
-      const req = createApiEndPoints(END_POINTS.GET_USER_INFO);
-      const res = await req.fetch();
-      this.profileInfo.FirstName = res.data.FirstName;
-      this.profileInfo.LastName = res.data.LastName;
-      this.profileInfo.PhoneNumber = res.data.PhoneNumber;
-      this.profileInfo.City = res.data.City;
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_USER_INFO);
+        const res = await req.fetch();
+        this.userInfo.FirstName = res.data.FirstName;
+        this.userInfo.LastName = res.data.LastName;
+        this.userInfo.PhoneNumber = res.data.PhoneNumber;
+        this.userInfo.City = res.data.City;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    async onUpdateProfile() {
+      this.loadingProfile = true;
+
+      if (this.$refs.formUpdate.validate()) {
+        try {
+          const req = createApiEndPoints(END_POINTS.UPDATE_PROFILE);
+          const res = await req.update({
+            ...this.userInfo,
+            UserName: this.userInfo.FirstName + "" + this.userInfo.LastName,
+          });
+          console.log(res);
+        } catch (e) {
+          console.log(e);
+          this.loadingProfile = false;
+          this.alertData = {
+            alertMessage: "Something went wrong! Please try again",
+            alertColor: "error",
+            alertIcon: "error",
+          };
+        }
+      } else {
+        console.log("form not valid");
+        this.loadingProfile = false;
+        this.alertData = {
+            alertMessage: "Please verify your profile information",
+            alertColor: "error",
+            alertIcon: "error",
+          };
+      }
     },
 
     openFileUplaod() {

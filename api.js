@@ -21,6 +21,7 @@ export const END_POINTS = {
   DELETE_FAVORITE: "favorite/delete",
 
   GET_USER_INFO: "profile/me",
+  UPDATE_PROFILE: "profile/me/edit",
 };
 
 export const authAxois = axios.create({
