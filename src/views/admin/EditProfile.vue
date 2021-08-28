@@ -1,9 +1,11 @@
 <template>
-    <div class="edit-profile">edit profile</div>
+  <div class="edit-profile">
+    edit profile
+  </div>
 </template>
 
 <script>
 export default {
-    name: "EditProfile",
-}
+  name: "EditProfile",
+};
 </script>
