@@ -1,14 +1,37 @@
 <template>
   <div class="house-owners">
+    <!-- Upper div for sorting and searching -->
+    <div class="sort-search d-flex align-center justify-space-between">
+      <div class="sort">
+        <v-btn depressed class="subtitle-2 font-weight-regular text-lowercase">
+          <v-icon small>person</v-icon>
+          <span>sort by Lastname</span>
+        </v-btn>
+        <v-btn depressed class="subtitle-2 font-weight-regular text-lowercase">
+          <v-icon small>location_on</v-icon>
+          <span>sort by City</span>
+        </v-btn>
+      </div>
+      <div class="search">
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </div>
+    </div>
     <v-data-table
       :headers="headers"
       :items="houseOwners"
       sort-by="LastName"
       class="elevation-1"
+      :search="search"
     >
       <!-- Avatar template -->
       <template v-slot:[`item.Avatar`]="{ item }">
-        <v-avatar color="teal" size="48">
+        <v-avatar size="48">
           <img :src="item.Avatar" alt="avatar" />
         </v-avatar>
       </template>
@@ -46,18 +69,20 @@ export default {
   name: "HouseOwners",
 
   data: () => ({
+    search: "",
     dialogDelete: false,
     headers: [
       {
         text: "Firstname",
         align: "start",
         sortable: false,
+        filterable: false,
         value: "FirstName",
       },
-      { text: "Lastname", value: "LastName" },
-      { text: "phone number", value: "PhoneNumber" },
-      { text: "City", value: "City" },
-      { text: "Avatar", value: "Avatar" },
+      { text: "Lastname", value: "LastName", filterable: true, },
+      { text: "phone number", value: "PhoneNumber", filterable: false, },
+      { text: "City", value: "City", filterable: false, },
+      { text: "Avatar", value: "Avatar", filterable: false, },
       { text: "Actions", value: "actions", sortable: false },
     ],
     houseOwners: [],
