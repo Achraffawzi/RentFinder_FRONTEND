@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api";
 export default {
   name: "Announcements",
 
@@ -122,24 +123,19 @@ export default {
     },
   },
 
-  created() {
+  mounted() {
     this.initialize();
   },
 
   methods: {
-    initialize() {
-      this.announcements = [
-        {
-          Title: "Sergio",
-          Price: 30,
-          Location: "Paris",
-        },
-        {
-          Title: "Achraf",
-          Price: 10,
-          Location: "London",
-        },
-      ];
+    async initialize() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS);
+        const response = await req.fetch();
+        this.announcements = response.data;
+      } catch (e) {
+        console.log(e);
+      }
     },
 
     sortBy(prop) {
