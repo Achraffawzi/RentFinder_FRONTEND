@@ -60,6 +60,18 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+      <v-list nav shaped>
+        <v-list-item-group v-model="drawer">
+          <v-list-item @click="onSignout">
+            <v-list-item-icon>
+              <v-icon small class="white--text">logout</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="white--text subtitle-2">Signout</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
     <!-- Main Content ( dashoard, users, houseowners, settings ) -->
     <v-container>
@@ -81,10 +93,17 @@ export default {
         { title: "Users", icon: "groups", routeName: "users" },
         { title: "Announcements", icon: "description", routeName: "announcements" },
         { title: "Settings", icon: "settings", routeName: "settings" },
-        { title: "Logout", icon: "logout", routeName: "" },
       ],
     };
   },
+
+  methods: {
+    onSignout() {
+      this.$store.dispatch('setUser', null);
+      localStorage.removeItem('L_T');
+      this.$router.push({ name: 'home' });
+    }
+  }
 };
 </script>
 
