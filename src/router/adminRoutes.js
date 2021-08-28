@@ -57,7 +57,7 @@ export default [
       },
 
       {
-        path: "/settings",
+        path: "/adminsettings",
         name: "settings",
         component: () =>
           import(
@@ -68,7 +68,7 @@ export default [
         },
         children: [
           {
-            path: "/settings/editprofile",
+            path: "/adminsettings/admineditprofile",
             name: "admineditprofile",
             component: () =>
               import(
@@ -80,7 +80,7 @@ export default [
           },
 
           {
-            path: "/settings/changepassword",
+            path: "/adminsettings/adminchangepassword",
             name: "adminchangepassword",
             component: () =>
               import(

@@ -44,7 +44,7 @@
       <v-list nav shaped>
         <v-list-item-group v-model="drawer">
           <v-list-item
-            v-for="item in items"
+            v-for="item in links"
             :key="item.title"
             link
             :to="{ name: item.routeName }"
@@ -67,7 +67,9 @@
               <v-icon small class="white--text">logout</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="white--text subtitle-2">Signout</v-list-item-title>
+              <v-list-item-title class="white--text subtitle-2"
+                >Signout</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -87,11 +89,19 @@ export default {
   data() {
     return {
       drawer: false,
-      items: [
+      links: [
         { title: "Statistics", icon: "equalizer", routeName: "statistics" },
-        { title: "House Owners", icon: "record_voice_over", routeName: "houseowners" },
+        {
+          title: "House Owners",
+          icon: "record_voice_over",
+          routeName: "houseowners",
+        },
         { title: "Users", icon: "groups", routeName: "users" },
-        { title: "Announcements", icon: "description", routeName: "announcements" },
+        {
+          title: "Announcements",
+          icon: "description",
+          routeName: "announcements",
+        },
         { title: "Settings", icon: "settings", routeName: "settings" },
       ],
     };
@@ -99,11 +109,11 @@ export default {
 
   methods: {
     onSignout() {
-      this.$store.dispatch('setUser', null);
-      localStorage.removeItem('L_T');
-      this.$router.push({ name: 'home' });
-    }
-  }
+      this.$store.dispatch("setUser", null);
+      localStorage.removeItem("L_T");
+      this.$router.push({ name: "home" });
+    },
+  },
 };
 </script>
 

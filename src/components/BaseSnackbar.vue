@@ -1,6 +1,6 @@
 <template>
   <div class="base-snackbar">
-    <v-snackbar  timeout="-1" v-model="show" top :color="color">
+    <v-snackbar timeout="-1" v-model="show" top :color="color">
       {{ message }}
 
       <template v-slot:action="{ attrs }">
@@ -31,15 +31,15 @@ export default {
       required: true,
     },
     show: {
-        type: Boolean,
-        required: true,
-    }
+      type: Boolean,
+      required: true,
+    },
   },
 
-//   data() {
-//     return {
-//       snackbar: this.show,
-//     };
-//   },
+  //   data() {
+  //     return {
+  //       snackbar: this.show,
+  //     };
+  //   },
 };
 </script>

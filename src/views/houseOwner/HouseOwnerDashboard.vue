@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard">
     <v-container v-if="announcements.length > 0">
-
       length: {{ announcements.length }}
       <!-- Logout btn -->
       <v-row>
@@ -255,7 +254,6 @@ export default {
     //     console.log(e);
     //   }
     // },
-
     // getHouseAnalytic(availability) {
     //   console.log("****************************inside anal****************************");
     //   if (availability === "Available Houses") {
@@ -264,24 +262,20 @@ export default {
     //     return this.announcements.filter((ann) => !ann.isAvailable).length;
     //   }
     // },
-
     // editItem(item) {
     //   this.editedIndex = this.announcements.indexOf(item);
     //   this.editedItem = Object.assign({}, item);
     //   this.dialog = true;
     // },
-
     // deleteItem(item) {
     //   this.editedIndex = this.announcements.indexOf(item);
     //   this.editedItem = Object.assign({}, item);
     //   this.dialogDelete = true;
     // },
-
     // deleteItemConfirm() {
     //   this.announcements.splice(this.editedIndex, 1);
     //   this.closeDelete();
     // },
-
     // close() {
     //   this.dialog = false;
     //   this.$nextTick(() => {
@@ -289,7 +283,6 @@ export default {
     //     this.editedIndex = -1;
     //   });
     // },
-
     // closeDelete() {
     //   this.dialogDelete = false;
     //   this.$nextTick(() => {
@@ -297,7 +290,6 @@ export default {
     //     this.editedIndex = -1;
     //   });
     // },
-
     // save() {
     //   if (this.editedIndex > -1) {
     //     Object.assign(this.announcements[this.editedIndex], this.editedItem);

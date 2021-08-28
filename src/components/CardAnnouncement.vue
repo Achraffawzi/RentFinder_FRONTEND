@@ -139,7 +139,9 @@ export default {
       else {
         try {
           const req = createApiEndPoints(END_POINTS.DELETE_FAVORITE);
-          const response = await req.delete({ announcementId: parseInt(announcementID) });
+          const response = await req.delete({
+            announcementId: parseInt(announcementID),
+          });
           this.snackbarFavoriteMsg = response.data.message;
           this.show = true;
           this.snackbarMsg = response.data.message;

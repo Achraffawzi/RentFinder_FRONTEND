@@ -1,12 +1,14 @@
 <template>
   <div class="settings">
     <div class="main-content">
+      <Navbar />
       <v-container>
         <v-row>
           <!-- Navigations -->
           <v-col cols="12" md="4">
             <!-- title -->
             <h3 class="mb-15 text-h4">Settings</h3>
+            <!-- nav sidebar link -->
             <div v-for="item in items" :key="item.title" class="mb-4">
               <router-link
                 :to="{ name: item.routeName }"
@@ -31,8 +33,11 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
 export default {
   name: "Settings",
+
+  components: { Navbar },
 
   data() {
     return {
@@ -40,13 +45,13 @@ export default {
         {
           icon: "badge",
           title: "Profile Settings",
-          routeName: "admineditprofile",
+          routeName: "usereditprofile",
           description: "Manage and Edit your profile information",
         },
         {
           icon: "admin_panel_settings",
           title: "Account Settings",
-          routeName: "adminchangepassword",
+          routeName: "userchangepassword",
           description: "change your account password",
         },
       ],

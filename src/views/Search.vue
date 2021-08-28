@@ -1,7 +1,13 @@
 <template>
   <div class="search">
     <!-- Snackbar for fields error -->
-    <BaseSnackbar v-if="show" :show="show" :message="snackbarMsg" :color="snackbarColor" v-on:closeSnackbar="show = false" />
+    <BaseSnackbar
+      v-if="show"
+      :show="show"
+      :message="snackbarMsg"
+      :color="snackbarColor"
+      v-on:closeSnackbar="show = false"
+    />
     <Navbar />
 
     <v-container>
@@ -117,14 +123,13 @@ export default {
 
     getPriceFromRange(range) {
       // check wheather the range had two values or just one ($40+/night)
-      if(range.includes('+')) {
-        let price = range.split('/')[0].split('$')[1].split('+')[0];
+      if (range.includes("+")) {
+        let price = range.split("/")[0].split("$")[1].split("+")[0];
 
         return price;
-      }
-      else {
-        let priceInf = range.split('/')[0].split(' - ')[0].split('$')[1];
-        let priceSup = range.split('/')[0].split(' - ')[1].split('$')[1];
+      } else {
+        let priceInf = range.split("/")[0].split(" - ")[0].split("$")[1];
+        let priceSup = range.split("/")[0].split(" - ")[1].split("$")[1];
 
         return [priceInf, priceSup];
       }
@@ -134,10 +139,19 @@ export default {
       if (this.$refs.formSearch.validate()) {
         // Get the price interval
         let priceRange = this.getPriceFromRange(this.priceRange);
-        if(Array.isArray(priceRange)) {
-          this.result = this.announcements.filter(ann => ann.Location.toLowerCase().includes(this.city.toLowerCase()) && (ann.Price >= parseInt(priceRange[0]) && ann.Price <= parseInt(priceRange[1])))
+        if (Array.isArray(priceRange)) {
+          this.result = this.announcements.filter(
+            (ann) =>
+              ann.Location.toLowerCase().includes(this.city.toLowerCase()) &&
+              ann.Price >= parseInt(priceRange[0]) &&
+              ann.Price <= parseInt(priceRange[1])
+          );
         } else {
-          this.result = this.announcements.filter(ann => ann.Location.toLowerCase().includes(this.city.toLowerCase()) && ann.Price >= parseInt(priceRange))
+          this.result = this.announcements.filter(
+            (ann) =>
+              ann.Location.toLowerCase().includes(this.city.toLowerCase()) &&
+              ann.Price >= parseInt(priceRange)
+          );
         }
       } else {
         this.show = true;

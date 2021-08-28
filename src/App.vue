@@ -21,9 +21,7 @@ export default {
     // Get the most starred reviews
   },
 
-  methods: {
-    
-  },
+  methods: {},
 };
 </script>
 
