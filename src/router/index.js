@@ -60,6 +60,15 @@ const routes = [
   ...UserRoutes,
 
   {
+    path: "/unauthorized",
+    name: "unauthorized",
+    component: () =>
+      import(
+        /* webpackChunkName: "unauthorized" */ "@/views/Unauthorized.vue"
+      ),
+  },
+
+  {
     path: "*",
     name: "notfound",
     component: () =>
