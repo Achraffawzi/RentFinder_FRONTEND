@@ -90,7 +90,7 @@ export default {
         { title: "Log in", routeName: "login" },
         { title: "Sign up", routeName: "signup" },
         { title: "Favorite", routeName: "favorite" },
-        { title: "Profile", routeName: "usersettings" },
+        { title: "Profile", routeName: "usereditprofile" },
         { title: "Log out", routeName: "logout" },
       ],
     };
