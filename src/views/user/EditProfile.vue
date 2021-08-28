@@ -118,6 +118,7 @@
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api.js";
 let filePicker = document.querySelector("#filePicker");
 export default {
   name: "EditProfile",
@@ -155,7 +156,20 @@ export default {
     }
   },
 
+  mounted() {
+    this.getUserInfo();
+  },
+
   methods: {
+    async getUserInfo() {
+      const req = createApiEndPoints(END_POINTS.GET_USER_INFO);
+      const res = await req.fetch();
+      this.profileInfo.FirstName = res.data.FirstName;
+      this.profileInfo.LastName = res.data.LastName;
+      this.profileInfo.PhoneNumber = res.data.PhoneNumber;
+      this.profileInfo.City = res.data.City;
+    },
+
     openFileUplaod() {
       filePicker.click();
     },
