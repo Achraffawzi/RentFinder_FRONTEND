@@ -48,7 +48,7 @@
       <!-- Avatar template -->
       <template v-slot:[`item.Avatar`]="{ item }">
         <v-avatar size="48">
-          <img :src="item.Avatar" alt="avatar" />
+          <img :src="'http://localhost:4000/static/images/user/' + item.Avatar" alt="avatar" />
         </v-avatar>
       </template>
       <!-- Dialog template -->
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api.js";
 export default {
   name: "HouseOwners",
 
@@ -138,25 +139,14 @@ export default {
   },
 
   methods: {
-    initialize() {
-      this.houseOwners = [
-        {
-          FirstName: "Sergio",
-          LastName: "Ramos",
-          PhoneNumber: "9910294855",
-          City: "Paris",
-          Avatar:
-            "https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg",
-        },
-        {
-          FirstName: "Achraf",
-          LastName: "FAWZI",
-          PhoneNumber: "9910294855",
-          City: "London",
-          Avatar:
-            "https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg",
-        },
-      ];
+    async initialize() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ALL_USERS);
+        const response = await req.fetch();
+        this.users = response.data.houseOwners;
+      } catch (e) {
+        console.log(e);
+      }
     },
 
     sortBy(prop) {

@@ -25,7 +25,9 @@ export const END_POINTS = {
   UPDATE_PROFILE: "profile/me/edit",
   CHANGE_PASSWORD: "profile/me/edit/password",
 
-  GET_ANALYTICS: "analytics/"
+  GET_ANALYTICS: "analytics/",
+
+  GET_ALL_USERS: "admin/users/all",
 };
 
 export const authAxois = axios.create({
