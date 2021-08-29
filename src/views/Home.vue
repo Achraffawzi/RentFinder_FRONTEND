@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Banner />
-    <GlobalStatistics />
+    <GlobalStatistics :statistics="statistics"/>
 
     <!-- Featured Houses -->
     <section class="featured-houses py-10">
@@ -41,6 +41,7 @@ export default {
       // START HERE
       featuredAnnouncements: null,
       feedbacks: [],
+      statistics: null,
     };
   },
 
@@ -51,17 +52,26 @@ export default {
   },
 
   mounted() {
+    this.getAnalytics();
     this.getFeaturedAnnouncements();
     this.getFeedbacks();
   },
 
   methods: {
+    async getAnalytics() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ANALYTICS);
+        const response = await req.fetch();
+        this.statistics = response.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
     async getFeaturedAnnouncements() {
       try {
         const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS);
         const response = await req.fetch();
-        console.log(response);
-        // this.featuredAnnouncements = [...response.data.slice(0, 4), isFaved = false];
         this.featuredAnnouncements = response.data.slice(0, 4);
       } catch (e) {
         console.log(e);

@@ -23,6 +23,8 @@ export const END_POINTS = {
 
   GET_USER_INFO: "profile/me",
   UPDATE_PROFILE: "profile/me/edit",
+
+  GET_ANALYTICS: "analytics/"
 };
 
 export const authAxois = axios.create({

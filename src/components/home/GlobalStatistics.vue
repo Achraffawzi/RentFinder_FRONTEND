@@ -5,14 +5,14 @@
         <v-col
           cols="12"
           sm="4"
-          v-for="stat in statistics"
-          :key="stat.title"
+          v-for="(value, propertyName) in statistics"
+          :key="propertyName"
           class="stat-col"
         >
           <h4 class="text-h4 font-weight-black">
-            {{ formatStats(stat.value) }}
+            {{ formatStats(value) }}
           </h4>
-          <p class="third--text">{{ stat.title }}</p>
+          <p class="third--text">{{ propertyName }}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -22,15 +22,14 @@
 <script>
 export default {
   name: "GlobalStatistics",
-  data() {
-    return {
-      statistics: [
-        { title: "Total House owners", value: 1300 },
-        { title: "Total users", value: 44030 },
-        { title: "Total Announcements", value: 300 },
-      ],
-    };
+
+  props: {
+    statistics: {
+      type: Object,
+      required: true,
+    }
   },
+
   methods: {
     // Format the stats values
     formatStats(value) {
