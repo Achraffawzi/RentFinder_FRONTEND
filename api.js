@@ -9,20 +9,21 @@ export const END_POINTS = {
   AUTH_CONFIRM_EMAIL: "auth/confirm",
   AUTH_FORGET_PASSWORD: "auth/forgetpassword",
   AUTH_RESET_PASSWORD: "auth/resetpassword",
-
+  
   GET_ANNOUNCEMENTS: "announcements/",
   GET_ANNOUNCEMENTS_OF_USER: "announcements/mine",
   GET_ANNOUNCEMENT_BY_ID: "announcements/",
   DELETE_ANNOUNCEMENT: "announcements/",
-
+  
   GET_FEEDBACKS: "feedback/",
-
+  
   GET_FAVORITES: "favorite/all",
   CREATE_FAVORITE: "favorite/add",
   DELETE_FAVORITE: "favorite/delete",
-
+  
   GET_USER_INFO: "profile/me",
   UPDATE_PROFILE: "profile/me/edit",
+  CHANGE_PASSWORD: "profile/me/edit/password",
 
   GET_ANALYTICS: "analytics/"
 };

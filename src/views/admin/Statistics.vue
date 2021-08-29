@@ -2,9 +2,10 @@
   <div class="statistics">
     <!-- Statistic numbers -->
     <v-row>
-      <v-col cols="12" sm="4" v-for="item in houseNumbers" :key="item.title">
+      <!-- <v-col cols="12" sm="4" v-for="item in houseNumbers" :key="item.title">
         <DashboardNumbers :data="item" />
-      </v-col>
+      </v-col> -->
+      <GlobalStatistics :statistics="statistics"/>
     </v-row>
 
     <!-- Charts -->
@@ -30,35 +31,22 @@
 </template>
 
 <script>
-import DashboardNumbers from "@/components/DashboardNumbers.vue";
+import { createApiEndPoints, END_POINTS } from "../../../api.js";
+import GlobalStatistics from "@/components/home/GlobalStatistics.vue";
+// import DashboardNumbers from "@/components/DashboardNumbers.vue";
 // import VueApexCharts from 'vue-apexcharts'
 export default {
   name: "Statistics",
 
   components: {
-    DashboardNumbers,
+    // DashboardNumbers,
     // VueApexCharts,
+    GlobalStatistics
   },
 
   data() {
     return {
-      houseNumbers: [
-        {
-          title: "Available Houses",
-          icon: "event_available",
-          value: 10,
-        },
-        {
-          title: "Rented Houses",
-          icon: "event_busy",
-          value: 3,
-        },
-        {
-          title: "Total Houses",
-          icon: "functions",
-          value: 13,
-        },
-      ],
+      statistics: null,
 
       // Graph data
       options: {
@@ -76,6 +64,22 @@ export default {
         },
       ],
     };
+  },
+
+  mounted() {
+    this.getAnalytics();
+  },
+
+  methods: {
+    async getAnalytics() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ANALYTICS);
+        const response = await req.fetch();
+        this.statistics = response.data;
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>

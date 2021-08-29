@@ -6,7 +6,7 @@
     <h5 class="text-h5 font-weight-bold">Change password</h5>
     <v-form ref="changePasswordForm">
       <v-text-field
-      v-model="passwords.currentPassword"
+        v-model="oldPassword"
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
         :type="show1 ? 'text' : 'password'"
@@ -18,7 +18,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="passwords.newPassword"
+        v-model="newPassword"
         :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
         :type="show2 ? 'text' : 'password'"
@@ -30,7 +30,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="passwords.confirmNewPassword"
+        v-model="confirmPassword"
         :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="confirmPasswordRule"
         :type="show3 ? 'text' : 'password'"
@@ -76,11 +76,9 @@ export default {
       //#endregion
 
       //#region Input models
-      passwords: {
-        currentPassword: "",
-        newPassword: "",
-        confirmNewPassword: "",
-      },
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
       //#endregion
 
       //#region Input rules
@@ -89,8 +87,7 @@ export default {
           password.length >= 8 || "Password must be at least 8 characters",
       ],
       confirmPasswordRule: [
-        (password) =>
-          password === this.passwords.newPassword || "Password not match",
+        (password) => password === this.newPassword || "Password not match",
       ],
       //#endregion
 
@@ -115,29 +112,37 @@ export default {
       this.loading = true;
       if (this.$refs.changePasswordForm.validate()) {
         try {
-          const req = createApiEndPoints(END_POINTS.AUTH_FORGET_PASSWORD);
-          const response = await req.create({ ...this.passwords });
-          console.log(response);
+          let reqObj = {
+            oldPassword: this.oldPassword,
+            newPassword: this.newPassword,
+            confirmPassword: this.confirmPassword,
+          };
+          const req = createApiEndPoints(END_POINTS.CHANGE_PASSWORD);
+          await req.update({ ...reqObj });
+
           this.alertData = {
             alertMessage: "Password has been changed successfully",
             alertColor: "success",
             alertIcon: "check",
           };
+
+          this.$refs.changePasswordForm.reset();
         } catch (e) {
-          console.log("forget error");
+          this.loading = false;
           this.alertData = {
-            alertMessage: "Something went wrong! please try again",
+            alertMessage: " your old password might be incorrect",
             alertColor: "error",
             alertIcon: "error",
           };
         }
       } else {
         this.alertData = {
-          alertMessage: "Please verify password fields",
+          alertMessage: "Please verify pasword fields",
           alertColor: "error",
           alertIcon: "error",
         };
       }
+
       this.loading = false;
     },
   },

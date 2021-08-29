@@ -6,7 +6,7 @@
     <h5 class="text-h5 font-weight-bold">Change password</h5>
     <v-form ref="changePasswordForm">
       <v-text-field
-        v-model="currentPassword"
+        v-model="oldPassword"
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="passwordRule"
         :type="show1 ? 'text' : 'password'"
@@ -30,7 +30,7 @@
       ></v-text-field>
 
       <v-text-field
-        v-model="confirmNewPassword"
+        v-model="confirmPassword"
         :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="confirmPasswordRule"
         :type="show3 ? 'text' : 'password'"
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api.js";
 import BaseAlert from "@/components/BaseAlert.vue";
 export default {
   name: "ChangePassword",
@@ -75,9 +76,9 @@ export default {
       //#endregion
 
       //#region Input models
-      currentPassword: "",
+      oldPassword: "",
       newPassword: "",
-      confirmNewPassword: "",
+      confirmPassword: "",
       //#endregion
 
       //#region Input rules
@@ -107,14 +108,33 @@ export default {
   },
 
   methods: {
-    onChangePassword() {
+    async onChangePassword() {
+      this.loading = true;
       if (this.$refs.changePasswordForm.validate()) {
-        console.log("ok");
-        this.alertData = {
-          alertMessage: "nice!",
-          alertColor: "success",
-          alertIcon: "check",
-        };
+        try {
+          let reqObj = {
+            oldPassword: this.oldPassword,
+            newPassword: this.newPassword,
+            confirmPassword: this.confirmPassword,
+          };
+          const req = createApiEndPoints(END_POINTS.CHANGE_PASSWORD);
+          await req.update({ ...reqObj });
+
+          this.alertData = {
+            alertMessage: "Password has been changed successfully",
+            alertColor: "success",
+            alertIcon: "check",
+          };
+
+          this.$refs.changePasswordForm.reset();
+        } catch (e) {
+          this.loading = false;
+          this.alertData = {
+            alertMessage: " your old password might be incorrect",
+            alertColor: "error",
+            alertIcon: "error",
+          };
+        }
       } else {
         this.alertData = {
           alertMessage: "Please verify pasword fields",
@@ -122,6 +142,8 @@ export default {
           alertIcon: "error",
         };
       }
+
+      this.loading = false;
     },
   },
 };

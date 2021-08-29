@@ -42,7 +42,7 @@
       <v-divider></v-divider>
 
       <v-list nav shaped>
-        <v-list-item-group v-model="drawer">
+        <v-list-item-group>
           <v-list-item
             v-for="item in links"
             :key="item.title"
@@ -61,7 +61,7 @@
         </v-list-item-group>
       </v-list>
       <v-list nav shaped>
-        <v-list-item-group v-model="drawer">
+        <v-list-item-group>
           <v-list-item @click="onSignout">
             <v-list-item-icon>
               <v-icon small class="white--text">logout</v-icon>
