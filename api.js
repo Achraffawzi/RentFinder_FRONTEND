@@ -17,6 +17,7 @@ export const END_POINTS = {
 
   GET_FEEDBACKS: "feedback/",
 
+  GET_FAVORITES: "favorite/all",
   CREATE_FAVORITE: "favorite/add",
   DELETE_FAVORITE: "favorite/delete",
 

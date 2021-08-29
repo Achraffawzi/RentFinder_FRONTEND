@@ -127,7 +127,7 @@ export default {
           this.$router.push({ name: pathName });
         } catch (e) {
           this.alertData = {
-            alertMessage: "Please confirm your email to login",
+            alertMessage: "Email or password incorrect",
             alertColor: "error",
             alertIcon: "error",
           };

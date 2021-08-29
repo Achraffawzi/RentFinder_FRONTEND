@@ -72,7 +72,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
-            <span @click="onSignout" style="cursor: pointer;">Signout</span>
+            <span @click="onSignout" style="cursor: pointer;" v-if="getUser !== {}">Signout</span>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -103,7 +103,7 @@ export default {
         { title: "Profile", routeName: "usereditprofile" },
       ];
 
-      if(this.getUser === null || this.getUser === undefined) {
+      if(this.getUser == null || this.getUser == undefined || localStorage.getItem('L_T') == null || localStorage.getItem('L_T') == undefined) {
         links = [
           { title: "Log in", routeName: "login" },
           { title: "Sign up", routeName: "signup" },

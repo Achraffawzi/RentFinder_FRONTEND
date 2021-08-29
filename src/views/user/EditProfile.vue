@@ -207,12 +207,21 @@ export default {
 
       if (this.$refs.formUpdate.validate()) {
         try {
+          let user = {
+            firstName: this.userInfo.FirstName,
+            lastName: this.userInfo.LastName,
+            phoneNumber: this.userInfo.PhoneNumber,
+            city: this.userInfo.City,
+            userName: this.userInfo.FirstName + "" + this.userInfo.LastName,
+          }
           const req = createApiEndPoints(END_POINTS.UPDATE_PROFILE);
-          const res = await req.update({
-            ...this.userInfo,
-            UserName: this.userInfo.FirstName + "" + this.userInfo.LastName,
-          });
-          console.log(res);
+          await req.update({...user});
+          this.loadingProfile = false;
+          this.alertData = {
+            alertMessage: "Your profile has been updated successfully",
+            alertColor: "success",
+            alertIcon: "check",
+          };
         } catch (e) {
           console.log(e);
           this.loadingProfile = false;

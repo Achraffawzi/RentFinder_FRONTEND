@@ -14,7 +14,7 @@
         <!-- :to="{ name: 'announcementdetails', params: { id: item.Id }}" -->
         <v-card class="mx-auto" outlined>
           <v-img
-            :src="item.Photos.split(' ')[0]"
+            :src="item.Photos ? item.Photos.split(' ')[0] : 'https://www.rocketmortgage.com/resources-cmsassets/RocketMortgage.com/Article_Images/Large_Images/TypesOfHomes/types-of-homes-hero.jpg'"
             height="200"
             class="align-end justify-space-between white--text"
           >
@@ -64,10 +64,9 @@
             <v-btn v-if="$route.name === 'favorite'" class="error dark"
               >Delete</v-btn
             >
-            <v-btn class="primary">
+            <v-btn class="primary" v-if="$route.name !== 'favorite'">
               <router-link
                 :to="{ path: 'announcementdetails/' + item.Id }"
-                v-if="$route.name !== 'favorite'"
                 class="white--text text-lowercase"
                 >View Details</router-link
               >
@@ -126,7 +125,7 @@ export default {
       if (this.isFaved) {
         try {
           const req = createApiEndPoints(END_POINTS.CREATE_FAVORITE);
-          const response = await req.create({ announcementId: announcementID });
+          const response = await req.create({ announcementId: parseInt(announcementID) });
 
           this.show = true;
           this.snackbarMsg = response.data.message;

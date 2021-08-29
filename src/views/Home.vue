@@ -60,6 +60,7 @@ export default {
       try {
         const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS);
         const response = await req.fetch();
+        console.log(response);
         // this.featuredAnnouncements = [...response.data.slice(0, 4), isFaved = false];
         this.featuredAnnouncements = response.data.slice(0, 4);
       } catch (e) {
