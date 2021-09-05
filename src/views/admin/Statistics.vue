@@ -1,12 +1,12 @@
 <template>
   <div class="statistics">
     <!-- Statistic numbers -->
-    <v-row>
+    <!-- <v-row> -->
       <!-- <v-col cols="12" sm="4" v-for="item in houseNumbers" :key="item.title">
         <DashboardNumbers :data="item" />
       </v-col> -->
-      <GlobalStatistics v-if="statistics" :statistics="statistics"/>
-    </v-row>
+      <GlobalStatistics class="pt-0" v-if="statistics" :statistics="statistics"/>
+    <!-- </v-row> -->
 
     <!-- Charts -->
     <v-row>

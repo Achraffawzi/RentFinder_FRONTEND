@@ -9,10 +9,18 @@
           :key="propertyName"
           class="stat-col"
         >
-          <h4 class="text-h4 font-weight-black">
-            {{ formatStats(value) }}
-          </h4>
-          <p class="third--text">{{ propertyName }}</p>
+          <v-card class="elevation-3 pa-3">
+            <v-card-title class="d-flex align-center justify-space-between flex-wrap">
+              <p class="text-h5 primary--text font-weight-black" style="white-space:nowrap">{{ propertyName }}</p>
+              <v-icon class="primary--text" v-if="propertyName === 'HouseOwners'" large>assignment_ind</v-icon>
+              <v-icon class="primary--text" v-else-if="propertyName === 'Users'" large>person</v-icon>
+              <v-icon class="primary--text" v-else-if="propertyName === 'announcements'" large>description</v-icon>
+            </v-card-title>
+
+            <h4 class="text-h4 third--text font-weight-black text-left">
+              {{ formatStats(value) }}
+            </h4>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -27,7 +35,7 @@ export default {
     statistics: {
       type: Object,
       required: true,
-    }
+    },
   },
 
   methods: {
