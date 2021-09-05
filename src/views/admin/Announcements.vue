@@ -1,5 +1,12 @@
 <template>
   <div class="announcements">
+    <BaseSnackbar
+      v-if="show"
+      :show="show"
+      :message="snackbarMsg"
+      :color="snackbarColor"
+      v-on:closeSnackbar="show = false"
+    />
     <!-- Upper div for sorting and searching -->
     <div
       class="
@@ -80,11 +87,17 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api";
+import BaseSnackbar from "@/components/BaseSnackbar.vue";
 export default {
   name: "Announcements",
 
+  components: { BaseSnackbar },
+
   data() {
     return {
+      show: false,
+      snackbarMsg: "",
+      snackbarColor: "",
       search: "",
       dialogDelete: false,
       headers: [
@@ -177,10 +190,15 @@ export default {
           END_POINTS.DELETE_ANNOUNCEMENT + "" + announcementID + "/delete"
         );
         const response = await req.deleteFromParams();
+
+        this.show = true;
+        this.snackbarMsg = response.data.message;
+        this.snackbarColor = "success";
         console.log(response);
       } catch (e) {
-        console.log(e);
-        console.log("from catch delete");
+        this.show = true;
+        this.snackbarMsg = "something went wrong!";
+        this.snackbarColor = "error";
       }
     },
 

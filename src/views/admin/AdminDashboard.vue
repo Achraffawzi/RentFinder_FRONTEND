@@ -102,7 +102,7 @@ export default {
           icon: "description",
           routeName: "announcements",
         },
-        { title: "Settings", icon: "settings", routeName: "settings" },
+        { title: "Settings", icon: "settings", routeName: "admineditprofile" },
       ],
     };
   },
