@@ -40,7 +40,7 @@
             :to="{ name: link.routeName }"
             >{{ link.title }}</router-link
           >
-          <span class="white--text hidden-sm-and-down ma-4" @click="onSignout" style="cursor: pointer;">Signout</span>
+          <span v-if="getUser" class="white--text hidden-sm-and-down ma-4" @click="onSignout" style="cursor: pointer;">Signout</span>
         </div>
 
         <!-- App Bars -->
@@ -72,7 +72,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
-            <span @click="onSignout" style="cursor: pointer;" v-if="getUser !== {}">Signout</span>
+            <span @click="onSignout" style="cursor: pointer;" v-if="getUser">Signout</span>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -93,7 +93,7 @@ export default {
 
   computed: {
     getUser() {
-      return this.$store.getters.getUser;
+      return localStorage.getItem('L_T') !== null ? true : false;
     },
 
     navbarItems() {
@@ -105,6 +105,7 @@ export default {
 
       if(this.getUser == null || this.getUser == undefined || localStorage.getItem('L_T') == null || localStorage.getItem('L_T') == undefined) {
         links = [
+          { title: "Search for a house", routeName: "search" },
           { title: "Log in", routeName: "login" },
           { title: "Sign up", routeName: "signup" },
         ]
