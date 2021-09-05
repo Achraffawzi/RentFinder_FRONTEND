@@ -1,7 +1,12 @@
 <template>
   <div class="users">
-    <!-- Alert -->
-    <BaseAlert v-if="alertData" :alertData="alertData" />
+    <BaseSnackbar
+      v-if="show"
+      :show="show"
+      :message="snackbarMsg"
+      :color="snackbarColor"
+      v-on:closeSnackbar="show = false"
+    />
     <!-- Upper div for sorting and searching -->
     <div
       class="
@@ -85,15 +90,17 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
-import BaseAlert from "@/components/BaseAlert.vue";
+import BaseSnackbar from "@/components/BaseSnackbar.vue";
 export default {
   name: "Users",
 
-  components: { BaseAlert },
+  components: { BaseSnackbar },
 
   data() {
     return {
-      alertData: null,
+      show: false,
+      snackbarMsg: "",
+      snackbarColor: "",
       search: "",
       dialogDelete: false,
       headers: [
@@ -176,20 +183,21 @@ export default {
       // Impl Delete house owner api
       try {
         const req = createApiEndPoints(END_POINTS.DELETE_USER);
+        console.log("this.editedItem.Id => " + this.editedItem.Id);
         await req.delete({userId: this.editedItem.Id});
-        this.alertData = {
-          alertMessage: "User has been deleted successfully",
-          alertColor: "success",
-          alertIcon: "check",
-        };
+
+
         this.users.splice(this.editedIndex, 1);
+
+
+        this.show = true;
+        this.snackbarMsg = "User has been deleted successfully";
+        this.snackbarColor = "success";
       } catch (e) {
         console.log(e);
-        this.alertData = {
-          alertMessage: "something went wrong!",
-          alertColor: "error",
-          alertIcon: "error",
-        };
+        this.show = true;
+        this.snackbarMsg = "Something went wrong!";
+        this.snackbarColor = "error";
       }
       this.closeDelete();
     },

@@ -1,5 +1,12 @@
 <template>
   <div class="house-owners">
+    <BaseSnackbar
+      v-if="show"
+      :show="show"
+      :message="snackbarMsg"
+      :color="snackbarColor"
+      v-on:closeSnackbar="show = false"
+    />
     <!-- Upper div for sorting and searching -->
     <div
       class="
@@ -48,7 +55,10 @@
       <!-- Avatar template -->
       <template v-slot:[`item.Avatar`]="{ item }">
         <v-avatar size="48">
-          <img :src="'http://localhost:4000/static/images/user/' + item.Avatar" alt="avatar" />
+          <img
+            :src="'http://localhost:4000/static/images/user/' + item.Avatar"
+            alt="avatar"
+          />
         </v-avatar>
       </template>
       <!-- Dialog template -->
@@ -80,10 +90,16 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
+import BaseSnackbar from "@/components/BaseSnackbar.vue";
 export default {
   name: "HouseOwners",
 
+  components: { BaseSnackbar },
+
   data: () => ({
+    show: false,
+    snackbarMsg: "",
+    snackbarColor: "",
     search: "",
     dialogDelete: false,
     headers: [
@@ -159,9 +175,21 @@ export default {
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
+    async deleteItemConfirm() {
       // Impl Delete house owner api
-      this.houseOwners.splice(this.editedIndex, 1);
+      try {
+        const req = createApiEndPoints(END_POINTS.DELETE_USER);
+        await req.delete({userId: this.editedItem.Id});
+        this.houseOwners.splice(this.editedIndex, 1);
+        this.show = true;
+        this.snackbarMsg = "House owner has been deleted successfully";
+        this.snackbarColor = "success";
+      } catch (e) {
+        console.log(e);
+        this.show = true;
+        this.snackbarMsg = "Something went wrong!";
+        this.snackbarColor = "error";
+      }
       this.closeDelete();
     },
 

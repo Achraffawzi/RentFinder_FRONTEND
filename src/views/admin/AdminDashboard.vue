@@ -19,25 +19,25 @@
       >
         RentFinder
       </div>
-      <v-list-item class="custom-list-item">
-        <v-list-item-avatar
+      <!-- <v-list-item class="custom-list-item"> -->
+        <!-- <v-list-item-avatar
           max-width="100"
           height="100"
           width="100"
           class="mx-auto"
         >
           <v-img
-            src="https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg"
+            :src="userInfo.Avatar === 'default-profile-image.jpg' ? 'http://localhost:4000/static/images/user/default-profile-image.jpg' : userInfo.Avatar"
           ></v-img>
-        </v-list-item-avatar>
+        </v-list-item-avatar> -->
 
-        <v-list-item-content class="white--text text-center">
+        <!-- <v-list-item-content class="white--text text-center">
           <v-list-item-title class="font-weight-bold"
-            >Sergio Ramos</v-list-item-title
+            >{{ formatFullname }}</v-list-item-title
           >
           <p class="caption">Admin</p>
         </v-list-item-content>
-      </v-list-item>
+      </v-list-item> -->
 
       <v-divider></v-divider>
 
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { createApiEndPoints, END_POINTS } from "../../../api.js";
 export default {
   name: "AdminDashboard",
 
@@ -104,10 +105,23 @@ export default {
         },
         { title: "Settings", icon: "settings", routeName: "admineditprofile" },
       ],
+      userInfo: null,
     };
   },
 
+  computed: {
+    formatFullname() {
+      return `${this.userInfo.FirstName} ${this.userInfo.LastName}`
+    }
+  },
+
   methods: {
+    async getUserInfo() {
+      const req = createApiEndPoints(END_POINTS.GET_USER_INFO);
+      const res = await req.fetch();
+      this.userInfo = {...res};
+    },
+
     onSignout() {
       this.$store.dispatch("setUser", null);
       localStorage.removeItem("L_T");
