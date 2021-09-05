@@ -5,7 +5,7 @@
       <!-- <v-col cols="12" sm="4" v-for="item in houseNumbers" :key="item.title">
         <DashboardNumbers :data="item" />
       </v-col> -->
-      <GlobalStatistics :statistics="statistics"/>
+      <GlobalStatistics v-if="statistics" :statistics="statistics"/>
     </v-row>
 
     <!-- Charts -->
@@ -76,6 +76,8 @@ export default {
         const req = createApiEndPoints(END_POINTS.GET_ANALYTICS);
         const response = await req.fetch();
         this.statistics = response.data;
+        console.log(response.data);
+        console.log("from 200");
       } catch (e) {
         console.log(e);
       }

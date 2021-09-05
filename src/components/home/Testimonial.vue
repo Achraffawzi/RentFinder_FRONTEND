@@ -17,7 +17,7 @@
       >
         <v-avatar size="100">
           <img
-            src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1026205392%2FBeautiful-luxury-home-exterior-at-twilight%2F960x0.jpg%3Ffit%3Dscale"
+            :src="feedback.Avatar === 'default-profile-image.jpg' ? 'http://localhost:4000/static/images/user/default-profile-image.jpg' : feedback.Avatar"
             alt=""
           />
         </v-avatar>

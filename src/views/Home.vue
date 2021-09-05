@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Banner />
-    <GlobalStatistics :statistics="statistics"/>
+    <GlobalStatistics v-if="statistics" :statistics="statistics"/>
 
     <!-- Featured Houses -->
     <section class="featured-houses py-10">

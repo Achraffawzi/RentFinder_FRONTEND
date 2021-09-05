@@ -1,5 +1,7 @@
 <template>
   <div class="users">
+    <!-- Alert -->
+    <BaseAlert v-if="alertData" :alertData="alertData" />
     <!-- Upper div for sorting and searching -->
     <div
       class="
@@ -48,7 +50,10 @@
       <!-- Avatar template -->
       <template v-slot:[`item.Avatar`]="{ item }">
         <v-avatar size="48">
-          <img :src="'http://localhost:4000/static/images/user/' + item.Avatar" alt="avatar" />
+          <img
+            :src="'http://localhost:4000/static/images/user/' + item.Avatar"
+            alt="avatar"
+          />
         </v-avatar>
       </template>
       <!-- Dialog template -->
@@ -80,11 +85,15 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
+import BaseAlert from "@/components/BaseAlert.vue";
 export default {
   name: "Users",
 
+  components: { BaseAlert },
+
   data() {
     return {
+      alertData: null,
       search: "",
       dialogDelete: false,
       headers: [
@@ -114,6 +123,7 @@ export default {
       users: [],
       editedIndex: -1,
       editedItem: {
+        Id: 0,
         FirstName: "",
         LastName: "",
         PhoneNumber: "",
@@ -121,6 +131,7 @@ export default {
         Avatar: "",
       },
       defaultItem: {
+        Id: 0,
         FirstName: "",
         LastName: "",
         PhoneNumber: "",
@@ -161,9 +172,25 @@ export default {
       this.dialogDelete = true;
     },
 
-    deleteItemConfirm() {
+    async deleteItemConfirm() {
       // Impl Delete house owner api
-      this.users.splice(this.editedIndex, 1);
+      try {
+        const req = createApiEndPoints(END_POINTS.DELETE_USER);
+        await req.delete({userId: this.editedItem.Id});
+        this.alertData = {
+          alertMessage: "User has been deleted successfully",
+          alertColor: "success",
+          alertIcon: "check",
+        };
+        this.users.splice(this.editedIndex, 1);
+      } catch (e) {
+        console.log(e);
+        this.alertData = {
+          alertMessage: "something went wrong!",
+          alertColor: "error",
+          alertIcon: "error",
+        };
+      }
       this.closeDelete();
     },
 

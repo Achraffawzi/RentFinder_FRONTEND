@@ -17,6 +17,7 @@
             :src="item.Photos ? item.Photos.split(' ')[0] : 'https://www.rocketmortgage.com/resources-cmsassets/RocketMortgage.com/Article_Images/Large_Images/TypesOfHomes/types-of-homes-hero.jpg'"
             height="200"
             class="align-end justify-space-between white--text"
+            gradient="to bottom, rgba(100,115,201,.33), rgba(104, 123, 238, .33)"
           >
             <v-card-title class="justify-space-between">
               <h5 class="text-h5 font-weight-bold">${{ item.Price }}/night</h5>

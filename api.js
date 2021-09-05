@@ -28,6 +28,7 @@ export const END_POINTS = {
   GET_ANALYTICS: "analytics/",
 
   GET_ALL_USERS: "admin/users/all",
+  DELETE_USER: "admin/users/delete",
 };
 
 export const authAxois = axios.create({
