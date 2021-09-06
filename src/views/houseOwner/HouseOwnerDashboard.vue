@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard">
-    <v-container v-if="announcements.length > 0">
-      length: {{ announcements.length }}
+    <v-container>
       <!-- Logout btn -->
       <v-row>
         <v-col cols="12" sm="2" offset-sm="10">
@@ -13,11 +12,11 @@
       </v-row>
 
       <!-- Statistic numbers -->
-      <v-row>
+      <!-- <v-row>
         <v-col cols="12" sm="4" v-for="item in houseNumbers" :key="item.title">
           <DashboardNumbers :data="item" />
         </v-col>
-      </v-row>
+      </v-row> -->
 
       <!-- Data Table -->
       <v-data-table
@@ -131,11 +130,11 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
-import DashboardNumbers from "@/components/DashboardNumbers.vue";
+// import DashboardNumbers from "@/components/DashboardNumbers.vue";
 export default {
   name: "HouseOwnerDashboard",
   components: {
-    DashboardNumbers,
+    // DashboardNumbers,
   },
   data() {
     return {
@@ -162,7 +161,6 @@ export default {
         { text: "Total Bedrooms", value: "TotalBedrooms" },
         { text: "Surface", value: "Surface" },
         { text: "Available", value: "IsAvailable" },
-        { text: "Photos", value: "Photos" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       //#endregion
@@ -173,7 +171,6 @@ export default {
       editedItem: {
         id: 0,
         title: "",
-        photos: "",
         city: "",
         price: 0,
         description: "",
@@ -188,7 +185,6 @@ export default {
       defaultItem: {
         id: 0,
         title: "",
-        photos: "",
         city: "",
         price: 0,
         description: "",
@@ -203,23 +199,23 @@ export default {
       //#endregion
 
       //#region Statistics Numbers
-      houseNumbers: [
-        {
-          title: "Available Houses",
-          icon: "event_available",
-          value: this.getHouseAnalytic("Available Houses"),
-        },
-        {
-          title: "Rented Houses",
-          icon: "event_busy",
-          value: this.getHouseAnalytic("Rented Houses"),
-        },
-        {
-          title: "Total Houses",
-          icon: "functions",
-          value: this.announcements.length,
-        },
-      ],
+      // houseNumbers: [
+      //   {
+      //     title: "Available Houses",
+      //     icon: "event_available",
+      //     value: this.getHouseAnalytic("Available Houses"),
+      //   },
+      //   {
+      //     title: "Rented Houses",
+      //     icon: "event_busy",
+      //     value: this.getHouseAnalytic("Rented Houses"),
+      //   },
+      //   {
+      //     title: "Total Houses",
+      //     icon: "functions",
+      //     value: this.announcements.length,
+      //   },
+      // ],
       //#endregion
     };
   },
@@ -241,7 +237,7 @@ export default {
 
   mounted() {
     this.initialize();
-    console.log("this.announcements ===> " + this.announcements);
+    // console.log("this.announcements ===> " + this.announcements);
   },
 
   methods: {
@@ -254,14 +250,15 @@ export default {
         console.log(e);
       }
     },
-    getHouseAnalytic(availability) {
-      console.log("****************************inside anal****************************");
-      if (availability === "Available Houses") {
-        return this.announcements.filter((ann) => ann.isAvailable).length;
-      } else if (availability === "Rented Houses") {
-        return this.announcements.filter((ann) => !ann.isAvailable).length;
-      }
-    },
+    // getHouseAnalytic(availability) {
+    //   console.log("****************************inside anal****************************");
+    //   console.log("anns => " + this.announcements);
+    //   if (availability === "Available Houses") {
+    //     return this.announcements.filter((ann) => ann.isAvailable).length;
+    //   } else if (availability === "Rented Houses") {
+    //     return this.announcements.filter((ann) => !ann.isAvailable).length;
+    //   }
+    // },
     editItem(item) {
       this.editedIndex = this.announcements.indexOf(item);
       this.editedItem = Object.assign({}, item);

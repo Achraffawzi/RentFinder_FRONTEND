@@ -7,7 +7,8 @@
     <section class="featured-houses py-10">
       <v-container>
         <h4 class="text-h4 font-weight-bold mb-10">Featured Houses</h4>
-        <CardAnnouncement :result="featuredAnnouncements" />
+        <CardAnnouncement :result="featuredAnnouncements" v-if="featuredAnnouncements.length > 0" />
+          <p v-else class="third--text text-h5 font-weight-medium">There are no featured houses yet</p>
       </v-container>
     </section>
 

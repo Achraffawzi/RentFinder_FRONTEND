@@ -8,6 +8,7 @@ export default [
       ),
     meta: {
       requiresAuth: true,
+      authorizedRoles: ["Admin"]
     },
     children: [
       {
@@ -19,6 +20,7 @@ export default [
           ),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["Admin"]
         },
       },
 
@@ -31,6 +33,7 @@ export default [
           ),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["Admin"]
         },
       },
 
@@ -41,6 +44,7 @@ export default [
           import(/* webpackChunkName: "users" */ "@/views/admin/Users.vue"),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["Admin"]
         },
       },
 
@@ -53,6 +57,7 @@ export default [
           ),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["Admin"]
         },
       },
 
@@ -65,6 +70,7 @@ export default [
           ),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["Admin"]
         },
         children: [
           {
@@ -76,6 +82,7 @@ export default [
               ),
             meta: {
               requiresAuth: true,
+              authorizedRoles: ["Admin"]
             },
           },
 
@@ -88,6 +95,7 @@ export default [
               ),
             meta: {
               requiresAuth: true,
+              authorizedRoles: ["Admin"]
             },
           },
         ],

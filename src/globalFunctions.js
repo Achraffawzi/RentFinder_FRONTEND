@@ -37,7 +37,7 @@ export function getUserPathName(token) {
 export function getRoleFromToken(token) {
   // Convert the JWT To Object
   let tokenObj = tokenToObj(token);
-  return tokenObj.role;
+  return tokenObj.user.role;
 }
 
 export function getUserObjFromToken(token) {

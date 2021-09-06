@@ -7,6 +7,7 @@ export default [
     props: true,
     meta: {
       requiresAuth: true,
+      authorizedRoles: ["User"]
     },
   },
   {
@@ -19,6 +20,7 @@ export default [
     props: true,
     meta: {
       requiresAuth: true,
+      authorizedRoles: ["User"]
     },
     children: [
       {
@@ -30,6 +32,7 @@ export default [
           ),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["User"]
         },
       },
 
@@ -42,6 +45,7 @@ export default [
           ),
         meta: {
           requiresAuth: true,
+          authorizedRoles: ["User"]
         },
       },
     ],

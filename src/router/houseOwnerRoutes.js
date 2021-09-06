@@ -9,6 +9,7 @@ export default [
     props: true,
     meta: {
       requiresAuth: true,
+      authorizedRoles: ["HouseOwner"]
     },
   },
 ];
