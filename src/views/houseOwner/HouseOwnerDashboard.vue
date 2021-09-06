@@ -12,11 +12,11 @@
       </v-row>
 
       <!-- Statistic numbers -->
-      <!-- <v-row>
+      <v-row v-if="analytics !== null">
         <v-col cols="12" sm="4" v-for="item in houseNumbers" :key="item.title">
           <DashboardNumbers :data="item" />
         </v-col>
-      </v-row> -->
+      </v-row>
 
       <!-- Data Table -->
       <v-data-table
@@ -125,7 +125,11 @@
                       ></v-select>
                     </v-row>
                     <v-row>
-                      <v-file-input multiple label="Photos" v-model="editedItem.photos"></v-file-input>
+                      <v-file-input
+                        multiple
+                        label="Photos"
+                        v-model="editedItem.photos"
+                      ></v-file-input>
                     </v-row>
                   </v-container>
                 </v-card-text>
@@ -174,11 +178,11 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
-// import DashboardNumbers from "@/components/DashboardNumbers.vue";
+import DashboardNumbers from "@/components/DashboardNumbers.vue";
 export default {
   name: "HouseOwnerDashboard",
   components: {
-    // DashboardNumbers,
+    DashboardNumbers,
   },
   data() {
     return {
@@ -245,23 +249,8 @@ export default {
       //#endregion
 
       //#region Statistics Numbers
-      // houseNumbers: [
-      //   {
-      //     title: "Available Houses",
-      //     icon: "event_available",
-      //     value: this.getHouseAnalytic("Available Houses"),
-      //   },
-      //   {
-      //     title: "Rented Houses",
-      //     icon: "event_busy",
-      //     value: this.getHouseAnalytic("Rented Houses"),
-      //   },
-      //   {
-      //     title: "Total Houses",
-      //     icon: "functions",
-      //     value: this.announcements.length,
-      //   },
-      // ],
+      analytics: null,
+      houseNumbers: null,
       //#endregion
     };
   },
@@ -283,7 +272,7 @@ export default {
 
   mounted() {
     this.initialize();
-    // console.log("this.announcements ===> " + this.announcements);
+    this.getHousesAnalytics();
   },
 
   methods: {
@@ -296,15 +285,34 @@ export default {
         console.log(e);
       }
     },
-    // getHouseAnalytic(availability) {
-    //   console.log("****************************inside anal****************************");
-    //   console.log("anns => " + this.announcements);
-    //   if (availability === "Available Houses") {
-    //     return this.announcements.filter((ann) => ann.isAvailable).length;
-    //   } else if (availability === "Rented Houses") {
-    //     return this.announcements.filter((ann) => !ann.isAvailable).length;
-    //   }
-    // },
+
+    async getHousesAnalytics() {
+      try {
+        const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS_ANALYTICS);
+        const response = await req.fetch();
+        this.analytics = response.data;
+        this.houseNumbers = [
+          {
+            title: "Available Houses",
+            icon: "event_available",
+            value: this.analytics?.housesAvailable,
+          },
+          {
+            title: "Rented Houses",
+            icon: "event_busy",
+            value: this.analytics?.housesNotAvailable,
+          },
+          {
+            title: "Total Houses",
+            icon: "functions",
+            value: this.analytics?.totalHouses,
+          },
+        ];
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
     editItem(item) {
       this.editedIndex = this.announcements.indexOf(item);
       this.editedItem = Object.assign({}, item);
