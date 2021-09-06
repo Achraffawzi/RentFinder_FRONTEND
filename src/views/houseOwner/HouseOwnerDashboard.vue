@@ -22,7 +22,7 @@
       <v-data-table
         :headers="headers"
         :items="announcements"
-        sort-by="calories"
+        sort-by="Price"
         class="elevation-1 mt-16"
       >
         <template v-slot:top>
@@ -41,7 +41,7 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  New Item
+                  New Announcement
                 </v-btn>
               </template>
               <v-card>
@@ -54,34 +54,78 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.name"
-                          label="Dessert name"
+                          v-model="editedItem.title"
+                          label="title"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.calories"
-                          label="Calories"
+                          v-model="editedItem.city"
+                          label="city"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.fat"
-                          label="Fat (g)"
+                          v-model="editedItem.price"
+                          label="price"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.totalfloors"
+                          label="totalfloors"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.carbs"
-                          label="Carbs (g)"
+                          v-model="editedItem.totalbathrooms"
+                          label="totalbathrooms"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.protein"
-                          label="Protein (g)"
+                          v-model="editedItem.totallivingrooms"
+                          label="totalbathrooms"
                         ></v-text-field>
                       </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.totalkitchens"
+                          label="totalkitchens"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.totalbedrooms"
+                          label="totalbedrooms"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.surface"
+                          label="surface"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-textarea
+                        label="Description"
+                        v-model="editedItem.description"
+                      ></v-textarea>
+                    </v-row>
+                    <v-row>
+                      <v-select
+                        label="Available"
+                        :items="['Yes', 'No']"
+                        v-model="editedItem.isAvailable"
+                      ></v-select>
+                    </v-row>
+                    <v-row>
+                      <v-file-input multiple label="Photos" v-model="editedItem.photos"></v-file-input>
                     </v-row>
                   </v-container>
                 </v-card-text>
@@ -171,6 +215,7 @@ export default {
       editedItem: {
         id: 0,
         title: "",
+        photos: "",
         city: "",
         price: 0,
         description: "",
@@ -185,6 +230,7 @@ export default {
       defaultItem: {
         id: 0,
         title: "",
+        photos: "",
         city: "",
         price: 0,
         description: "",
@@ -222,7 +268,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "New Announcement" : "Edit Announcement";
     },
   },
 
