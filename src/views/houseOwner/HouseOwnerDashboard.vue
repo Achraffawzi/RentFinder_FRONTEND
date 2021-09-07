@@ -32,6 +32,9 @@
         sort-by="Price"
         class="elevation-1 mt-16"
       >
+        <template v-slot:[`item.Price`]="{ item }">
+          <span class="font-weight-bold">${{ item.Price }}</span>
+        </template>
         <template v-slot:[`item.IsAvailable`]="{ item }">
           <v-chip :color="getColor(item.IsAvailable)" dark>
             {{ formatAvailability(item.IsAvailable) }}

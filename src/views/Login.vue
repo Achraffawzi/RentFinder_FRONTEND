@@ -124,7 +124,9 @@ export default {
             getUserObjFromToken(response.data.token)
           );
           let pathName = getUserPathName(response.data.token);
-          this.$router.push({ name: pathName });
+          this.$router.push({ name: pathName }, () => {
+            location.reload();
+          });
         } catch (e) {
           this.alertData = {
             alertMessage: "Email or password incorrect",
