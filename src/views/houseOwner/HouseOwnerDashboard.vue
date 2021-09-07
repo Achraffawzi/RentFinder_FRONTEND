@@ -32,6 +32,11 @@
         sort-by="Price"
         class="elevation-1 mt-16"
       >
+        <template v-slot:[`item.IsAvailable`]="{ item }">
+          <v-chip :color="getColor(item.IsAvailable)" dark>
+            {{ formatAvailability(item.IsAvailable) }}
+          </v-chip>
+        </template>
         <template v-slot:top>
           <v-toolbar flat>
             <v-toolbar-title>
@@ -124,13 +129,13 @@
                         v-model="editedItem.description"
                       ></v-textarea>
                     </v-row>
-                    <v-row>
+                    <!-- <v-row>
                       <v-select
                         label="Available"
                         :items="['Yes', 'No']"
                         v-model="editedItem.isAvailable"
                       ></v-select>
-                    </v-row>
+                    </v-row> -->
                   </v-container>
                 </v-card-text>
 
@@ -169,7 +174,11 @@
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="dialogImagesUpload = false">
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="dialogImagesUpload = false"
+                        >
                           Save
                         </v-btn>
                       </v-card-actions>
@@ -266,7 +275,6 @@ export default {
       editedItem: {
         id: 0,
         title: "",
-        photos: "",
         city: "",
         price: 0,
         description: "",
@@ -377,6 +385,46 @@ export default {
       }
     },
 
+    async onCreateAnnouncement() {
+      try {
+        console.log("inside try");
+        let newAnnouncement = {
+          title: this.editedItem.title,
+          description: this.editedItem.description,
+          isAvailable: this.editedItem.isAvailable,
+          totalLivingrooms: parseInt(this.editedItem.totallivingrooms),
+          totalBathrooms: parseInt(this.editedItem.totalbathrooms),
+          totalBedrooms: parseInt(this.editedItem.totalbedrooms),
+          totalFloors: parseInt(this.editedItem.totalfloors),
+          totalKitchens: parseInt(this.editedItem.totalkitchens),
+          location: this.editedItem.city,
+          surface: parseInt(this.editedItem.surface),
+          price: parseFloat(this.editedItem.price),
+        };
+        console.log("finishing object");
+        console.log(newAnnouncement.price);
+
+        const req = createApiEndPoints(END_POINTS.CREATE_ANNOUNCEMENT);
+        const response = await req.create({ ...newAnnouncement });
+
+        this.show = true;
+        this.snackbarMsg = response.data.message;
+        this.snackbarColor = "success";
+      } catch (e) {
+        this.show = true;
+        this.snackbarMsg = "something went wrong!";
+        this.snackbarColor = "error";
+      }
+    },
+
+    formatAvailability(availability) {
+      return availability ? 'Yes' : 'No';
+    },
+
+    getColor(availability) {
+      return availability ? 'success' : 'red';
+    },
+
     editItem(item) {
       this.editedIndex = this.announcements.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -415,6 +463,8 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.announcements[this.editedIndex], this.editedItem);
       } else {
+        // Impl new announcement functionality
+        this.onCreateAnnouncement();
         this.announcements.push(this.editedItem);
       }
       this.close();

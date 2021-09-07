@@ -10,6 +10,7 @@ export const END_POINTS = {
   AUTH_FORGET_PASSWORD: "auth/forgetpassword",
   AUTH_RESET_PASSWORD: "auth/resetpassword",
   
+  CREATE_ANNOUNCEMENT: "announcements/create",
   GET_ANNOUNCEMENTS: "announcements/",
   GET_ANNOUNCEMENTS_OF_USER: "announcements/mine",
   GET_ANNOUNCEMENT_BY_ID: "announcements/",
