@@ -1,5 +1,6 @@
 <template>
   <div class="dashboard">
+    <Navbar />
     <v-container>
       <BaseSnackbar
         v-if="show"
@@ -8,15 +9,6 @@
         :color="snackbarColor"
         v-on:closeSnackbar="show = false"
       />
-      <!-- Logout btn -->
-      <v-row>
-        <v-col cols="12" sm="2" offset-sm="10">
-          <v-btn @click="onSignout" text depressed>
-            <v-icon>logout</v-icon>
-            <span>Signout</span>
-          </v-btn>
-        </v-col>
-      </v-row>
 
       <!-- Statistic numbers -->
       <v-row v-if="analytics !== null">
@@ -32,9 +24,11 @@
         sort-by="Price"
         class="elevation-1 mt-16"
       >
+        <!-- custom Price template -->
         <template v-slot:[`item.Price`]="{ item }">
           <span class="font-weight-bold">${{ item.Price }}</span>
         </template>
+        <!-- custom availability template -->
         <template v-slot:[`item.IsAvailable`]="{ item }">
           <v-chip :color="getColor(item.IsAvailable)" dark>
             {{ formatAvailability(item.IsAvailable) }}
@@ -224,12 +218,14 @@
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
 import BaseSnackbar from "@/components/BaseSnackbar.vue";
+import Navbar from "@/components/houseOwner/Navbar.vue";
 import DashboardNumbers from "@/components/DashboardNumbers.vue";
 export default {
   name: "HouseOwnerDashboard",
   components: {
-    DashboardNumbers,
+    Navbar,
     BaseSnackbar,
+    DashboardNumbers,
   },
   data() {
     return {
@@ -421,11 +417,11 @@ export default {
     },
 
     formatAvailability(availability) {
-      return availability ? 'Yes' : 'No';
+      return availability ? "Yes" : "No";
     },
 
     getColor(availability) {
-      return availability ? 'success' : 'red';
+      return availability ? "success" : "red";
     },
 
     editItem(item) {
