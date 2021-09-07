@@ -62,19 +62,19 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.title"
-                          label="title"
+                          label="Title"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.city"
-                          label="city"
+                          label="City"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.price"
-                          label="price"
+                          label="Price"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -82,19 +82,19 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.totalfloors"
-                          label="totalfloors"
+                          label="Total floors"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.totalbathrooms"
-                          label="totalbathrooms"
+                          label="Total bathrooms"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.totallivingrooms"
-                          label="totalbathrooms"
+                          label="Total livingrooms"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -102,19 +102,19 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.totalkitchens"
-                          label="totalkitchens"
+                          label="Total kitchens"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.totalbedrooms"
-                          label="totalbedrooms"
+                          label="Total bedrooms"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.surface"
-                          label="surface"
+                          label="Surface"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -131,13 +131,6 @@
                         v-model="editedItem.isAvailable"
                       ></v-select>
                     </v-row>
-                    <v-row>
-                      <v-file-input
-                        multiple
-                        label="Photos"
-                        v-model="editedItem.photos"
-                      ></v-file-input>
-                    </v-row>
                   </v-container>
                 </v-card-text>
 
@@ -146,7 +139,43 @@
                   <v-btn color="blue darken-1" text @click="close">
                     Cancel
                   </v-btn>
-                  <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                  <!-- =================== NEXT DIALOG FOR ANNOUNCEMENT IMAGES UPLOAD ================ -->
+                  <v-dialog v-model="dialogImagesUpload" width="500">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        color="blue darken-1"
+                        text
+                        @click="save"
+                      >
+                        Save and next
+                      </v-btn>
+                    </template>
+
+                    <v-card>
+                      <v-card-title class="text-h5 grey lighten-2">
+                        Upload images
+                      </v-card-title>
+
+                      <v-card-text>
+                        <v-file-input
+                          multiple
+                          label="Upload images"
+                        ></v-file-input>
+                      </v-card-text>
+
+                      <v-divider></v-divider>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @click="dialogImagesUpload = false">
+                          Save
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                  <!-- =================== NEXT DIALOG FOR ANNOUNCEMENT IMAGES UPLOAD ================ -->
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -175,9 +204,6 @@
           </v-icon>
           <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
         </template>
-        <!-- <template v-slot:no-data>
-          <v-btn color="primary" @click="initialize"> Reset </v-btn>
-        </template> -->
       </v-data-table>
     </v-container>
   </div>
@@ -197,6 +223,7 @@ export default {
     return {
       //#region Component Dialogs
       dialog: false,
+      dialogImagesUpload: false,
       dialogDelete: false,
       //#endregion
 
@@ -212,18 +239,23 @@ export default {
           text: "Title",
           align: "start",
           value: "Title",
+          sortable: false,
         },
 
-        { text: "Description", value: "Description" },
+        { text: "Description", value: "Description", sortable: false },
         { text: "Price", value: "Price" },
-        { text: "City", value: "Location" },
-        { text: "Total Floors", value: "TotalFloors" },
-        { text: "Total Bathrooms", value: "TotalBathrooms" },
-        { text: "Total Livingrooms", value: "TotalLivingrooms" },
-        { text: "Total Kitchens", value: "TotalKitchens" },
-        { text: "Total Bedrooms", value: "TotalBedrooms" },
-        { text: "Surface", value: "Surface" },
-        { text: "Available", value: "IsAvailable" },
+        { text: "City", value: "Location", sortable: false },
+        { text: "Total Floors", value: "TotalFloors", sortable: false },
+        { text: "Total Bathrooms", value: "TotalBathrooms", sortable: false },
+        {
+          text: "Total Livingrooms",
+          value: "TotalLivingrooms",
+          sortable: false,
+        },
+        { text: "Total Kitchens", value: "TotalKitchens", sortable: false },
+        { text: "Total Bedrooms", value: "TotalBedrooms", sortable: false },
+        { text: "Surface", value: "Surface", sortable: false },
+        { text: "Available", value: "IsAvailable", sortable: false },
         { text: "Actions", value: "actions", sortable: false },
       ],
       //#endregion
@@ -338,7 +370,6 @@ export default {
         this.show = true;
         this.snackbarMsg = response.data.message;
         this.snackbarColor = "success";
-        console.log(response);
       } catch (e) {
         this.show = true;
         this.snackbarMsg = "something went wrong!";
@@ -351,16 +382,19 @@ export default {
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
+
     deleteItem(item) {
       this.editedIndex = this.announcements.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogDelete = true;
     },
+
     deleteItemConfirm() {
       this.onDeleteAnnouncement(this.editedItem.Id);
       this.announcements.splice(this.editedIndex, 1);
       this.closeDelete();
     },
+
     close() {
       this.dialog = false;
       this.$nextTick(() => {
@@ -368,6 +402,7 @@ export default {
         this.editedIndex = -1;
       });
     },
+
     closeDelete() {
       this.dialogDelete = false;
       this.$nextTick(() => {
@@ -375,6 +410,7 @@ export default {
         this.editedIndex = -1;
       });
     },
+
     save() {
       if (this.editedIndex > -1) {
         Object.assign(this.announcements[this.editedIndex], this.editedItem);
@@ -382,6 +418,7 @@ export default {
         this.announcements.push(this.editedItem);
       }
       this.close();
+      this.dialogImagesUpload = true;
     },
 
     onSignout() {
