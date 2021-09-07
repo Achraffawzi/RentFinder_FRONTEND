@@ -4,9 +4,9 @@
       <!-- Logout btn -->
       <v-row>
         <v-col cols="12" sm="2" offset-sm="10">
-          <v-btn text depressed>
+          <v-btn @click="onSignout" text depressed>
             <v-icon>logout</v-icon>
-            <span>Log out</span>
+            <span>Signout</span>
           </v-btn>
         </v-col>
       </v-row>
@@ -348,6 +348,12 @@ export default {
         this.announcements.push(this.editedItem);
       }
       this.close();
+    },
+
+    onSignout() {
+      this.$store.dispatch('setUser', null);
+      localStorage.removeItem('L_T');
+      this.$router.push({ name: 'home' });
     },
   },
 };
