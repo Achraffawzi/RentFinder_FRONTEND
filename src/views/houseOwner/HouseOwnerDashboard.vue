@@ -1,6 +1,13 @@
 <template>
   <div class="dashboard">
     <v-container>
+      <BaseSnackbar
+        v-if="show"
+        :show="show"
+        :message="snackbarMsg"
+        :color="snackbarColor"
+        v-on:closeSnackbar="show = false"
+      />
       <!-- Logout btn -->
       <v-row>
         <v-col cols="12" sm="2" offset-sm="10">
@@ -178,17 +185,25 @@
 
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
+import BaseSnackbar from "@/components/BaseSnackbar.vue";
 import DashboardNumbers from "@/components/DashboardNumbers.vue";
 export default {
   name: "HouseOwnerDashboard",
   components: {
     DashboardNumbers,
+    BaseSnackbar,
   },
   data() {
     return {
       //#region Component Dialogs
       dialog: false,
       dialogDelete: false,
+      //#endregion
+
+      //#region
+      show: false,
+      snackbarMsg: "",
+      snackbarColor: "",
       //#endregion
 
       //#region Data table properties
@@ -313,6 +328,24 @@ export default {
       }
     },
 
+    async onDeleteAnnouncement(announcementID) {
+      try {
+        const req = createApiEndPoints(
+          END_POINTS.DELETE_ANNOUNCEMENT + "" + announcementID + "/delete"
+        );
+        const response = await req.deleteFromParams();
+
+        this.show = true;
+        this.snackbarMsg = response.data.message;
+        this.snackbarColor = "success";
+        console.log(response);
+      } catch (e) {
+        this.show = true;
+        this.snackbarMsg = "something went wrong!";
+        this.snackbarColor = "error";
+      }
+    },
+
     editItem(item) {
       this.editedIndex = this.announcements.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -324,6 +357,7 @@ export default {
       this.dialogDelete = true;
     },
     deleteItemConfirm() {
+      this.onDeleteAnnouncement(this.editedItem.Id);
       this.announcements.splice(this.editedIndex, 1);
       this.closeDelete();
     },
@@ -351,9 +385,9 @@ export default {
     },
 
     onSignout() {
-      this.$store.dispatch('setUser', null);
-      localStorage.removeItem('L_T');
-      this.$router.push({ name: 'home' });
+      this.$store.dispatch("setUser", null);
+      localStorage.removeItem("L_T");
+      this.$router.push({ name: "home" });
     },
   },
 };
