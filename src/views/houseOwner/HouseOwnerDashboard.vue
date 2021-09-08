@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <Navbar />
+    <Navbar/>
     <v-container>
       <BaseSnackbar
         v-if="show"
@@ -468,12 +468,6 @@ export default {
       }
       this.close();
       this.dialogImagesUpload = true;
-    },
-
-    onSignout() {
-      this.$store.dispatch("setUser", null);
-      localStorage.removeItem("L_T");
-      this.$router.push({ name: "home" });
     },
   },
 };
