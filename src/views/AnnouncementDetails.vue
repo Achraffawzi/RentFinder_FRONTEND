@@ -14,18 +14,18 @@
             :center="true"
           >
             <v-img
-              src="https://www.rocketmortgage.com/resources-cmsassets/RocketMortgage.com/Article_Images/Large_Images/TypesOfHomes/types-of-homes-hero.jpg"
+              :src="announcement.announcement.Photos"
             >
             </v-img>
           </carousel>
           <div class="d-flex align-center justify-space-between mt-4">
             <div>
               <span class="primary--text text-h5 font-weight-medium"
-                >${{ announcement.Price }}</span
+                >${{ announcement.announcement.Price }}</span
               >
               <span class="primary--text">/night</span>
             </div>
-            <h5 class="text-h5">{{ announcement.Location }}</h5>
+            <h5 class="text-h5">{{ announcement.announcement.Location }}</h5>
           </div>
           <v-rating
             size="25"
@@ -36,8 +36,8 @@
             :value="4"
             readonly
           ></v-rating>
-          <h2 class="font-weight-bold my-2">{{ announcement.Title }}</h2>
-          <p class="mt-4 mb-13">{{ announcement.Description }}</p>
+          <h2 class="font-weight-bold my-2">{{ announcement.announcement.Title }}</h2>
+          <p class="mt-4 mb-13">{{ announcement.announcement.Description }}</p>
           <!-- Rooms numbers -->
           <v-row>
             <v-col
@@ -56,7 +56,7 @@
             </v-col>
           </v-row>
           <p class="mt-6 font-weight-medium">
-            Published in {{ announcement.PublicationDate }}
+            Published in {{ announcement.announcement.PublicationDate }}
           </p>
         </v-col>
 
@@ -67,7 +67,8 @@
               <v-row>
                 <v-col cols="12" sm="4">
                   <v-img
-                    :src="announcement.houseOwner.Avatar"
+                    class="rounded-pill"
+                    :src="announcement.houseOwner.Avatar === 'default-profile-image.jpg' ? 'http://localhost:4000/static/images/user/default-profile-image.jpg' : announcement.houseOwner.Avatar"
                     max-width="100"
                   ></v-img>
                 </v-col>
@@ -93,9 +94,7 @@
                   </v-card-title>
 
                   <v-card-text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    There might be a lot of scammers posting fake announcements, and the RentFinder community has no responsibilities for the scam!
 
                     <!-- Phone Number -->
                     <div
@@ -132,13 +131,17 @@
 import { createApiEndPoints, END_POINTS } from "../../api.js";
 import Navbar from "@/components/Navbar.vue";
 import carousel from "vue-owl-carousel";
+
 export default {
   name: "AnnouncementDetails",
+
   components: {
     Navbar,
     carousel,
   },
+
   props: ["id"],
+
   data() {
     return {
       totalRooms: null,
@@ -146,15 +149,9 @@ export default {
       announcement: null,
     };
   },
-  // computed: {
-  //   getAnnouncement() {
-  //     return this.$store.getters.getAnnouncement(this.id);
-  //   },
-  // },
 
   mounted() {
     this.getAnnouncement(this.id);
-    // this.fillRoomsNumbers();
   },
 
   methods: {
@@ -165,7 +162,6 @@ export default {
         );
         const response = await req.fetch();
         this.announcement = response.data;
-        console.log(this.announcement);
         await this.fillRoomsNumbers();
       } catch (e) {
         console.log("catch block");
@@ -178,32 +174,32 @@ export default {
         {
           icon: "roofing",
           title: "total floors",
-          value: this.announcement.TotalFloors,
+          value: this.announcement.announcement.TotalFloors,
         },
         {
           icon: "bathtub",
           title: "total bathrooms",
-          value: this.announcement.TotalBathrooms,
+          value: this.announcement.announcement.TotalBathrooms,
         },
         {
           icon: "dinner_dining",
           title: "total livingrooms",
-          value: this.announcement.TotalLivingrooms,
+          value: this.announcement.announcement.TotalLivingrooms,
         },
         {
           icon: "restaurant",
           title: "total kitchens",
-          value: this.announcement.TotalKitchens,
+          value: this.announcement.announcement.TotalKitchens,
         },
         {
           icon: "king_bed",
           title: "total bedrooms",
-          value: this.announcement.TotalBedrooms,
+          value: this.announcement.announcement.TotalBedrooms,
         },
         {
           icon: "aspect_ratio",
-          title: "surface",
-          value: this.announcement.Surface,
+          title: "surface (m²)",
+          value: this.announcement.announcement.Surface,
         },
       ];
     },
