@@ -17,11 +17,11 @@
       >
         <v-avatar size="100">
           <img
-            :src="feedback.Avatar === 'default-profile-image.jpg' ? 'http://localhost:4000/static/images/user/default-profile-image.jpg' : feedback.Avatar"
+            :src="`http://localhost:4000/static/images/user/${feedback.Avatar}`"
             alt=""
           />
         </v-avatar>
-        <h4 class="text-h4 font-weight-medium my-3">Ella Johnson</h4>
+        <h4 class="text-h4 font-weight-medium my-3">{{ feedback.UserName }}</h4>
         <v-rating
           size="20"
           background-color="yellow lighten-3"

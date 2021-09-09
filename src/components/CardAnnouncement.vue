@@ -62,7 +62,7 @@
               >
               <!-- <span class="font-weight-medium">{{ item.publicationDate }}</span> -->
             </div>
-            <v-btn v-if="$route.name === 'favorite'" class="error dark"
+            <v-btn @click="removeFromFavorite(item.Id)" v-if="$route.name === 'favorite'" class="error dark"
               >Delete</v-btn
             >
             <v-btn class="primary" v-if="$route.name !== 'favorite'">
@@ -167,6 +167,24 @@ export default {
     // Set the text of availaility ( Busy | Available )
     setAvailabilityText(availability) {
       return availability ? "Available" : "Busy"
+    },
+
+    async removeFromFavorite(announcementID) {
+      try {
+          const req = createApiEndPoints(END_POINTS.DELETE_FAVORITE);
+          const response = await req.delete({
+            announcementId: parseInt(announcementID),
+          });
+          this.snackbarFavoriteMsg = response.data.message;
+          this.show = true;
+          this.snackbarMsg = response.data.message;
+          this.snackbarColor = "success";
+        } catch (e) {
+          this.isFaved = !this.isFaved;
+          this.show = true;
+          this.snackbarMsg = "something went wrong!";
+          this.snackbarColor = "error";
+        }
     },
   },
 };

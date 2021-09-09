@@ -117,6 +117,7 @@ export default {
 
   methods: {
     onSignout() {
+      console.log("sign out");
       this.$store.dispatch('setUser', null);
       localStorage.removeItem('L_T');
       this.$router.push({ name: 'home' });

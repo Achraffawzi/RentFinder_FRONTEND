@@ -12,18 +12,33 @@
           style="cursor: pointer"
           @click="openFileUplaod"
         >
-          <v-img
-            src="https://www.realmadrid.com/img/vertical_380px/ramos_ficha_550x650_20210630115027.jpg"
-          ></v-img>
+          <img
+            id="profile-image"
+            :src="
+              userInfo.Avatar === 'default-profile-image.jpg'
+                ? 'http://localhost:4000/static/images/user/default-profile-image.jpg'
+                : `http://localhost:4000/static/images/user/${userInfo.Avatar}`
+            "
+          />
         </v-avatar>
-        <input type="file" id="filePicker" class="d-none" />
-        <v-btn class="primary white--text text-lowercase d-block mt-4"
+        <input
+          accept="image/*"
+          @change="onFileSelected"
+          type="file"
+          id="filePicker"
+          class="d-none"
+        />
+        <v-btn @click="onSaveAvatar" class="primary white--text text-lowercase d-block mt-4"
           >Save Photo</v-btn
         >
       </v-col>
       <!-- Profile info col -->
       <v-col cols="12" md="7">
-        <v-form @submit.prevent="onUpdateProfile" method="POST" ref="formUpdate">
+        <v-form
+          @submit.prevent="onUpdateProfile"
+          method="POST"
+          ref="formUpdate"
+        >
           <!-- Firstname -->
           <div>
             <div class="d-flex justify-space-between align-center py-4">
@@ -129,16 +144,17 @@
 <script>
 import { createApiEndPoints, END_POINTS } from "../../../api.js";
 import BaseAlert from "@/components/BaseAlert.vue";
-let filePicker = document.querySelector("#filePicker");
 export default {
   name: "EditProfile",
 
-  components: { BaseAlert, },
+  components: { BaseAlert },
 
   data() {
     return {
+      selectedFile: null,
       //#region Main Data
       userInfo: {
+        Avatar: "",
         FirstName: "",
         LastName: "",
         PhoneNumber: "",
@@ -193,10 +209,12 @@ export default {
       try {
         const req = createApiEndPoints(END_POINTS.GET_USER_INFO);
         const res = await req.fetch();
+        this.userInfo.Avatar = res.data.Avatar;
         this.userInfo.FirstName = res.data.FirstName;
         this.userInfo.LastName = res.data.LastName;
         this.userInfo.PhoneNumber = res.data.PhoneNumber;
         this.userInfo.City = res.data.City;
+        console.log(res.data);
       } catch (e) {
         console.log(e);
       }
@@ -213,9 +231,9 @@ export default {
             phoneNumber: this.userInfo.PhoneNumber,
             city: this.userInfo.City,
             userName: this.userInfo.FirstName + "" + this.userInfo.LastName,
-          }
+          };
           const req = createApiEndPoints(END_POINTS.UPDATE_PROFILE);
-          await req.update({...user});
+          await req.update({ ...user });
           this.loadingProfile = false;
           this.alertData = {
             alertMessage: "Your profile has been updated successfully",
@@ -235,19 +253,46 @@ export default {
         console.log("form not valid");
         this.loadingProfile = false;
         this.alertData = {
-            alertMessage: "Please verify your profile information",
-            alertColor: "error",
-            alertIcon: "error",
-          };
+          alertMessage: "Please verify your profile information",
+          alertColor: "error",
+          alertIcon: "error",
+        };
       }
     },
 
     openFileUplaod() {
+      let filePicker = document.querySelector("#filePicker");
       filePicker.click();
     },
 
     changeButtonValue(prop) {
       return prop ? "Save" : "Change";
+    },
+
+    onFileSelected(event) {
+      let imgSrc = document.querySelector('#profile-image');
+      this.selectedFile = event.target.files[0];
+      let reader = new FileReader();
+      // NOTE: If an image SELECTED DO this
+      if (this.selectedFile) {
+        reader.readAsDataURL(this.selectedFile);
+      }
+      // NOTE: Set The Source / 'src' tag  of image
+      reader.addEventListener("load", function () {
+        imgSrc.setAttribute('src', reader.result);
+      });
+      this.userInfo.Avatar = reader.result;
+    },
+
+    async onSaveAvatar() {
+      try {
+        const formData = new FormData();
+        formData.append('avatar', this.selectedFile)
+        const req = createApiEndPoints(END_POINTS.UPDATE_AVATAR);
+        await req.update(formData);
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

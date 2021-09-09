@@ -25,6 +25,7 @@ export const END_POINTS = {
   
   GET_USER_INFO: "profile/me",
   UPDATE_PROFILE: "profile/me/edit",
+  UPDATE_AVATAR: "profile/me/edit/avatar",
   CHANGE_PASSWORD: "profile/me/edit/password",
 
   GET_ANALYTICS: "analytics/",
