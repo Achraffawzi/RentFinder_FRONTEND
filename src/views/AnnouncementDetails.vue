@@ -14,6 +14,7 @@
             :center="true"
           >
             <v-img
+              v-for="(photo, index) in announcement.announcement.Photos.split(' ')" :key="index"
               :src="announcement.announcement.Photos"
             >
             </v-img>
@@ -33,7 +34,7 @@
             length="5"
             color="yellow"
             class="mb-5"
-            :value="4"
+            :value="parseInt(announcement.announcement.rate)"
             readonly
           ></v-rating>
           <h2 class="font-weight-bold my-2">{{ announcement.announcement.Title }}</h2>
