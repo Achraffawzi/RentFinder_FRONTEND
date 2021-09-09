@@ -18,6 +18,7 @@ export const END_POINTS = {
   GET_ANNOUNCEMENTS_ANALYTICS: "announcements/analytics",
   
   GET_FEEDBACKS: "feedback/",
+  CREATE_FEEDBACK: "feedback/create",
   
   GET_FAVORITES: "favorite/all",
   CREATE_FAVORITE: "favorite/add",

@@ -41,6 +41,7 @@
 </template>
 
 <script>
+// import BaseSnackbar from "@/components/BaseSnackbar.vue";
 import carousel from "vue-owl-carousel";
 export default {
   name: "Testimonial",
@@ -48,5 +49,6 @@ export default {
   components: { carousel },
 
   props: ["feedbacks"],
+
 };
 </script>
