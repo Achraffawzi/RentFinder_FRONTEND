@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <Navbar/>
+    <Navbar />
     <v-container>
       <BaseSnackbar
         v-if="show"
@@ -9,6 +9,12 @@
         :color="snackbarColor"
         v-on:closeSnackbar="show = false"
       />
+
+      <v-switch
+        :value="darkMode"
+        @change="toggleDarkMode"
+        :label="`toggle ${switchLabel} mode`"
+      ></v-switch>
 
       <!-- Statistic numbers -->
       <v-row v-if="analytics !== null">
@@ -235,6 +241,8 @@ export default {
       dialogDelete: false,
       //#endregion
 
+      darkMode: false,
+
       //#region
       show: false,
       snackbarMsg: "",
@@ -313,6 +321,9 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Announcement" : "Edit Announcement";
     },
+    switchLabel: function () {
+      return this.darkMode ? "light" : "dark";
+    },
   },
 
   watch: {
@@ -330,6 +341,11 @@ export default {
   },
 
   methods: {
+    toggleDarkMode: function () {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+      this.darkMode = !this.darkMode;
+    },
+
     async initialize() {
       try {
         const req = createApiEndPoints(END_POINTS.GET_ANNOUNCEMENTS_OF_USER);

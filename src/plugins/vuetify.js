@@ -13,6 +13,10 @@ export default new Vuetify({
         navigationDrawer: "#122658",
         error: "#b71c1c",
       },
+      dark: {
+        primary: '#90CAF9',
+        secondary: '#E91E63'
+      },
     },
   },
 });
