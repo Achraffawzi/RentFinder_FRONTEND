@@ -14,7 +14,7 @@ export default new Vuetify({
         error: "#b71c1c",
       },
       dark: {
-        primary: '#90CAF9',
+        primary: '#008DE9',
         secondary: '#E91E63'
       },
     },

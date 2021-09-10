@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import HouseOwnerNavbar from "@/components/Navbar.vue";
-import UserNavbar from "@/components/houseOwner/Navbar.vue";
+import HouseOwnerNavbar from "@/components/houseOwner/Navbar.vue";
+import UserNavbar from "@/components/Navbar.vue";
 export default {
   name: "Settings",
 

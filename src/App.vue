@@ -18,7 +18,7 @@ export default {
   }),
 
   mounted() {
-    // Get the most starred reviews
+    this.$vuetify.theme.dark = false
   },
 
   methods: {},
