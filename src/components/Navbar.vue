@@ -100,7 +100,7 @@ export default {
       let links = [
         { title: "Search for a house", routeName: "search" },
         { title: "Favorite", routeName: "favorite" },
-        { title: "Profile", routeName: "usereditprofile" },
+        { title: "Profile", routeName: "editprofile" },
       ];
 
       if(this.getUser == null || this.getUser == undefined || localStorage.getItem('L_T') == null || localStorage.getItem('L_T') == undefined) {

@@ -103,7 +103,7 @@ export default {
           icon: "description",
           routeName: "announcements",
         },
-        { title: "Settings", icon: "settings", routeName: "admineditprofile" },
+        { title: "Settings", icon: "settings", routeName: "editprofile" },
       ],
       userInfo: null,
     };

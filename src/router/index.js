@@ -66,6 +66,47 @@ const routes = [
       authorizedRoles: ["All"],
     },
   },
+
+  {
+    path: "/settings",
+    name: "settings",
+    component: () =>
+      import(
+        /* webpackChunkName: "settings" */ "@/views/Settings.vue"
+      ),
+    meta: {
+      requiresAuth: true,
+      authorizedRoles: ["Admin", "User", "HouseOwner"]
+    },
+    children: [
+      {
+        path: "/settings/editprofile",
+        name: "editprofile",
+        component: () =>
+          import(
+            /* webpackChunkName: "editprofile" */ "@/views/EditProfile.vue"
+          ),
+        meta: {
+          requiresAuth: true,
+          authorizedRoles: ["Admin", "User", "HouseOwner"]
+        },
+      },
+
+      {
+        path: "/settings/changepassword",
+        name: "changepassword",
+        component: () =>
+          import(
+            /* webpackChunkName: "changepassword" */ "@/views/ChangePassword.vue"
+          ),
+        meta: {
+          requiresAuth: true,
+          authorizedRoles: ["Admin", "User", "HouseOwner"]
+        },
+      },
+    ],
+  },
+
   ...adminRoutes,
   ...houseOwnerRoutes,
   ...UserRoutes,

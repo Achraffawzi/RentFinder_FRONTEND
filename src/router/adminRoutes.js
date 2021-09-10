@@ -60,46 +60,6 @@ export default [
           authorizedRoles: ["Admin"]
         },
       },
-
-      {
-        path: "/adminsettings",
-        name: "settings",
-        component: () =>
-          import(
-            /* webpackChunkName: "settings" */ "@/views/admin/Settings.vue"
-          ),
-        meta: {
-          requiresAuth: true,
-          authorizedRoles: ["Admin"]
-        },
-        children: [
-          {
-            path: "/adminsettings/admineditprofile",
-            name: "admineditprofile",
-            component: () =>
-              import(
-                /* webpackChunkName: "admineditprofile" */ "@/views/admin/EditProfile.vue"
-              ),
-            meta: {
-              requiresAuth: true,
-              authorizedRoles: ["Admin"]
-            },
-          },
-
-          {
-            path: "/adminsettings/adminchangepassword",
-            name: "adminchangepassword",
-            component: () =>
-              import(
-                /* webpackChunkName: "adminchangepassword" */ "@/views/admin/ChangePassword.vue"
-              ),
-            meta: {
-              requiresAuth: true,
-              authorizedRoles: ["Admin"]
-            },
-          },
-        ],
-      },
     ],
   },
 ];

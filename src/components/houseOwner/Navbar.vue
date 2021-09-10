@@ -72,7 +72,7 @@ export default {
         {
           title: "Profile",
           icon: "person",
-          routeName: "houseownereditprofile",
+          routeName: "editprofile",
         },
         {
           title: "Dashboard",
