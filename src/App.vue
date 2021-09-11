@@ -25,7 +25,28 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+html {
+  scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar {
+  width: 1vw;
+}
+ 
+html::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 141, 233, .7);
+  outline: 1px solid slategrey;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: $primary-color;
+}
+
 #app {
   display: flex;
   flex-direction: column;
