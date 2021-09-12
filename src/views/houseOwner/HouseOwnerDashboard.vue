@@ -291,7 +291,7 @@ export default {
         totalkitchens: 0,
         totalbedrooms: 0,
         surface: 0,
-        isAvailable: true,
+        isAvailable: 1,
       },
       defaultItem: {
         id: 0,
@@ -306,7 +306,7 @@ export default {
         totalkitchens: 0,
         totalbedrooms: 0,
         surface: 0,
-        isAvailable: true,
+        isAvailable: 1,
       },
       //#endregion
 
