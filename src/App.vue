@@ -17,6 +17,14 @@ export default {
     //
   }),
 
+  watch: {
+    $route() {
+      if (this.$route.name !== 'houseownerdashboard') {
+        this.$vuetify.theme.dark = false;
+      }
+    }
+  },
+
   mounted() {
     this.$vuetify.theme.dark = false
   },
