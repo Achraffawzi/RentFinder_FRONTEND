@@ -339,12 +339,15 @@ export default {
   mounted() {
     this.initialize();
     this.getHousesAnalytics();
+    this.$vuetify.theme.dark = this.$store.getters.getDarkModeStatus;
+    this.darkMode = this.$store.getters.getDarkModeStatus;
   },
 
   methods: {
-    toggleDarkMode: function () {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-      this.darkMode = !this.darkMode;
+    toggleDarkMode() {
+      this.$store.dispatch('setDarkMode', !this.$vuetify.theme.dark)
+      this.$vuetify.theme.dark = this.$store.getters.getDarkModeStatus;
+      this.darkMode = this.$store.getters.getDarkModeStatus;
     },
 
     async initialize() {
