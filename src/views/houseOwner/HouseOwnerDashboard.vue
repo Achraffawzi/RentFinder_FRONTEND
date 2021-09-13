@@ -69,19 +69,19 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.title"
+                          v-model="editedItem.Title"
                           label="Title"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.city"
+                          v-model="editedItem.Location"
                           label="City"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.price"
+                          v-model="editedItem.Price"
                           label="Price"
                         ></v-text-field>
                       </v-col>
@@ -89,19 +89,19 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.totalfloors"
+                          v-model="editedItem.TotalFloors"
                           label="Total floors"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.totalbathrooms"
+                          v-model="editedItem.TotalBathrooms"
                           label="Total bathrooms"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.totallivingrooms"
+                          v-model="editedItem.TotalLivingrooms"
                           label="Total livingrooms"
                         ></v-text-field>
                       </v-col>
@@ -109,19 +109,19 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.totalkitchens"
+                          v-model="editedItem.TotalKitchens"
                           label="Total kitchens"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.totalbedrooms"
+                          v-model="editedItem.TotalBedrooms"
                           label="Total bedrooms"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.surface"
+                          v-model="editedItem.Surface"
                           label="Surface"
                         ></v-text-field>
                       </v-col>
@@ -129,16 +129,16 @@
                     <v-row>
                       <v-textarea
                         label="Description"
-                        v-model="editedItem.description"
+                        v-model="editedItem.Description"
                       ></v-textarea>
                     </v-row>
-                    <!-- <v-row>
+                    <v-row v-if="formTitle === 'Edit Announcement'">
                       <v-select
                         label="Available"
-                        :items="['Yes', 'No']"
-                        v-model="editedItem.isAvailable"
+                        :items="available"
+                        v-model="editedItem.IsAvailable"
                       ></v-select>
-                    </v-row> -->
+                    </v-row>
                   </v-container>
                 </v-card-text>
 
@@ -242,6 +242,7 @@ export default {
       //#endregion
 
       darkMode: false,
+      available: ["Yes", "No"],
 
       //#region
       show: false,
@@ -280,18 +281,18 @@ export default {
       announcements: [],
       editedIndex: -1,
       editedItem: {
-        id: 0,
-        title: "",
-        city: "",
-        price: 0,
-        description: "",
-        totalfloors: 0,
-        totalbathrooms: 0,
-        totallivingrooms: 0,
-        totalkitchens: 0,
-        totalbedrooms: 0,
-        surface: 0,
-        isAvailable: 1,
+        Id: 0,
+        Title: "",
+        Description: "",
+        IsAvailable: 0,
+        TotalLivingrooms: 0,
+        TotalBathrooms: 0,
+        TotalBedrooms: 0,
+        TotalFloors: 0,
+        TotalKitchens: 0,
+        Location: 0,
+        Surface: 0,
+        Price: 0,
       },
       defaultItem: {
         id: 0,
@@ -432,6 +433,36 @@ export default {
       }
     },
 
+    async onEditAnnouncement(announcement) {
+      try {
+        const req = createApiEndPoints(
+          END_POINTS.UPDATE_ANNOUNCEMENT + "" + announcement.Id + "/update"
+        );
+        announcement.IsAvailable = announcement.IsAvailable === "Yes" ? 1 : 0;
+        const response = await req.update({
+          title: announcement.Title,
+          description: announcement.Description,
+          isAvailable: announcement.IsAvailable,
+          totalLivingrooms: announcement.TotalLivingrooms,
+          totalBathrooms: announcement.TotalBathrooms,
+          totalBedrooms: announcement.TotalBedrooms,
+          totalFloors: announcement.TotalFloors,
+          totalKitchens: announcement.TotalKitchens,
+          location: announcement.Location,
+          surface: announcement.Surface,
+          price: announcement.Price,
+        });
+
+        this.show = true;
+        this.snackbarMsg = response.data.message;
+        this.snackbarColor = "success";
+      } catch (e) {
+        this.show = true;
+        this.snackbarMsg = "something went wrong!";
+        this.snackbarColor = "error";
+      }
+    },
+
     formatAvailability(availability) {
       return availability ? "Yes" : "No";
     },
@@ -443,6 +474,7 @@ export default {
     editItem(item) {
       this.editedIndex = this.announcements.indexOf(item);
       this.editedItem = Object.assign({}, item);
+      this.editedItem.IsAvailable = item.IsAvailable === 1 ? "Yes" : "No";
       this.dialog = true;
     },
 
@@ -476,6 +508,7 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
+        this.onEditAnnouncement(this.editedItem);
         Object.assign(this.announcements[this.editedIndex], this.editedItem);
       } else {
         // Impl new announcement functionality
