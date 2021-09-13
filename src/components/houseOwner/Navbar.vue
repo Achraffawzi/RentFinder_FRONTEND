@@ -48,8 +48,8 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
-            <div @click="onSignout">
+          <v-list-item @click="onSignout">
+            <div>
               <v-icon>logout</v-icon>
               <span>Signout</span>
             </div>
