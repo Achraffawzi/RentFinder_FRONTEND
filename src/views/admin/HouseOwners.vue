@@ -159,7 +159,7 @@ export default {
       try {
         const req = createApiEndPoints(END_POINTS.GET_ALL_USERS);
         const response = await req.fetch();
-        this.users = response.data.houseOwners;
+        this.houseOwners = response.data.houseOwners;
       } catch (e) {
         console.log(e);
       }

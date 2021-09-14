@@ -190,11 +190,11 @@ export default {
           END_POINTS.DELETE_ANNOUNCEMENT + "" + announcementID + "/delete"
         );
         const response = await req.deleteFromParams();
+        this.announcements.splice(this.editedIndex, 1);
 
         this.show = true;
         this.snackbarMsg = response.data.message;
         this.snackbarColor = "success";
-        console.log(response);
       } catch (e) {
         this.show = true;
         this.snackbarMsg = "something went wrong!";
@@ -215,7 +215,6 @@ export default {
     deleteItemConfirm() {
       // Impl Delete house owner api
       this.onDeleteAnnouncement(this.editedItem.Id);
-      this.announcements.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
