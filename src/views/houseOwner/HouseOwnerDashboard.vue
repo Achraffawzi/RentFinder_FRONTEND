@@ -393,6 +393,7 @@ export default {
           END_POINTS.DELETE_ANNOUNCEMENT + "" + announcementID + "/delete"
         );
         const response = await req.deleteFromParams();
+        this.announcements.splice(this.editedIndex, 1);
 
         this.show = true;
         this.snackbarMsg = response.data.message;
@@ -406,7 +407,6 @@ export default {
 
     async onCreateAnnouncement() {
       try {
-        console.log("inside try");
         let newAnnouncement = {
           title: this.editedItem.Title,
           description: this.editedItem.Description,
@@ -420,11 +420,10 @@ export default {
           surface: parseInt(this.editedItem.Surface),
           price: parseFloat(this.editedItem.Price),
         };
-        console.log("finishing object");
-        console.log(newAnnouncement.price);
 
         const req = createApiEndPoints(END_POINTS.CREATE_ANNOUNCEMENT);
         const response = await req.create({ ...newAnnouncement });
+        this.announcements.push(this.editedItem);
 
         this.show = true;
         this.snackbarMsg = response.data.message;
@@ -455,6 +454,8 @@ export default {
           surface: announcement.Surface,
           price: announcement.Price,
         });
+
+        Object.assign(this.announcements[this.editedIndex], this.editedItem);
 
         this.show = true;
         this.snackbarMsg = response.data.message;
@@ -489,7 +490,6 @@ export default {
 
     deleteItemConfirm() {
       this.onDeleteAnnouncement(this.editedItem.Id);
-      this.announcements.splice(this.editedIndex, 1);
       this.closeDelete();
     },
 
@@ -512,11 +512,9 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         this.onEditAnnouncement(this.editedItem);
-        Object.assign(this.announcements[this.editedIndex], this.editedItem);
       } else {
         // Impl new announcement functionality
         this.onCreateAnnouncement();
-        this.announcements.push(this.editedItem);
       }
       this.close();
       this.dialogImagesUpload = true;
