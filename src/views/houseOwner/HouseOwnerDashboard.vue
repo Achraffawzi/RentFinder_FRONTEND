@@ -423,7 +423,20 @@ export default {
 
         const req = createApiEndPoints(END_POINTS.CREATE_ANNOUNCEMENT);
         const response = await req.create({ ...newAnnouncement });
-        this.announcements.push(this.editedItem);
+        this.announcements.push({ 
+          Id:newAnnouncement.id,
+          Title: newAnnouncement.title,
+          Description: newAnnouncement.description,
+          IsAvailable:newAnnouncement.isAvailable,
+          TotalLivingrooms:newAnnouncement.totalLivingrooms,
+          TotalBathrooms:newAnnouncement.totalBathrooms,
+          TotalBedrooms:newAnnouncement.totalBedrooms,
+          TotalFloors:newAnnouncement.totalFloors,
+          TotalKitchens:newAnnouncement.totalKitchens,
+          Location: newAnnouncement.location,
+          Surface:newAnnouncement.surface,
+          Price:newAnnouncement.price,
+         });
 
         this.show = true;
         this.snackbarMsg = response.data.message;
@@ -455,15 +468,16 @@ export default {
           price: announcement.Price,
         });
 
-        Object.assign(this.announcements[this.editedIndex], this.editedItem);
-
         this.show = true;
         this.snackbarMsg = response.data.message;
         this.snackbarColor = "success";
+        return true;
       } catch (e) {
+        console.log("error");
         this.show = true;
         this.snackbarMsg = "something went wrong!";
         this.snackbarColor = "error";
+        return false;
       }
     },
 
@@ -511,7 +525,8 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        this.onEditAnnouncement(this.editedItem);
+        let isUpdated = this.onEditAnnouncement(this.editedItem);
+        if(isUpdated) Object.assign(this.announcements[this.editedIndex], this.editedItem);
       } else {
         // Impl new announcement functionality
         this.onCreateAnnouncement();
